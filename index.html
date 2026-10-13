@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Révisions S1</title>
+<meta name="description" content="Applis de révision gratuites et installables pour le S1 : cours, QCM et annales corrigées.">
+<link rel="icon" href="cinematique-s1/icons/favicon-64.png" type="image/png">
+<link rel="apple-touch-icon" href="cinematique-s1/icons/apple-touch-icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400&family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,800&family=JetBrains+Mono:wght@500;700&display=swap">
+<style>
+/* Accueil : une liste courte d'applis, chacune avec son bouton d'installation. */
+:root {
+  --paper: #F4F6FA; --card: #FFFFFF; --ink: #141C33; --ink-2: #4A5470; --rule: #D7DEEA; --grid: #E2E8F2;
+  --f-disp: "Bricolage Grotesque", "Avenir Next", "Segoe UI", system-ui, sans-serif;
+  --f-body: "Atkinson Hyperlegible", "Segoe UI", system-ui, -apple-system, sans-serif;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) { --paper: #0D1220; --card: #151C2D; --ink: #E8ECF5; --ink-2: #A8B2C8; --rule: #283249; --grid: #182033; color-scheme: dark; }
+}
+:root[data-theme="dark"] { --paper: #0D1220; --card: #151C2D; --ink: #E8ECF5; --ink-2: #A8B2C8; --rule: #283249; --grid: #182033; color-scheme: dark; }
+* { box-sizing: border-box; }
+body {
+  margin: 0; background-color: var(--paper); color: var(--ink); font: 17px/1.6 var(--f-body);
+  background-image: linear-gradient(var(--grid) 1px, transparent 1px), linear-gradient(90deg, var(--grid) 1px, transparent 1px);
+  background-size: 22px 22px;
+}
+main { max-width: 40rem; margin: 0 auto; padding-inline: 20px; padding-block: calc(48px + env(safe-area-inset-top, 0px)) calc(48px + env(safe-area-inset-bottom, 0px)); display: grid; gap: 22px; }
+h1 { font-family: var(--f-disp); font-weight: 800; font-size: clamp(2.2rem, 8vw, 3.2rem); line-height: 1.05; margin: 0; letter-spacing: -0.02em; }
+.lede { color: var(--ink-2); margin: 0; font-size: 1.08rem; }
+.app { background: var(--card); border: 1px solid var(--rule); border-radius: 16px; padding: 18px; display: grid; grid-template-columns: 72px minmax(0, 1fr); gap: 16px; align-items: start; }
+.app img { width: 72px; height: 72px; border-radius: 18px; }
+.app h2 { font-family: var(--f-disp); font-weight: 800; font-size: 1.35rem; margin: 0; }
+.app p { margin: 4px 0 12px; color: var(--ink-2); }
+.row { display: flex; flex-wrap: wrap; gap: 8px; }
+.btn { display: inline-flex; align-items: center; background: var(--ink); color: var(--paper); border: 1.5px solid var(--ink); border-radius: 10px; padding: 9px 16px; font-weight: 700; text-decoration: none; }
+.btn.ghost { background: transparent; color: var(--ink); }
+.btn:hover { filter: brightness(1.12); }
+:focus-visible { outline: 3px solid #1262D2; outline-offset: 2px; border-radius: 6px; }
+.small { font-size: 0.88rem; color: var(--ink-2); margin: 0; }
+</style>
+</head>
+<body>
+<main>
+  <h1>Révisions S1</h1>
+  <p class="lede">Des applis de révision gratuites, à installer sur ton téléphone. Elles marchent sans internet et se mettent à jour toutes seules.</p>
+  <article class="app">
+    <img src="cinematique-s1/icons/icon-192.png" alt="" width="72" height="72">
+    <div>
+      <h2>Cinématique S1</h2>
+      <p>Contrôle 1 de physique : cours illustré, 27 QCM et 12 exercices tirés des annales 2017 à 2022.</p>
+      <div class="row">
+        <a class="btn" href="cinematique-s1/installer.html">Installer</a>
+        <a class="btn ghost" href="cinematique-s1/">Ouvrir</a>
+      </div>
+    </div>
+  </article>
+  <p class="small">D’autres matières pourront s’ajouter ici. Contenu tiré des annales publiques Epidocs, non affilié à EPITA.</p>
+</main>
+</body>
+</html>

@@ -1,0 +1,985 @@
+<title>Cinématique S1</title>
+<meta name="description" content="Révisions du contrôle 1 de physique S1 (EPITA) : cours, schémas, QCM et annales corrigées.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400&family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,800&family=JetBrains+Mono:wght@500;700&display=swap">
+<style>
+/* Layout : un cahier à petits carreaux. Colonne de lecture de 46rem, schémas jusqu'à 60rem, barre de navigation collante avec la progression. */
+:root {
+  --paper: #F4F6FA;
+  --card: #FFFFFF;
+  --ink: #141C33;
+  --ink-2: #4A5470;
+  --ink-3: #7C86A0;
+  --rule: #D7DEEA;
+  --grid: #E2E8F2;
+  --mark: #FFE36E;
+  --note: #FFF6CC;
+  --note-line: #D9B92E;
+  --v: #1262D2;
+  --a: #D43A1F;
+  --u1: #7A3BD0;
+  --u2: #0B8574;
+  --good: #1D8A4C;
+  --good-soft: #E4F4EA;
+  --bad: #CC3333;
+  --bad-soft: #FBE9E9;
+  --btn: #141C33;
+  --btn-ink: #FFFFFF;
+  --area: rgba(18, 98, 210, 0.10);
+  --f-disp: "Bricolage Grotesque", "Avenir Next", "Segoe UI", system-ui, sans-serif;
+  --f-body: "Atkinson Hyperlegible", "Segoe UI", system-ui, -apple-system, sans-serif;
+  --f-mono: "JetBrains Mono", ui-monospace, "SFMono-Regular", Menlo, Consolas, monospace;
+  --radius: 12px;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --paper: #0D1220; --card: #151C2D; --ink: #E8ECF5; --ink-2: #A8B2C8; --ink-3: #7A849C;
+    --rule: #283249; --grid: #182033; --mark: #6E5C10; --note: #2B2711; --note-line: #8C7A22;
+    --v: #5CA8FF; --a: #FF7B5E; --u1: #B990FF; --u2: #37CCB3;
+    --good: #4CC47F; --good-soft: #12291C; --bad: #FF6B6B; --bad-soft: #2E1719;
+    --btn: #E8ECF5; --btn-ink: #0D1220; --area: rgba(92, 168, 255, 0.14);
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --paper: #0D1220; --card: #151C2D; --ink: #E8ECF5; --ink-2: #A8B2C8; --ink-3: #7A849C;
+  --rule: #283249; --grid: #182033; --mark: #6E5C10; --note: #2B2711; --note-line: #8C7A22;
+  --v: #5CA8FF; --a: #FF7B5E; --u1: #B990FF; --u2: #37CCB3;
+  --good: #4CC47F; --good-soft: #12291C; --bad: #FF6B6B; --bad-soft: #2E1719;
+  --btn: #E8ECF5; --btn-ink: #0D1220; --area: rgba(92, 168, 255, 0.14);
+  color-scheme: dark;
+}
+
+* { box-sizing: border-box; }
+[hidden] { display: none !important; }
+html { scroll-behavior: smooth; scroll-padding-top: 72px; }
+@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+body {
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--f-body);
+  font-size: 17px;
+  line-height: 1.6;
+}
+a { color: inherit; text-decoration-color: var(--ink-3); text-underline-offset: 3px; }
+a:hover { text-decoration-color: var(--ink); }
+:focus-visible { outline: 3px solid var(--v); outline-offset: 2px; border-radius: 4px; }
+mark { background: linear-gradient(transparent 52%, var(--mark) 52%, var(--mark) 92%, transparent 92%); color: inherit; padding: 0 2px; }
+b, strong { font-weight: 700; }
+.wrap { max-width: 60rem; margin: 0 auto; padding-inline: 20px; }
+.read { max-width: 46rem; }
+h1, h2, h3, h4 { font-family: var(--f-disp); line-height: 1.15; text-wrap: balance; margin: 0; letter-spacing: -0.01em; }
+h2 { font-size: clamp(1.7rem, 4vw, 2.3rem); font-weight: 800; }
+h3 { font-size: 1.35rem; font-weight: 800; margin-top: 2.2rem; }
+h4 { font-size: 1.12rem; font-weight: 800; }
+p { margin: 0.6rem 0; }
+.muted { color: var(--ink-2); }
+.small { font-size: 0.9rem; }
+.mono { font-family: var(--f-mono); }
+
+/* ---------- Barre de navigation ---------- */
+.nav {
+  position: sticky; top: env(safe-area-inset-top, 0px); z-index: 20;
+  background: color-mix(in srgb, var(--paper) 90%, transparent);
+  backdrop-filter: blur(8px);
+  border-bottom: 1px solid var(--rule);
+}
+.nav .wrap { display: flex; align-items: center; gap: 16px; min-height: 56px; }
+.brand { font-family: var(--f-disp); font-weight: 800; font-size: 1.1rem; text-decoration: none; white-space: nowrap; }
+.brand span { font-family: var(--f-mono); font-size: 0.75rem; font-weight: 700; background: var(--ink); color: var(--paper); border-radius: 5px; padding: 1px 6px; margin-left: 4px; vertical-align: 2px; }
+.links { display: flex; gap: 4px; overflow-x: auto; flex: 1; min-width: 0; scrollbar-width: none; }
+.links::-webkit-scrollbar { display: none; }
+.links a { text-decoration: none; font-size: 0.92rem; padding: 6px 10px; border-radius: 8px; white-space: nowrap; color: var(--ink-2); }
+.links a:hover { background: var(--grid); color: var(--ink); }
+.prog { display: flex; align-items: center; gap: 8px; font-family: var(--f-mono); font-size: 0.78rem; color: var(--ink-2); white-space: nowrap; }
+.prog .bar { width: 64px; height: 6px; border-radius: 3px; background: var(--grid); overflow: hidden; }
+.prog .bar i { display: block; height: 100%; width: 0; background: var(--good); transition: width .3s; }
+@media (max-width: 640px) { .prog .bar { display: none; } .brand span { display: none; } }
+
+/* ---------- Hero ---------- */
+.hero {
+  background-color: var(--card);
+  background-image: linear-gradient(var(--grid) 1px, transparent 1px), linear-gradient(90deg, var(--grid) 1px, transparent 1px);
+  background-size: 22px 22px;
+  border-bottom: 1px solid var(--rule);
+}
+.hero .wrap { display: grid; grid-template-columns: 1.05fr 1fr; gap: 28px; align-items: center; padding-block: 44px 36px; }
+.hero .wrap > * { min-width: 0; }
+.kicker { font-family: var(--f-mono); font-size: 0.8rem; letter-spacing: 0.06em; text-transform: uppercase; color: var(--ink-2); margin: 0 0 10px; }
+.hero h1 { font-size: clamp(2.3rem, 6vw, 3.6rem); font-weight: 800; letter-spacing: -0.025em; }
+.lede { font-size: 1.1rem; color: var(--ink-2); max-width: 34rem; }
+.cta { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 18px; }
+.btn { display: inline-flex; align-items: center; gap: 8px; background: var(--btn); color: var(--btn-ink); border: 1.5px solid var(--btn); border-radius: 10px; padding: 10px 16px; font: 700 0.95rem var(--f-body); text-decoration: none; cursor: pointer; }
+.btn.ghost { background: transparent; color: var(--ink); }
+.btn.small { padding: 6px 12px; font-size: 0.86rem; }
+.btn:hover { filter: brightness(1.12); }
+.stats { display: flex; flex-wrap: wrap; gap: 22px; margin-top: 22px; }
+.stats div { display: grid; }
+.stats b { font-family: var(--f-disp); font-size: 1.9rem; font-weight: 800; line-height: 1; }
+.stats span { font-size: 0.85rem; color: var(--ink-2); }
+.hero-fig { background: var(--card); border: 1px solid var(--rule); border-radius: var(--radius); padding: 10px; }
+.legend { display: flex; flex-wrap: wrap; gap: 8px 14px; margin-top: 10px; font-size: 0.86rem; color: var(--ink-2); }
+.legend .sw { display: inline-flex; align-items: center; gap: 6px; }
+.legend .sw::before { content: ""; width: 18px; height: 4px; border-radius: 2px; background: currentColor; }
+.sw-ink { color: var(--ink); } .sw-v { color: var(--v); } .sw-a { color: var(--a); } .sw-u1 { color: var(--u1); } .sw-u2 { color: var(--u2); }
+.legend .sw span { color: var(--ink-2); }
+@media (max-width: 820px) { .hero .wrap { grid-template-columns: 1fr; } }
+
+/* ---------- Sections ---------- */
+section.block { padding-block: 56px 24px; }
+section.block + section.block { border-top: 1px solid var(--rule); }
+.sec-head { display: grid; gap: 6px; margin-bottom: 18px; }
+.sec-tag { font-family: var(--f-mono); font-size: 0.78rem; letter-spacing: 0.06em; text-transform: uppercase; color: var(--ink-2); }
+.chapter { margin-top: 40px; padding-top: 8px; }
+.chapter > h3:first-child { margin-top: 0; display: flex; align-items: baseline; gap: 12px; font-size: 1.6rem; }
+.chapter > h3:first-child .n { font-family: var(--f-mono); font-size: 0.9rem; font-weight: 700; color: var(--paper); background: var(--ink); border-radius: 6px; padding: 2px 8px; }
+.toc { display: grid; grid-template-columns: repeat(auto-fit, minmax(170px, 1fr)); gap: 10px; margin: 14px 0 0; padding: 0; list-style: none; }
+.toc a { display: grid; gap: 2px; text-decoration: none; background: var(--card); border: 1px solid var(--rule); border-radius: 10px; padding: 10px 12px; height: 100%; }
+.toc a:hover { border-color: var(--ink-3); }
+.toc .n { font-family: var(--f-mono); font-size: 0.75rem; color: var(--ink-2); }
+.toc b { font-family: var(--f-disp); font-size: 1rem; }
+
+/* ---------- Encadrés ---------- */
+.box { border: 1.5px solid var(--rule); border-radius: var(--radius); padding: 14px 16px; margin: 16px 0; background: var(--card); }
+.box > .lbl { display: inline-block; font-family: var(--f-mono); font-size: 0.72rem; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; padding: 2px 8px; border-radius: 5px; margin-bottom: 6px; }
+.box.key { background: var(--note); border-color: var(--note-line); }
+.box.key > .lbl { background: var(--note-line); color: var(--card); }
+.box.trap { background: var(--bad-soft); border-color: var(--bad); }
+.box.trap > .lbl { background: var(--bad); color: var(--card); }
+.box.how { background: var(--good-soft); border-color: var(--good); }
+.box.how > .lbl { background: var(--good); color: var(--card); }
+.box.try { border-style: dashed; border-color: var(--ink-3); }
+.box.try > .lbl { background: var(--ink); color: var(--paper); }
+.box p:first-of-type { margin-top: 0; }
+.box ol, .box ul { margin: 6px 0; padding-left: 1.3rem; }
+
+/* ---------- Formules et tableaux ---------- */
+.eq { overflow-x: auto; overflow-y: hidden; padding: 4px 0; margin: 8px 0; }
+.eq.big { font-size: 1.12rem; }
+.tbl { overflow-x: auto; margin: 14px 0; border: 1px solid var(--rule); border-radius: 10px; background: var(--card); }
+table { border-collapse: collapse; width: 100%; font-size: 0.95rem; }
+th, td { text-align: left; padding: 9px 12px; border-bottom: 1px solid var(--rule); vertical-align: top; }
+th { font-family: var(--f-mono); font-size: 0.74rem; letter-spacing: 0.05em; text-transform: uppercase; color: var(--ink-2); font-weight: 700; background: var(--paper); }
+tr:last-child td { border-bottom: 0; }
+.cv { fill: var(--v); stroke: var(--v); color: var(--v); }
+.ca { fill: var(--a); stroke: var(--a); color: var(--a); }
+.c1 { fill: var(--u1); stroke: var(--u1); color: var(--u1); }
+.c2 { fill: var(--u2); stroke: var(--u2); color: var(--u2); }
+mjx-container { max-width: 100%; }
+mjx-container[display="true"] { margin: 0.5em 0 !important; }
+
+/* ---------- Schémas ---------- */
+figure { margin: 18px 0; }
+figure.panel { background: var(--card); border: 1px solid var(--rule); border-radius: var(--radius); padding: 12px; }
+figcaption { font-size: 0.88rem; color: var(--ink-2); margin-top: 6px; }
+.fig-svg { width: 100%; height: auto; display: block; }
+.fig-svg.mini { max-width: 320px; margin: 0 auto; }
+.fig-svg.icon { max-width: 160px; margin: 0 auto; }
+.fig-svg.half { max-width: 460px; margin: 0 auto; }
+.grid2 { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px; }
+.grid3 { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px; }
+.grid4 { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px; }
+@media (max-width: 760px) { .grid3 { grid-template-columns: 1fr; } .grid4 { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 620px) { .grid2 { grid-template-columns: 1fr; } }
+.grid2 > *, .grid3 > *, .grid4 > * { min-width: 0; }
+.ln { fill: none; stroke-linecap: round; }
+.ln-ink { stroke: var(--ink); } .ln-ink2 { stroke: var(--ink-2); } .ln-ink3 { stroke: var(--ink-3); }
+.ln-v { stroke: var(--v); } .ln-a { stroke: var(--a); } .ln-u1 { stroke: var(--u1); } .ln-u2 { stroke: var(--u2); }
+.mk-ink { fill: var(--ink); } .mk-ink2 { fill: var(--ink-2); } .mk-ink3 { fill: var(--ink-3); }
+.mk-v { fill: var(--v); } .mk-a { fill: var(--a); } .mk-u1 { fill: var(--u1); } .mk-u2 { fill: var(--u2); }
+.tx { font-family: var(--f-body); }
+.tx-ink { fill: var(--ink); } .tx-ink2 { fill: var(--ink-2); } .tx-ink3 { fill: var(--ink-3); }
+.tx-v { fill: var(--v); } .tx-a { fill: var(--a); } .tx-u1 { fill: var(--u1); } .tx-u2 { fill: var(--u2); }
+.dot-ink { fill: var(--ink); } .dot-ink2 { fill: var(--ink-2); } .dot-ink3 { fill: var(--ink-3); }
+.area { fill: var(--area); stroke: none; }
+.cap-tag { display: inline-block; font-family: var(--f-mono); font-size: 0.78rem; font-weight: 700; padding: 1px 7px; border-radius: 5px; margin-right: 6px; }
+.cap-tag.pos { background: var(--good-soft); color: var(--good); }
+.cap-tag.zero { background: var(--grid); color: var(--ink-2); }
+.cap-tag.neg { background: var(--bad-soft); color: var(--bad); }
+
+/* ---------- Ce qui tombe : barres ---------- */
+.bars { display: grid; gap: 6px; margin: 18px 0; }
+.bar-row { display: grid; grid-template-columns: minmax(0, 15rem) minmax(0, 1fr) 3.2rem; gap: 12px; align-items: center; text-decoration: none; padding: 4px 6px; border-radius: 8px; position: relative; }
+.bar-row:hover, .bar-row:focus-visible { background: var(--card); }
+.bar-row .name { font-size: 0.95rem; }
+.bar-row .track { height: 14px; border-radius: 4px; background: var(--grid); }
+.bar-row .fill { display: block; height: 100%; border-radius: 4px; background: var(--ink-2); }
+.bar-row.top .fill { background: var(--ink); }
+.bar-row .val { font-family: var(--f-mono); font-size: 0.85rem; text-align: right; color: var(--ink-2); font-variant-numeric: tabular-nums; }
+.bar-row .tip { position: absolute; left: 6px; top: 100%; z-index: 5; background: var(--ink); color: var(--paper); font-size: 0.82rem; padding: 6px 10px; border-radius: 8px; opacity: 0; pointer-events: none; transform: translateY(-4px); transition: opacity .15s, transform .15s; max-width: 90%; }
+.bar-row:hover .tip, .bar-row:focus-visible .tip { opacity: 1; transform: none; }
+@media (max-width: 620px) { .bar-row { grid-template-columns: minmax(0, 1fr) 3rem; } .bar-row .track { grid-column: 1 / -1; order: 3; } }
+.facts { display: grid; grid-template-columns: repeat(auto-fit, minmax(190px, 1fr)); gap: 10px; margin: 16px 0; }
+.fact { background: var(--card); border: 1px solid var(--rule); border-radius: 10px; padding: 12px 14px; }
+.fact b { display: block; font-family: var(--f-disp); font-size: 1.25rem; }
+.fact span { font-size: 0.88rem; color: var(--ink-2); }
+.steps { counter-reset: s; list-style: none; padding: 0; display: grid; gap: 10px; margin: 14px 0; }
+.steps li { counter-increment: s; display: grid; grid-template-columns: 2rem minmax(0, 1fr); gap: 10px; align-items: start; }
+.steps li::before { content: counter(s); font-family: var(--f-mono); font-weight: 700; background: var(--ink); color: var(--paper); width: 1.7rem; height: 1.7rem; border-radius: 50%; display: grid; place-items: center; font-size: 0.85rem; margin-top: 2px; }
+
+/* ---------- Polaire interactif ---------- */
+.polar { display: grid; grid-template-columns: minmax(0, 1.35fr) minmax(0, 1fr); gap: 16px; align-items: start; }
+@media (max-width: 760px) { .polar { grid-template-columns: 1fr; } }
+.polar-ctl { display: grid; gap: 10px; }
+.polar-ctl label { font-weight: 700; display: flex; justify-content: space-between; }
+.polar-ctl input[type=range] { width: 100%; accent-color: var(--u1); }
+.vals { font-family: var(--f-mono); font-size: 0.86rem; display: grid; gap: 4px; background: var(--paper); border-radius: 10px; padding: 10px 12px; font-variant-numeric: tabular-nums; }
+.vals .r1 { color: var(--u1); font-weight: 700; } .vals .r2 { color: var(--u2); font-weight: 700; }
+
+/* ---------- Petit vérificateur ---------- */
+.check-row { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; margin: 10px 0; }
+.check-row input { width: 5.2rem; font: 1rem var(--f-mono); padding: 6px 8px; border: 1.5px solid var(--rule); border-radius: 8px; background: var(--card); color: var(--ink); }
+.check-row input.ok { border-color: var(--good); background: var(--good-soft); }
+.check-row input.ko { border-color: var(--bad); background: var(--bad-soft); }
+.feedback { font-size: 0.92rem; min-height: 1.4em; }
+.feedback.ok { color: var(--good); font-weight: 700; } .feedback.ko { color: var(--bad); }
+
+/* ---------- QCM ---------- */
+.qcm-bar { display: flex; flex-wrap: wrap; gap: 12px; align-items: center; justify-content: space-between; background: var(--card); border: 1px solid var(--rule); border-radius: var(--radius); padding: 12px 16px; margin: 16px 0; position: sticky; top: calc(env(safe-area-inset-top, 0px) + 60px); z-index: 10; }
+.score { font-family: var(--f-disp); font-size: 1.3rem; font-weight: 800; }
+.score small { font-family: var(--f-body); font-size: 0.85rem; font-weight: 400; color: var(--ink-2); }
+.qlist { display: grid; gap: 14px; }
+.q { background: var(--card); border: 1px solid var(--rule); border-radius: var(--radius); padding: 14px 16px; }
+.q.right { border-color: var(--good); }
+.q.wrong { border-color: var(--bad); }
+.q-head { display: flex; gap: 10px; align-items: center; font-family: var(--f-mono); font-size: 0.76rem; color: var(--ink-2); }
+.q-num { font-weight: 700; background: var(--ink); color: var(--paper); border-radius: 5px; padding: 1px 7px; }
+.q-multi { background: var(--note); color: var(--ink); border: 1px solid var(--note-line); border-radius: 5px; padding: 0 6px; }
+.q-text { font-weight: 700; margin: 8px 0 10px; }
+.opts { display: grid; gap: 8px; }
+.opt { display: flex; gap: 10px; align-items: center; text-align: left; width: 100%; background: var(--paper); color: var(--ink); border: 1.5px solid var(--rule); border-radius: 10px; padding: 8px 12px; font: 0.98rem var(--f-body); cursor: pointer; min-height: 44px; overflow-x: auto; }
+.opt:hover:not(:disabled) { border-color: var(--ink-3); }
+.opt .k { font-family: var(--f-mono); font-weight: 700; font-size: 0.8rem; flex: 0 0 auto; width: 1.6rem; height: 1.6rem; display: grid; place-items: center; border-radius: 6px; background: var(--grid); }
+.opt.sel { border-color: var(--ink); }
+.opt.sel .k { background: var(--ink); color: var(--paper); }
+.opt.is-right { border-color: var(--good); background: var(--good-soft); }
+.opt.is-right .k { background: var(--good); color: var(--card); }
+.opt.is-wrong { border-color: var(--bad); background: var(--bad-soft); }
+.opt.is-wrong .k { background: var(--bad); color: var(--card); }
+.opt:disabled { cursor: default; }
+.q-foot { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; margin-top: 10px; }
+.q-expl { margin-top: 10px; padding: 10px 12px; border-radius: 10px; background: var(--paper); font-size: 0.95rem; }
+.q-expl .verdict { font-weight: 700; }
+.q.right .verdict { color: var(--good); } .q.wrong .verdict { color: var(--bad); }
+
+/* ---------- Exercices ---------- */
+.ex-group { margin-top: 30px; }
+.ex-group > h3 { margin-top: 0; }
+.ex { background: var(--card); border: 1px solid var(--rule); border-radius: var(--radius); padding: 18px; margin: 14px 0; }
+.ex.done { border-color: var(--good); }
+.ex-head { display: flex; flex-wrap: wrap; gap: 8px 14px; align-items: baseline; justify-content: space-between; }
+.chips { display: flex; flex-wrap: wrap; gap: 6px; }
+.chip { font-family: var(--f-mono); font-size: 0.72rem; font-weight: 700; padding: 2px 8px; border-radius: 999px; border: 1px solid var(--rule); color: var(--ink-2); white-space: nowrap; }
+.chip.hot { background: var(--mark); border-color: var(--note-line); color: var(--ink); }
+.enonce { background: var(--paper); border-radius: 10px; padding: 10px 14px; margin: 12px 0; }
+.qs { list-style: none; padding: 0; margin: 0; display: grid; gap: 14px; counter-reset: qq; }
+.qa { counter-increment: qq; border-top: 1px dashed var(--rule); padding-top: 12px; }
+.qa > p:first-child::before { content: "Q" counter(qq) " "; font-family: var(--f-mono); font-weight: 700; font-size: 0.8rem; color: var(--paper); background: var(--ink-2); border-radius: 5px; padding: 1px 6px; margin-right: 6px; }
+.qa > p:first-child { margin-top: 0; font-weight: 700; }
+.qa textarea { width: 100%; min-height: 4.2rem; resize: vertical; font: 0.98rem var(--f-body); color: var(--ink); background-color: var(--paper); background-image: linear-gradient(var(--grid) 1px, transparent 1px), linear-gradient(90deg, var(--grid) 1px, transparent 1px); background-size: 18px 18px; border: 1.5px solid var(--rule); border-radius: 10px; padding: 8px 10px; line-height: 1.5; }
+.qa textarea:focus { border-color: var(--ink-3); outline: none; }
+.qa .row { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; margin-top: 8px; }
+.show { background: transparent; color: var(--ink); border: 1.5px solid var(--ink); border-radius: 9px; padding: 5px 12px; font: 700 0.86rem var(--f-body); cursor: pointer; }
+.show[aria-expanded="true"] { background: var(--ink); color: var(--paper); }
+.corr { margin-top: 10px; border: 1.5px solid var(--good); background: var(--good-soft); border-radius: 10px; padding: 10px 14px; }
+.corr > p:first-child { margin-top: 0; }
+.ex-foot { display: flex; flex-wrap: wrap; gap: 10px 18px; align-items: center; justify-content: space-between; margin-top: 16px; padding-top: 12px; border-top: 1px solid var(--rule); }
+.done-lbl { display: inline-flex; gap: 8px; align-items: center; font-weight: 700; cursor: pointer; }
+.done-lbl input { width: 20px; height: 20px; accent-color: var(--good); }
+.src-link { font-size: 0.88rem; color: var(--ink-2); }
+
+/* ---------- Annales ---------- */
+.annales { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 270px), 1fr)); gap: 14px; margin-top: 18px; }
+.an { background: var(--card); border: 1px solid var(--rule); border-radius: var(--radius); padding: 16px; display: grid; gap: 10px; align-content: start; }
+.an.recent { border: 2px solid var(--ink); }
+.an-top { display: flex; justify-content: space-between; align-items: baseline; gap: 8px; }
+.an-date { font-family: var(--f-disp); font-weight: 800; font-size: 1.3rem; }
+.an-dir { font-family: var(--f-mono); font-size: 0.75rem; color: var(--ink-2); }
+.an ul { margin: 0; padding-left: 1.1rem; font-size: 0.93rem; }
+.an .links2 { display: flex; flex-wrap: wrap; gap: 8px; }
+.an .links2 a, .an .links2 span { font-size: 0.85rem; font-weight: 700; padding: 5px 10px; border-radius: 8px; border: 1.5px solid var(--ink); text-decoration: none; }
+.an .links2 span { border-color: var(--rule); color: var(--ink-3); font-weight: 400; }
+.an .warn { font-size: 0.84rem; color: var(--ink-2); }
+
+/* ---------- Fiche ---------- */
+.fiche { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 280px), 1fr)); gap: 12px; margin-top: 16px; }
+.fc { background: var(--card); border: 1px solid var(--rule); border-radius: var(--radius); padding: 12px 14px; display: grid; gap: 4px; align-content: start; position: relative; }
+.fc h4 { font-size: 0.95rem; }
+.fc .body { overflow-x: auto; }
+.flash .fc { cursor: pointer; }
+.flash .fc:not(.open) .body { filter: blur(7px); opacity: 0.55; user-select: none; }
+.flash .fc:not(.open)::after { content: "Touche pour révéler"; position: absolute; right: 12px; bottom: 10px; font-family: var(--f-mono); font-size: 0.7rem; color: var(--ink-2); background: var(--card); padding: 2px 6px; border-radius: 5px; border: 1px solid var(--rule); }
+.switch { display: inline-flex; gap: 10px; align-items: center; font-weight: 700; cursor: pointer; }
+.switch input { width: 20px; height: 20px; accent-color: var(--ink); }
+
+details.demo { margin: 12px 0; border: 1px solid var(--rule); border-radius: 10px; background: var(--card); }
+details.demo summary { cursor: pointer; padding: 10px 14px; font-weight: 700; }
+details.demo > div { padding: 0 14px 12px; }
+
+footer { border-top: 1px solid var(--rule); margin-top: 40px; padding-block: 28px 48px; font-size: 0.9rem; color: var(--ink-2); }
+footer .wrap { display: grid; gap: 10px; }
+.reset { display: flex; gap: 10px; align-items: center; flex-wrap: wrap; }
+</style>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+  <defs>
+    <marker id="ar-ink" viewBox="0 0 10 10" refX="9" refY="5" markerUnits="userSpaceOnUse" markerWidth="11" markerHeight="11" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" class="mk-ink"/></marker>
+    <marker id="ar-ink2" viewBox="0 0 10 10" refX="9" refY="5" markerUnits="userSpaceOnUse" markerWidth="10" markerHeight="10" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" class="mk-ink2"/></marker>
+    <marker id="ar-ink3" viewBox="0 0 10 10" refX="9" refY="5" markerUnits="userSpaceOnUse" markerWidth="9" markerHeight="9" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" class="mk-ink3"/></marker>
+    <marker id="ar-v" viewBox="0 0 10 10" refX="9" refY="5" markerUnits="userSpaceOnUse" markerWidth="12" markerHeight="12" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" class="mk-v"/></marker>
+    <marker id="ar-a" viewBox="0 0 10 10" refX="9" refY="5" markerUnits="userSpaceOnUse" markerWidth="12" markerHeight="12" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" class="mk-a"/></marker>
+    <marker id="ar-u1" viewBox="0 0 10 10" refX="9" refY="5" markerUnits="userSpaceOnUse" markerWidth="12" markerHeight="12" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" class="mk-u1"/></marker>
+    <marker id="ar-u2" viewBox="0 0 10 10" refX="9" refY="5" markerUnits="userSpaceOnUse" markerWidth="12" markerHeight="12" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" class="mk-u2"/></marker>
+  </defs>
+</svg>
+
+<header class="nav">
+  <div class="wrap">
+    <a class="brand" href="#top">Cinématique<span>S1</span></a>
+    <nav class="links" aria-label="Sections">
+      <a href="#tombe">Ce qui tombe</a>
+      <a href="#cours">Cours</a>
+      <a href="#qcm">QCM</a>
+      <a href="#exos">Exercices</a>
+      <a href="#annales">Annales</a>
+      <a href="#fiche">Fiche</a>
+    </nav>
+    <div class="prog" title="Questions de QCM justes + exercices réussis"><span id="progTxt">0 / @@NB_TOTAL@@</span><div class="bar"><i id="progBar"></i></div></div>
+  </div>
+</header>
+
+<section class="hero" id="top">
+  <div class="wrap">
+    <div>
+      <p class="kicker">EPITA · S1 · Contrôle 1 de physique</p>
+      <h1>Toute la cinématique du contrôle, <mark>en une page</mark>.</h1>
+      <p class="lede">Le cours expliqué simplement, des schémas en couleur, un QCM corrigé tout seul et @@NB_EXOS@@ exercices des annales @@ANNEES@@. Pour chaque question, tu écris ta réponse dans la case, puis tu ouvres la correction.</p>
+      <div class="stats">
+        <div><b>@@NB_SUJETS@@</b><span>sujets analysés</span></div>
+        <div><b>@@NB_QCM@@</b><span>questions de QCM</span></div>
+        <div><b>@@NB_EXOS@@</b><span>exercices corrigés</span></div>
+      </div>
+      <div class="cta">
+        <a class="btn" href="#cours">Commencer le cours</a>
+        <a class="btn ghost" href="#qcm">Me tester tout de suite</a>
+      </div>
+    </div>
+    <div class="hero-fig">
+      @@TRAJ@@
+      <div class="legend" aria-label="Code couleur des schémas">
+        <span class="sw sw-ink"><span>position</span></span>
+        <span class="sw sw-v"><span>vitesse</span></span>
+        <span class="sw sw-a"><span>accélération</span></span>
+        <span class="sw sw-u1"><span>u<sub>ρ</sub>, u<sub>T</sub></span></span>
+        <span class="sw sw-u2"><span>u<sub>θ</sub>, u<sub>N</sub></span></span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<main>
+<!-- ====================== CE QUI TOMBE ====================== -->
+<section class="block" id="tombe">
+  <div class="wrap">
+    <div class="sec-head read">
+      <span class="sec-tag">Avant de réviser</span>
+      <h2>Ce qui tombe au contrôle</h2>
+      <p>Le contrôle 1 porte toujours sur les outils vectoriels et la cinématique du point. Les calculs de vitesse et d’accélération et les coordonnées polaires sont dans <mark>les 7 sujets</mark>. Clique sur un thème pour aller à la partie du cours.</p>
+    </div>
+    <div class="bars" role="list" aria-label="Nombre de sujets où chaque thème apparaît, sur 7">
+@@BARS@@
+    </div>
+    <div class="facts">
+      <div class="fact"><b>1 h</b><span>Durée indiquée en 2022. Sans calculatrice ni documents.</span></div>
+      <div class="fact"><b>QCM de 2,5 à 6 pts</b><span>0,5 point par question, pas de points négatifs.</span></div>
+      <div class="fact"><b>2 ou 3 exercices</b><span>De 4 à 9 points chacun, réponses sur le sujet.</span></div>
+      <div class="fact"><b>Nouveau depuis 2021</b><span>QCM à réponses multiples et exercice de tir de projectile.</span></div>
+    </div>
+    <div class="box how read">
+      <span class="lbl">Plan de révision</span>
+      <ol class="steps">
+        <li><span>Lis le cours dans l’ordre, en priorité <a href="#ch-polaires">les coordonnées polaires</a> : elles sont dans tous les sujets.</span></li>
+        <li><span>Fais <a href="#qcm">le QCM</a> jusqu’à avoir tout juste. Les mêmes questions reviennent chaque année.</span></li>
+        <li><span>Fais <a href="#exos">les exercices</a> sans regarder la correction, en commençant par ceux de 2021 et 2022.</span></li>
+        <li><span>La veille, relis <a href="#fiche">la fiche</a> en mode cartes mémoire.</span></li>
+      </ol>
+    </div>
+  </div>
+</section>
+
+<!-- ====================== COURS ====================== -->
+<section class="block" id="cours">
+  <div class="wrap">
+    <div class="sec-head read">
+      <span class="sec-tag">Le cours</span>
+      <h2>Cinq chapitres, du plus simple au plus utile</h2>
+      <p>Chaque chapitre s’appuie sur le précédent. Les encadrés jaunes sont à savoir par cœur, les rouges sont les pièges des annales, les verts sont des méthodes à appliquer telles quelles.</p>
+    </div>
+    <ol class="toc">
+      <li><a href="#ch-outils"><span class="n">Chapitre 1</span><b>Outils mathématiques</b></a></li>
+      <li><a href="#ch-bases"><span class="n">Chapitre 2</span><b>Bases de la cinématique</b></a></li>
+      <li><a href="#ch-cart"><span class="n">Chapitre 3</span><b>Cartésiennes et trajectoire</b></a></li>
+      <li><a href="#ch-polaires"><span class="n">Chapitre 4</span><b>Polaires et cylindriques</b></a></li>
+      <li><a href="#ch-frenet"><span class="n">Chapitre 5</span><b>Base de Frenet</b></a></li>
+    </ol>
+
+    <!-- ---------- Chapitre 1 ---------- -->
+    <div class="chapter" id="ch-outils">
+      <h3><span class="n">1</span>Outils mathématiques</h3>
+      <div class="read">
+        <p>Trois gestes reviennent partout : projeter un vecteur, calculer une norme et dériver. Ils valent à eux seuls 2 à 3 points de QCM.</p>
+        <h4 style="margin-top:1.4rem">Projeter un vecteur sur les axes</h4>
+        <p>Une force <b>F</b> de norme F fait un angle α avec un axe. On la découpe en deux morceaux, un par axe. Le côté <mark>collé à l’angle reçoit le cos</mark>, l’autre côté reçoit le sin.</p>
+      </div>
+      <div class="grid2">
+        <figure class="panel">@@PROJ_X@@<figcaption>α part de l’axe Ox : \(\vec F = (F\cos\alpha\ ;\ F\sin\alpha)\)</figcaption></figure>
+        <figure class="panel">@@PROJ_Y@@<figcaption>α part de l’axe Oy : \(\vec F = (F\sin\alpha\ ;\ F\cos\alpha)\)</figcaption></figure>
+      </div>
+      <div class="box trap read"><span class="lbl">Piège</span><p>Regarde toujours <b>depuis quel axe</b> l’angle est dessiné, puis le <b>sens de la flèche</b> : vers la gauche, la composante x est négative ; vers le bas, la composante y est négative.</p></div>
+
+      <div class="read">
+        <h4 style="margin-top:1.6rem">Norme et résultante</h4>
+        <p>La norme d’un vecteur est sa longueur, calculée avec Pythagore :</p>
+        <div class="eq big">\[\|\vec V\| = \sqrt{V_x^2 + V_y^2 + V_z^2}\]</div>
+        <div class="tbl"><table>
+          <thead><tr><th>Deux forces F<sub>1</sub> et F<sub>2</sub>…</th><th>Résultante R</th></tr></thead>
+          <tbody>
+            <tr><td>même direction, même sens</td><td>\(R = F_1 + F_2\)</td></tr>
+            <tr><td>même direction, sens opposés</td><td>\(R = |F_1 - F_2|\)</td></tr>
+            <tr><td>perpendiculaires</td><td>\(R = \sqrt{F_1^2 + F_2^2}\)</td></tr>
+            <tr><td>angle α quelconque</td><td>\(R = \sqrt{F_1^2 + F_2^2 + 2F_1F_2\cos\alpha}\)</td></tr>
+          </tbody>
+        </table></div>
+
+        <h4 style="margin-top:1.6rem">Produit scalaire : le résultat est un nombre</h4>
+        <div class="eq big">\[\vec U\cdot\vec V = U_xV_x + U_yV_y + U_zV_z = \|\vec U\|\,\|\vec V\|\cos\alpha\]</div>
+        <p>Pour le QCM, seul le <b>signe</b> compte. Il dépend de l’angle α entre les deux vecteurs :</p>
+      </div>
+      <div class="grid3">
+        <figure class="panel">@@SC_AIGU@@<figcaption><span class="cap-tag pos">&gt; 0</span>angle aigu</figcaption></figure>
+        <figure class="panel">@@SC_DROIT@@<figcaption><span class="cap-tag zero">= 0</span>perpendiculaires (et réciproquement)</figcaption></figure>
+        <figure class="panel">@@SC_OPP@@<figcaption><span class="cap-tag neg">&lt; 0</span>sens opposés : \(\vec U\cdot\vec V = -UV\)</figcaption></figure>
+      </div>
+
+      <div class="read">
+        <h4 style="margin-top:1.6rem">Produit vectoriel : le résultat est un vecteur</h4>
+        <p>\(\vec W = \vec U\wedge\vec V\) est perpendiculaire à \(\vec U\) et à \(\vec V\) (règle de la main droite). Sa norme est l’aire du parallélogramme formé par les deux vecteurs.</p>
+      </div>
+      <figure class="panel" style="max-width:34rem">@@CROSS@@</figure>
+      <div class="read">
+        <div class="box key"><span class="lbl">À retenir</span>
+          <div class="eq">\[\|\vec U\wedge\vec V\| = UV|\sin\alpha| \qquad \vec U\wedge\vec V = \begin{pmatrix} U_yV_z - U_zV_y \\ U_zV_x - U_xV_z \\ U_xV_y - U_yV_x \end{pmatrix}\]</div>
+          <p>Moyen mnémotechnique : on tourne dans l’ordre x → y → z → x. Pour la ligne x, on utilise y et z ; pour la ligne y, on utilise z et x ; pour la ligne z, on utilise x et y.</p>
+          <p>Aussi : \(\vec u_x\wedge\vec u_y = \vec u_z\), et le produit vectoriel de deux vecteurs colinéaires est nul.</p>
+        </div>
+        <div class="box try" id="cross-check"><span class="lbl">À toi · tombé 2 fois en 2018</span>
+          <p>Calcule \(\vec W = \vec U\wedge\vec V\) avec \(\vec U = (1\ ;\ 3\ ;\ 2)\) et \(\vec V = (-4\ ;\ 1\ ;\ 1)\).</p>
+          <div class="check-row">
+            <label for="cx1">W<sub>x</sub></label><input id="cx1" inputmode="numeric" autocomplete="off">
+            <label for="cx2">W<sub>y</sub></label><input id="cx2" inputmode="numeric" autocomplete="off">
+            <label for="cx3">W<sub>z</sub></label><input id="cx3" inputmode="numeric" autocomplete="off">
+            <button class="btn small" id="cxBtn" type="button">Vérifier</button>
+          </div>
+          <div class="feedback" id="cxFb" aria-live="polite"></div>
+        </div>
+
+        <h4 style="margin-top:1.6rem">Dériver sans se tromper</h4>
+        <p>Un point au-dessus d’une lettre veut dire « dérivée par rapport au temps » : \(\dot x = \frac{dx}{dt}\) et \(\ddot x = \frac{d^2x}{dt^2}\). La règle qui piège le plus est la <b>dérivée d’une fonction composée</b> : on dérive l’extérieur, puis on multiplie par la dérivée de l’intérieur.</p>
+        <div class="tbl"><table>
+          <thead><tr><th>Fonction</th><th>Dérivée par rapport à t</th></tr></thead>
+          <tbody>
+            <tr><td>\(\cos(\omega t)\)</td><td>\(-\omega\sin(\omega t)\)</td></tr>
+            <tr><td>\(\sin(\omega t)\)</td><td>\(\omega\cos(\omega t)\)</td></tr>
+            <tr><td>\(\cos(\theta(t))\)</td><td>\(-\dot\theta\sin\theta\)</td></tr>
+            <tr><td>\(\sin(\theta(t))\)</td><td>\(\dot\theta\cos\theta\)</td></tr>
+            <tr><td>\(A\cos^2(\theta(t))\)</td><td>\(-2A\dot\theta\cos\theta\sin\theta\)</td></tr>
+            <tr><td>\(e^{\omega t}\)</td><td>\(\omega e^{\omega t}\)</td></tr>
+            <tr><td>\(\ln t\) et \(1/t\)</td><td>\(1/t\) et \(-1/t^2\)</td></tr>
+          </tbody>
+        </table></div>
+        <div class="box key"><span class="lbl">Trigo à savoir</span>
+          <ul>
+            <li>\(\cos^2x + \sin^2x = 1\) : l’outil n°1 pour simplifier une norme.</li>
+            <li>\(\cos 2x = 1 - 2\sin^2x = 2\cos^2x - 1\) et \(\sin 2x = 2\sin x\cos x\).</li>
+            <li>\(1 - \cos x = 2\sin^2(x/2)\).</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- ---------- Chapitre 2 ---------- -->
+    <div class="chapter" id="ch-bases">
+      <h3><span class="n">2</span>Bases de la cinématique</h3>
+      <div class="read">
+        <p>La cinématique décrit un mouvement sans chercher ce qui le provoque. Tout part du vecteur position : <mark>on le dérive une fois pour la vitesse, deux fois pour l’accélération</mark>.</p>
+        <ul>
+          <li><b>Point matériel M</b> : l’objet étudié, réduit à un point.</li>
+          <li><b>Vecteur position</b> \(\OM(t)\) : la flèche de l’origine O au point M.</li>
+          <li><b>Équations horaires</b> : les coordonnées en fonction du temps, comme x(t) et y(t).</li>
+          <li><b>Trajectoire</b> : la courbe dessinée par M. Son équation ne contient plus t, par exemple y = f(x).</li>
+        </ul>
+      </div>
+      <figure class="panel">@@TRAJ@@<figcaption>La vitesse est toujours tangente à la trajectoire. L’accélération pointe vers l’intérieur du virage.</figcaption></figure>
+      <div class="read">
+        <div class="box key"><span class="lbl">À retenir</span>
+          <div class="eq big">\[\V(t) = \frac{d\OM}{dt}\ \ \text{en m·s}^{-1} \qquad \A(t) = \frac{d\V}{dt} = \frac{d^2\OM}{dt^2}\ \ \text{en m·s}^{-2}\]</div>
+        </div>
+        <div class="box trap"><span class="lbl">Piège</span><p>L’accélération est la dérivée <b>seconde</b> \(\frac{d^2\OM}{dt^2}\), pas le carré de la dérivée \(\left(\frac{d\OM}{dt}\right)^2\).</p></div>
+        <h4 style="margin-top:1.6rem">Qualifier un mouvement</h4>
+        <ul>
+          <li><b>Rectiligne</b> : trajectoire droite. <b>Circulaire</b> : trajectoire en cercle.</li>
+          <li><b>Uniforme</b> : la <mark>norme de la vitesse est constante</mark>. La direction, elle, peut changer.</li>
+          <li><b>Accéléré</b> : la vitesse augmente. <b>Décéléré</b> : elle diminue. Le test le plus sûr est le signe de \(\V\cdot\A\).</li>
+        </ul>
+      </div>
+      <div class="grid3">
+        <figure class="panel">@@SP_ACC@@<figcaption><span class="cap-tag pos">v·a &gt; 0</span>même sens : ça accélère</figcaption></figure>
+        <figure class="panel">@@SP_DEC@@<figcaption><span class="cap-tag neg">v·a &lt; 0</span>sens opposés : ça freine</figcaption></figure>
+        <figure class="panel">@@SP_UNI@@<figcaption><span class="cap-tag zero">v·a = 0</span>a ⟂ v : la norme de v ne change pas</figcaption></figure>
+      </div>
+      <div class="read">
+        <div class="box key"><span class="lbl">Trois phrases qui tombent en QCM</span>
+          <ol>
+            <li>Rectiligne uniforme : l’accélération est <b>nulle</b>.</li>
+            <li>Circulaire uniforme : l’accélération n’est <b>pas nulle</b>, elle pointe vers le centre.</li>
+            <li>Un mouvement peut être uniforme sur une seule composante (le projectile avance à vitesse constante selon x, pas selon y).</li>
+          </ol>
+        </div>
+        <div class="box trap"><span class="lbl">Exemple piège · 2021</span>
+          <p>\(x(t) = 10 - 2t^2\). On dérive : \(v = -4t\), puis \(a = -4\ \text{m·s}^{-2}\). Pour t &gt; 0, \(v\cdot a = 16t &gt; 0\) : le mouvement est <b>accéléré</b>. La vitesse grandit en valeur absolue, même si elle est négative. Et la norme de a vaut 4, pas 2.</p>
+        </div>
+        <h4 style="margin-top:1.6rem">Vérifier avec les unités</h4>
+        <p>Chaque terme d’une somme a la même unité. Exemple de 2017 : dans \(\A = \alpha\,\uT + \beta t^2\,\uN\), α est une accélération donc α est en m·s⁻², et βt² aussi donc β est en m·s⁻⁴.</p>
+      </div>
+    </div>
+
+    <!-- ---------- Chapitre 3 ---------- -->
+    <div class="chapter" id="ch-cart">
+      <h3><span class="n">3</span>Coordonnées cartésiennes et trajectoire</h3>
+      <div class="read">
+        <p>En cartésiennes, les vecteurs \(\vec u_x, \vec u_y, \vec u_z\) sont <b>fixes</b>. On dérive donc chaque coordonnée, sans toucher aux vecteurs.</p>
+        <div class="eq big">\[\OM = x\,\vec u_x + y\,\vec u_y + z\,\vec u_z \qquad \V = \dot x\,\vec u_x + \dot y\,\vec u_y + \dot z\,\vec u_z \qquad \A = \ddot x\,\vec u_x + \ddot y\,\vec u_y + \ddot z\,\vec u_z\]</div>
+        <div class="box how"><span class="lbl">Méthode en 3 étapes</span>
+          <ol>
+            <li>Dériver chaque coordonnée : une fois pour v, deux fois pour a.</li>
+            <li>Calculer la norme : racine de la somme des carrés.</li>
+            <li>Simplifier avec cos² + sin² = 1. Si la norme ne dépend plus de t, le mouvement est uniforme.</li>
+          </ol>
+        </div>
+        <h4 style="margin-top:1.6rem">Trouver l’équation de la trajectoire</h4>
+        <p>Le but est d’<mark>éliminer t</mark> entre x(t) et y(t). Trois astuces couvrent tous les sujets :</p>
+        <ol>
+          <li><b>t apparaît seul</b> dans une équation (x = v₀cos α · t) : on isole t et on remplace dans y(t). On obtient une parabole.</li>
+          <li><b>Un cos et un sin du même angle</b> : on isole cos(ωt) et sin(ωt), on élève au carré et on additionne. On obtient un cercle ou une ellipse.</li>
+          <li><b>Un sin² et un cos(2ωt)</b> : on utilise cos(2ωt) = 1 − 2sin²(ωt). On obtient une droite.</li>
+        </ol>
+      </div>
+      <div class="grid4">
+        <figure class="panel">@@SH_CERCLE@@<figcaption><b>Cercle</b> de centre O, rayon R<br>\(x^2 + y^2 = R^2\)</figcaption></figure>
+        <figure class="panel">@@SH_ELLIPSE@@<figcaption><b>Ellipse</b>, demi-axes A et B<br>\(\frac{x^2}{A^2} + \frac{y^2}{B^2} = 1\)</figcaption></figure>
+        <figure class="panel">@@SH_DROITE@@<figcaption><b>Droite</b><br>\(y = ax + b\)</figcaption></figure>
+        <figure class="panel">@@SH_PARAB@@<figcaption><b>Parabole</b><br>\(y = ax^2 + bx + c\)</figcaption></figure>
+      </div>
+      <div class="read">
+        <p class="muted small">Un cercle de centre (x₀ ; y₀) s’écrit \((x - x_0)^2 + (y - y_0)^2 = R^2\). Entraîne-toi avec <a href="#ex-cercle">le cercle décalé</a>, <a href="#ex-ellipse">l’ellipse</a>, <a href="#ex-droite">la droite cachée</a> et <a href="#ex-projectile">le projectile</a>.</p>
+      </div>
+      <figure class="panel">@@PROJECTILE@@<figcaption>Tir d’un projectile (sujets 2021 et 2022). La vitesse horizontale ne change pas, la vitesse verticale s’annule au sommet S, l’accélération vaut −g partout.</figcaption></figure>
+    </div>
+
+    <!-- ---------- Chapitre 4 ---------- -->
+    <div class="chapter" id="ch-polaires">
+      <h3><span class="n">4</span>Coordonnées polaires et cylindriques</h3>
+      <div class="read">
+        <p>C’est le cœur du contrôle : la vitesse en polaires est demandée dans tous les sujets. L’idée clé est que la base polaire <mark>tourne avec le point M</mark>, donc ses vecteurs ont une dérivée non nulle.</p>
+        <p>On repère M par deux nombres : <b>ρ</b> (rho), la distance OM, toujours positive, et <b>θ</b> (thêta), l’angle entre l’axe Ox et OM. Fais varier θ pour voir la base bouger.</p>
+      </div>
+      <div class="panel polar" style="background:var(--card);border:1px solid var(--rule);border-radius:var(--radius);padding:12px">
+        <svg id="polarSvg" viewBox="0 0 520 400" class="fig-svg" role="img" aria-label="Base polaire au point M, qui tourne avec l'angle thêta"></svg>
+        <div class="polar-ctl">
+          <label for="theta"><span>Angle θ</span><span class="mono" id="thetaVal">35°</span></label>
+          <input type="range" id="theta" min="0" max="359" value="35" step="1">
+          <button class="btn small" id="spin" type="button" aria-pressed="false">Faire tourner M</button>
+          <div class="vals" aria-live="off">
+            <span>cos θ = <span id="vCos">0,82</span> · sin θ = <span id="vSin">0,57</span></span>
+            <span class="r1">u<sub>ρ</sub> = (cos θ ; sin θ) = <span id="vUr">(0,82 ; 0,57)</span></span>
+            <span class="r2">u<sub>θ</sub> = (−sin θ ; cos θ) = <span id="vUt">(−0,57 ; 0,82)</span></span>
+            <span>u<sub>ρ</sub> · u<sub>θ</sub> = 0 : toujours perpendiculaires</span>
+          </div>
+          <p class="small muted" style="margin:0">u<sub>ρ</sub> pointe de O vers M. u<sub>θ</sub> est u<sub>ρ</sub> tourné de +90°, dans le sens où θ augmente.</p>
+        </div>
+      </div>
+      <div class="read">
+        <div class="box key"><span class="lbl">À retenir</span>
+          <p>Passage polaire ↔ cartésien et base polaire :</p>
+          <div class="eq">\[x = \rho\cos\theta \quad y = \rho\sin\theta \quad \rho = \sqrt{x^2+y^2}\]</div>
+          <div class="eq">\[\ur = \cos\theta\,\vec u_x + \sin\theta\,\vec u_y \qquad \ut = -\sin\theta\,\vec u_x + \cos\theta\,\vec u_y\]</div>
+          <p>Dérivées de la base (par rapport à θ, puis au temps) :</p>
+          <div class="eq">\[\frac{d\ur}{d\theta} = \ut \quad \frac{d\ut}{d\theta} = -\ur \qquad\Longrightarrow\qquad \frac{d\ur}{dt} = \dot\theta\,\ut \quad \frac{d\ut}{dt} = -\dot\theta\,\ur\]</div>
+          <p>Moyen mnémotechnique : dériver un vecteur de la base polaire, c’est le tourner de +90° et multiplier par \(\dot\theta\).</p>
+        </div>
+        <h4 style="margin-top:1.6rem">Position, vitesse, accélération</h4>
+        <div class="box trap"><span class="lbl">Piège n°1</span><p>La position s’écrit avec <b>un seul terme</b> : \(\OM = \rho\,\ur\). La réponse « \(\rho\,\ur + \theta\,\ut\) » est fausse : θ est un angle, pas une longueur.</p></div>
+        <div class="box key"><span class="lbl">À retenir</span>
+          <div class="eq big">\[\OM = \rho\,\ur\]</div>
+          <div class="eq big">\[\V = \dot\rho\,\ur + \rho\dot\theta\,\ut\]</div>
+          <div class="eq big">\[\A = (\ddot\rho - \rho\dot\theta^2)\,\ur + (2\dot\rho\dot\theta + \rho\ddot\theta)\,\ut\]</div>
+        </div>
+        <details class="demo"><summary>Voir la démonstration de la vitesse (question de cours 2021)</summary><div>
+          <p>On dérive un produit (ρ fois \(\ur\)) :</p>
+          <div class="eq">\[\V = \frac{d(\rho\,\ur)}{dt} = \dot\rho\,\ur + \rho\,\frac{d\ur}{dt}\]</div>
+          <p>Or \(\frac{d\ur}{dt} = \frac{d\ur}{d\theta}\cdot\frac{d\theta}{dt} = \dot\theta\,\ut\). Donc \(\V = \dot\rho\,\ur + \rho\dot\theta\,\ut\). On dérive encore une fois de la même façon pour obtenir \(\A\).</p>
+        </div></details>
+
+        <h4 style="margin-top:1.6rem" id="circulaire">Le cas du mouvement circulaire</h4>
+        <p>Sur un cercle de rayon R, ρ = R ne change pas, donc \(\dot\rho = 0\) et \(\ddot\rho = 0\). Les formules se simplifient :</p>
+        <div class="eq big">\[\V = R\dot\theta\,\ut \qquad \A = -R\dot\theta^2\,\ur + R\ddot\theta\,\ut\]</div>
+      </div>
+      <div class="grid2">
+        <figure class="panel">@@CIRC_U@@<figcaption><b>Uniforme</b> (\(\dot\theta = \omega\) constante, \(\ddot\theta = 0\)) : \(\A = -R\omega^2\,\ur\), vers le centre, de norme \(R\omega^2 = v^2/R\).</figcaption></figure>
+        <figure class="panel">@@CIRC_A@@<figcaption><b>Accéléré</b> : \(\A = (-R\dot\theta^2\ ;\ R\ddot\theta)\). Décéléré : même formule, avec \(\ddot\theta\) de signe opposé.</figcaption></figure>
+      </div>
+      <div class="read">
+        <div class="box trap"><span class="lbl">Piège</span><p>La composante sur \(\ur\) est <b>toujours négative</b> (−Rθ̇²) : l’accélération pointe vers l’intérieur. « Circulaire accéléré » ou « décéléré » donnent la même réponse au QCM : \((-R\dot\theta^2\ ;\ R\ddot\theta)\). « Circulaire uniforme » donne \((-R\dot\theta^2\ ;\ 0)\).</p></div>
+        <h4 style="margin-top:1.6rem" id="cylindriques">Cylindriques = polaires + une hauteur z</h4>
+        <p>On ajoute un axe vertical Oz, de vecteur \(\vec u_z\) <b>fixe</b>. Il suffit d’ajouter une ligne en z aux formules polaires.</p>
+      </div>
+      <div class="grid2">
+        <figure class="panel">@@HELIX@@<figcaption>Une hélice : x = R cos(ωt), y = R sin(ωt) donnent ρ = R et θ = ωt.</figcaption></figure>
+        <div class="box key" style="margin:18px 0"><span class="lbl">À retenir</span>
+          <div class="eq">\[\OM = \rho\,\ur + z\,\vec u_z\]</div>
+          <div class="eq">\[\V = \dot\rho\,\ur + \rho\dot\theta\,\ut + \dot z\,\vec u_z\]</div>
+          <div class="eq">\[\A = (\ddot\rho - \rho\dot\theta^2)\,\ur + (2\dot\rho\dot\theta + \rho\ddot\theta)\,\ut + \ddot z\,\vec u_z\]</div>
+          <p class="small">Une norme ne dépend pas de la base : les sujets demandent souvent de « retrouver » en cylindriques la norme calculée en cartésiennes. C’est un bon moyen de vérifier ton calcul.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- ---------- Chapitre 5 ---------- -->
+    <div class="chapter" id="ch-frenet">
+      <h3><span class="n">5</span>La base de Frenet</h3>
+      <div class="read">
+        <p>La base de Frenet suit la trajectoire. Elle coupe l’accélération en deux morceaux : <span style="color:var(--u1);font-weight:700">celui qui change la vitesse</span> et <span style="color:var(--u2);font-weight:700">celui qui fait tourner</span>.</p>
+        <ul>
+          <li>\(\uT\) (tangent) : tangent à la trajectoire, dans le sens du mouvement.</li>
+          <li>\(\uN\) (normal) : perpendiculaire, tourné vers l’intérieur du virage.</li>
+          <li><b>Rayon de courbure R<sub>c</sub></b> : le rayon du cercle qui épouse la trajectoire en M. Pour un cercle, R<sub>c</sub> = R.</li>
+        </ul>
+      </div>
+      <div class="grid2">
+        <figure class="panel">@@FRENET@@<figcaption>Le cercle en pointillés épouse la courbe en M : son rayon est R<sub>c</sub>.</figcaption></figure>
+        <figure class="panel">@@FRENET_A@@<figcaption>L’accélération se décompose en a<sub>T</sub> (le long de la trajectoire) et a<sub>N</sub> (vers le centre de courbure).</figcaption></figure>
+      </div>
+      <div class="read">
+        <div class="box key"><span class="lbl">À retenir</span>
+          <div class="eq big">\[v = \frac{ds}{dt} \qquad \V = v\,\uT \qquad \A = \frac{dv}{dt}\,\uT + \frac{v^2}{R_c}\,\uN\]</div>
+          <p>s(t) est l’<b>abscisse curviligne</b> : la distance parcourue le long de la trajectoire, comme un compteur kilométrique. \(s(t) = \int_0^t v\,dt + s(0)\). Sur un cercle, s = Rθ et ds = R dθ.</p>
+        </div>
+        <div class="tbl"><table>
+          <thead><tr><th>Composante</th><th>Formule</th><th>Rôle</th><th>Si elle est nulle</th></tr></thead>
+          <tbody>
+            <tr><td style="color:var(--u1);font-weight:700">a<sub>T</sub> tangentielle</td><td>\(dv/dt\)</td><td>change la valeur de la vitesse</td><td>mouvement uniforme</td></tr>
+            <tr><td style="color:var(--u2);font-weight:700">a<sub>N</sub> normale</td><td>\(v^2/R_c\)</td><td>fait tourner la trajectoire</td><td>mouvement rectiligne</td></tr>
+          </tbody>
+        </table></div>
+        <div class="box trap"><span class="lbl">Pièges du QCM</span><p>La bonne réponse est toujours a<sub>T</sub> = dv/dt et a<sub>N</sub> = v²/R. Les fausses mettent dθ/dt dans a<sub>T</sub>, ou v²/R². Pour s(t), on intègre v, pas a<sub>T</sub> (intégrer a<sub>T</sub> donne v).</p></div>
+        <div class="box how"><span class="lbl">Méthode · trouver le rayon de courbure (2017, 2018, 2020)</span>
+          <ol>
+            <li>Calcule v et a (les normes) dans la base la plus simple.</li>
+            <li>Calcule \(a_T = dv/dt\).</li>
+            <li>Déduis \(a_N = \sqrt{a^2 - a_T^2}\).</li>
+            <li>Conclus : \(R_c = v^2/a_N\).</li>
+          </ol>
+          <p>Cas fréquent : si v est constante, a<sub>T</sub> = 0, donc a<sub>N</sub> = a et R<sub>c</sub> = v²/a.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ====================== QCM ====================== -->
+<section class="block" id="qcm">
+  <div class="wrap">
+    <div class="sec-head read">
+      <span class="sec-tag">S’entraîner</span>
+      <h2>QCM des annales</h2>
+      <p>@@NB_QCM@@ questions reprises des sujets @@ANNEES@@. Clique sur une réponse : la correction s’affiche tout de suite. Pour les questions marquées « plusieurs réponses », coche tout ce qui est juste puis valide.</p>
+    </div>
+    <div class="qcm-bar">
+      <div class="score"><span id="qScore">0</span> / @@NB_QCM@@ <small>bonnes réponses</small></div>
+      <button class="btn ghost small" id="qReset" type="button">Recommencer le QCM</button>
+    </div>
+    <div class="qlist read" id="qlist">
+@@QCM@@
+    </div>
+  </div>
+</section>
+
+<!-- ====================== EXERCICES ====================== -->
+<section class="block" id="exos">
+  <div class="wrap">
+    <div class="sec-head read">
+      <span class="sec-tag">S’entraîner</span>
+      <h2>@@NB_EXOS@@ exercices des annales, avec des cases à remplir</h2>
+      <p>Écris ta réponse dans la case quadrillée, puis ouvre la correction. Tes réponses restent enregistrées dans ton navigateur. Coche « J’ai réussi » quand tu sais refaire l’exercice seul : ta progression monte en haut de la page.</p>
+    </div>
+@@EXOS@@
+  </div>
+</section>
+
+<!-- ====================== ANNALES ====================== -->
+<section class="block" id="annales">
+  <div class="wrap">
+    <div class="sec-head read">
+      <span class="sec-tag">Les sujets originaux</span>
+      <h2>Annales @@ANNEES@@</h2>
+      <p>Les @@NB_SUJETS@@ contrôles disponibles sur Epidocs, du plus récent au plus ancien. Les deux premiers ont le format actuel : <mark>commence par eux</mark>. Le nom du dossier est l’année de la promo, pas celle de l’examen.</p>
+    </div>
+    <div class="annales">
+@@ANNALES@@
+    </div>
+    <p class="small muted read" style="margin-top:16px">Pour la suite du semestre, le dossier <a href="https://github.com/Epidocs/past-exams/tree/master/S1/Finals/Phys" target="_blank" rel="noopener">S1/Finals/Phys</a> contient 7 partiels sur la statique, les lois de Newton, le travail et l’énergie.</p>
+  </div>
+</section>
+
+<!-- ====================== FICHE ====================== -->
+<section class="block" id="fiche">
+  <div class="wrap">
+    <div class="sec-head read">
+      <span class="sec-tag">La veille du contrôle</span>
+      <h2>Fiche à savoir par cœur</h2>
+      <p>Sans calculatrice ni documents, ces formules doivent sortir sans réfléchir. Active le mode cartes mémoire : chaque formule est cachée, essaie de la réciter, puis touche la carte pour vérifier.</p>
+      <label class="switch"><input type="checkbox" id="flashToggle"> Mode cartes mémoire</label>
+    </div>
+    <div class="fiche" id="ficheGrid">
+@@FICHE@@
+    </div>
+  </div>
+</section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <p><b>Sources.</b> Sujets et corrigés du dépôt <a href="https://github.com/Epidocs/past-exams/tree/master/S1/Midterms/Phys" target="_blank" rel="noopener">Epidocs/past-exams, dossier S1/Midterms/Phys</a> (consulté le 13 octobre 2026). Epidocs n’est pas affilié à EPITA. En cas de doute, ton cours et ton professeur ont le dernier mot.</p>
+    <p>Deux corrigés scannés contiennent une erreur, signalée dans les corrections : la définition de « mouvement uniforme » (2021) et la vitesse de l’exercice de la droite (2020).</p>
+    <div class="reset">
+      <button class="btn ghost small" id="wipe" type="button">Effacer mes réponses</button>
+      <span id="wipeMsg" class="small" aria-live="polite"></span>
+    </div>
+  </div>
+</footer>
+
+<script>
+window.MathJax = {
+  loader: { load: ['[tex]/html'] },
+  tex: {
+    packages: { '[+]': ['html'] },
+    inlineMath: [['\\(', '\\)']],
+    displayMath: [['\\[', '\\]']],
+    macros: {
+      OM: '\\overrightarrow{OM}',
+      V: '\\class{cv}{\\vec{v}}',
+      A: '\\class{ca}{\\vec{a}}',
+      ur: '\\class{c1}{\\vec{u}_\\rho}',
+      ut: '\\class{c2}{\\vec{u}_\\theta}',
+      uT: '\\class{c1}{\\vec{u}_T}',
+      uN: '\\class{c2}{\\vec{u}_N}'
+    }
+  },
+  svg: { fontCache: 'global' },
+  options: { enableMenu: false }
+};
+</script>
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3.2.2/es5/tex-svg.js" async></script>
+<script>
+(function () {
+  var KEY = 'cinematique-s1-v1';
+  var state = { ans: {}, done: {}, qcm: {}, sel: {} };
+  try { var raw = localStorage.getItem(KEY); if (raw) { var s = JSON.parse(raw); if (s && typeof s === 'object') { state.ans = s.ans || {}; state.done = s.done || {}; state.qcm = s.qcm || {}; state.sel = s.sel || {}; } } } catch (e) {}
+  function save() { try { localStorage.setItem(KEY, JSON.stringify(state)); } catch (e) {} }
+  var $ = function (s, r) { return (r || document).querySelector(s); };
+  var $$ = function (s, r) { return Array.prototype.slice.call((r || document).querySelectorAll(s)); };
+
+  /* ---------- Progression ---------- */
+  var TOTAL_Q = $$('.q').length, TOTAL_E = $$('.ex').length;
+  function progress() {
+    var q = 0; Object.keys(state.qcm).forEach(function (k) { if (state.qcm[k] === true) q++; });
+    var e = 0; Object.keys(state.done).forEach(function (k) { if (state.done[k]) e++; });
+    var tot = TOTAL_Q + TOTAL_E, n = q + e;
+    $('#progTxt').textContent = n + ' / ' + tot;
+    $('#progBar').style.width = (100 * n / tot) + '%';
+    $('#qScore').textContent = q;
+  }
+
+  /* ---------- QCM ---------- */
+  function answerSet(q) { return q.dataset.answer.split(',').sort().join(','); }
+  function showResult(q, chosen) {
+    var good = answerSet(q), ok = chosen.slice().sort().join(',') === good;
+    var right = good.split(',');
+    $$('.opt', q).forEach(function (b) {
+      b.disabled = true;
+      var k = b.dataset.k;
+      if (right.indexOf(k) >= 0) b.classList.add('is-right');
+      else if (chosen.indexOf(k) >= 0) b.classList.add('is-wrong');
+    });
+    q.classList.add(ok ? 'right' : 'wrong');
+    var ex = $('.q-expl', q); ex.hidden = false;
+    $('.verdict', ex).textContent = ok ? 'Juste. ' : 'Pas tout à fait. ';
+    var val = $('.q-validate', q); if (val) val.hidden = true;
+    var re = $('.q-retry', q); if (re) re.hidden = false;
+    return ok;
+  }
+  function resetQ(q) {
+    q.classList.remove('right', 'wrong');
+    $$('.opt', q).forEach(function (b) { b.disabled = false; b.classList.remove('is-right', 'is-wrong', 'sel'); b.setAttribute('aria-pressed', 'false'); });
+    $('.q-expl', q).hidden = true;
+    var val = $('.q-validate', q); if (val) val.hidden = false;
+    var re = $('.q-retry', q); if (re) re.hidden = true;
+  }
+  $$('.q').forEach(function (q) {
+    var id = q.dataset.q, multi = q.hasAttribute('data-multi');
+    $$('.opt', q).forEach(function (b) {
+      b.setAttribute('aria-pressed', 'false');
+      b.addEventListener('click', function () {
+        if (multi) {
+          b.classList.toggle('sel');
+          b.setAttribute('aria-pressed', b.classList.contains('sel') ? 'true' : 'false');
+        } else {
+          var ok = showResult(q, [b.dataset.k]);
+          state.qcm[id] = ok; state.sel[id] = [b.dataset.k]; save(); progress();
+        }
+      });
+    });
+    var val = $('.q-validate', q);
+    if (val) val.addEventListener('click', function () {
+      var chosen = $$('.opt.sel', q).map(function (b) { return b.dataset.k; });
+      if (!chosen.length) { val.textContent = 'Choisis au moins une réponse'; return; }
+      var ok = showResult(q, chosen);
+      state.qcm[id] = ok; state.sel[id] = chosen; save(); progress();
+    });
+    var re = $('.q-retry', q);
+    if (re) re.addEventListener('click', function () { resetQ(q); delete state.qcm[id]; delete state.sel[id]; save(); progress(); if (val) val.textContent = 'Valider'; });
+    if (state.sel[id]) {
+      if (multi) state.sel[id].forEach(function (k) { var b = $('.opt[data-k="' + k + '"]', q); if (b) b.classList.add('sel'); });
+      showResult(q, state.sel[id]);
+    }
+  });
+  $('#qReset').addEventListener('click', function () {
+    $$('.q').forEach(resetQ); state.qcm = {}; state.sel = {}; save(); progress();
+    $$('.q-validate').forEach(function (v) { v.textContent = 'Valider'; });
+  });
+
+  /* ---------- Exercices ---------- */
+  $$('.qa textarea').forEach(function (t) {
+    if (state.ans[t.id]) t.value = state.ans[t.id];
+    t.addEventListener('input', function () { state.ans[t.id] = t.value; save(); });
+  });
+  $$('.show').forEach(function (b) {
+    b.addEventListener('click', function () {
+      var c = document.getElementById(b.getAttribute('aria-controls'));
+      var open = b.getAttribute('aria-expanded') === 'true';
+      b.setAttribute('aria-expanded', open ? 'false' : 'true');
+      b.textContent = open ? 'Voir la correction' : 'Cacher la correction';
+      c.hidden = open;
+    });
+  });
+  $$('.done-lbl input').forEach(function (c) {
+    var ex = c.closest('.ex');
+    c.checked = !!state.done[c.id];
+    ex.classList.toggle('done', c.checked);
+    c.addEventListener('change', function () { state.done[c.id] = c.checked; ex.classList.toggle('done', c.checked); save(); progress(); });
+  });
+
+  /* ---------- Produit vectoriel ---------- */
+  $('#cxBtn').addEventListener('click', function () {
+    var want = [1, -9, 13], names = ['Wx', 'Wy', 'Wz'], hints = ['Wx = UyVz − UzVy = 3×1 − 2×1', 'Wy = UzVx − UxVz = 2×(−4) − 1×1', 'Wz = UxVy − UyVx = 1×1 − 3×(−4)'];
+    var bad = [];
+    [1, 2, 3].forEach(function (i) {
+      var inp = $('#cx' + i), v = parseFloat(String(inp.value).replace(',', '.').replace('−', '-'));
+      var ok = v === want[i - 1];
+      inp.classList.toggle('ok', ok); inp.classList.toggle('ko', !ok);
+      if (!ok) bad.push(hints[i - 1]);
+    });
+    var fb = $('#cxFb');
+    if (!bad.length) { fb.className = 'feedback ok'; fb.textContent = 'Bravo : W = (1 ; −9 ; 13).'; }
+    else { fb.className = 'feedback ko'; fb.textContent = 'À revoir : ' + bad.join(' · '); }
+  });
+
+  /* ---------- Fiche ---------- */
+  var grid = $('#ficheGrid'), ft = $('#flashToggle');
+  ft.addEventListener('change', function () { grid.classList.toggle('flash', ft.checked); $$('.fc', grid).forEach(function (c) { c.classList.remove('open'); }); });
+  $$('.fc', grid).forEach(function (c) {
+    c.addEventListener('click', function () { if (grid.classList.contains('flash')) c.classList.toggle('open'); });
+    c.addEventListener('keydown', function (e) { if ((e.key === 'Enter' || e.key === ' ') && grid.classList.contains('flash')) { e.preventDefault(); c.classList.toggle('open'); } });
+  });
+
+  /* ---------- Effacer ---------- */
+  var wipe = $('#wipe'), armed = false;
+  wipe.addEventListener('click', function () {
+    if (!armed) { armed = true; wipe.textContent = 'Confirmer : tout effacer'; $('#wipeMsg').textContent = 'Clique encore pour effacer tes réponses, ton QCM et ta progression.'; return; }
+    state = { ans: {}, done: {}, qcm: {}, sel: {} }; save();
+    $$('.qa textarea').forEach(function (t) { t.value = ''; });
+    $$('.done-lbl input').forEach(function (c) { c.checked = false; c.closest('.ex').classList.remove('done'); });
+    $$('.q').forEach(resetQ);
+    armed = false; wipe.textContent = 'Effacer mes réponses'; $('#wipeMsg').textContent = 'Tout est effacé.'; progress();
+  });
+
+  /* ---------- Polaire interactif ---------- */
+  var svg = $('#polarSvg'), range = $('#theta');
+  var O = { x: 250, y: 205 }, RHO = 140, U = 72;
+  function fmt(n) { return (Math.round(n * 100) / 100).toFixed(2).replace('.', ',').replace('-', '−'); }
+  function L(x1, y1, x2, y2, c, w, dash, arrow) {
+    return '<line x1="' + x1.toFixed(1) + '" y1="' + y1.toFixed(1) + '" x2="' + x2.toFixed(1) + '" y2="' + y2.toFixed(1) + '" class="ln ln-' + c + '" stroke-width="' + w + '"' + (dash ? ' stroke-dasharray="' + dash + '"' : '') + (arrow ? ' marker-end="url(#ar-' + c + ')"' : '') + '/>';
+  }
+  function T(x, y, s, c, anchor, size, weight) {
+    return '<text x="' + x.toFixed(1) + '" y="' + y.toFixed(1) + '" class="tx tx-' + c + '" text-anchor="' + (anchor || 'start') + '" font-size="' + (size || 15) + '"' + (weight ? ' font-weight="' + weight + '"' : '') + '>' + s + '</text>';
+  }
+  function draw(deg) {
+    var t = deg * Math.PI / 180, c = Math.cos(t), s = Math.sin(t);
+    var M = { x: O.x + RHO * c, y: O.y - RHO * s };
+    var ur = { x: c, y: -s }, ut = { x: -s, y: -c };
+    var h = '';
+    h += '<circle cx="' + O.x + '" cy="' + O.y + '" r="' + RHO + '" class="ln ln-ink3" stroke-width="1" stroke-dasharray="3 5" fill="none"/>';
+    h += L(30, O.y, 490, O.y, 'ink3', 1.4, null, true) + L(O.x, 385, O.x, 22, 'ink3', 1.4, null, true);
+    h += T(496, O.y + 5, 'x', 'ink2', 'start', 14) + T(O.x + 10, 26, 'y', 'ink2', 'start', 14);
+    h += T(O.x - 8, O.y + 20, 'O', 'ink2', 'end', 14);
+    h += L(M.x, M.y, M.x, O.y, 'ink3', 1.2, '5 5') + L(M.x, M.y, O.x, M.y, 'ink3', 1.2, '5 5');
+    var xl = 'x = ρ cos θ', yl = 'y = ρ sin θ';
+    h += T(M.x, O.y + (s >= 0 ? 22 : -10), xl, 'ink2', 'middle', 13);
+    h += T(O.x + (c >= 0 ? -8 : 8), M.y + 4, yl, 'ink2', c >= 0 ? 'end' : 'start', 13);
+    var r = 38, large = deg > 180 ? 1 : 0;
+    if (deg > 0) h += '<path d="M' + (O.x + r) + ' ' + O.y + ' A' + r + ' ' + r + ' 0 ' + large + ' 0 ' + (O.x + r * c).toFixed(1) + ' ' + (O.y - r * s).toFixed(1) + '" class="ln ln-ink" stroke-width="1.6" fill="none"/>';
+    var tb = t / 2; h += T(O.x + 56 * Math.cos(tb) - 4, O.y - 56 * Math.sin(tb) + 5, 'θ', 'ink', 'middle', 16, 700);
+    h += L(O.x, O.y, M.x, M.y, 'ink', 2.2, null, false);
+    h += T((O.x + M.x) / 2 + 18 * ut.x, (O.y + M.y) / 2 + 18 * ut.y + 5, 'ρ', 'ink', 'middle', 16, 700);
+    var e1 = { x: M.x + U * ur.x, y: M.y + U * ur.y }, e2 = { x: M.x + U * ut.x, y: M.y + U * ut.y };
+    h += L(M.x, M.y, e1.x, e1.y, 'u1', 3.2, null, true) + L(M.x, M.y, e2.x, e2.y, 'u2', 3.2, null, true);
+    var sq = 11;
+    h += '<path d="M' + (M.x + sq * ur.x).toFixed(1) + ' ' + (M.y + sq * ur.y).toFixed(1) + ' L' + (M.x + sq * ur.x + sq * ut.x).toFixed(1) + ' ' + (M.y + sq * ur.y + sq * ut.y).toFixed(1) + ' L' + (M.x + sq * ut.x).toFixed(1) + ' ' + (M.y + sq * ut.y).toFixed(1) + '" class="ln ln-ink2" stroke-width="1" fill="none"/>';
+    var sub = function (g) { return '<tspan font-weight="700">u</tspan><tspan dy="5" font-size="0.75em" font-weight="700">' + g + '</tspan>'; };
+    h += T(e1.x + 18 * ur.x, e1.y + 18 * ur.y + 5, sub('ρ'), 'u1', 'middle', 17);
+    h += T(e2.x + 18 * ut.x, e2.y + 18 * ut.y + 5, sub('θ'), 'u2', 'middle', 17);
+    h += '<circle cx="' + M.x.toFixed(1) + '" cy="' + M.y.toFixed(1) + '" r="5" class="dot-ink"/>';
+    h += T(M.x - 14 * ur.x - 12 * ut.x, M.y - 14 * ur.y - 12 * ut.y + 5, 'M', 'ink', 'middle', 16, 700);
+    svg.innerHTML = h;
+    $('#thetaVal').textContent = deg + '°';
+    $('#vCos').textContent = fmt(c); $('#vSin').textContent = fmt(s);
+    $('#vUr').textContent = '(' + fmt(c) + ' ; ' + fmt(s) + ')';
+    $('#vUt').textContent = '(' + fmt(-s) + ' ; ' + fmt(c) + ')';
+  }
+  range.addEventListener('input', function () { draw(+range.value); });
+  var spinning = false, last = 0, btn = $('#spin');
+  function tick(ts) {
+    if (!spinning) return;
+    if (ts - last > 30) { last = ts; range.value = (+range.value + 1) % 360; draw(+range.value); }
+    requestAnimationFrame(tick);
+  }
+  btn.addEventListener('click', function () {
+    spinning = !spinning; btn.setAttribute('aria-pressed', spinning ? 'true' : 'false');
+    btn.textContent = spinning ? 'Arrêter' : 'Faire tourner M';
+    if (spinning) requestAnimationFrame(tick);
+  });
+  draw(35);
+  progress();
+})();
+</script>

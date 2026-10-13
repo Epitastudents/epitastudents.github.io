@@ -1,0 +1,226 @@
+<!doctype html>
+<html lang="fr">
+<head>
+@@HEAD@@
+<title>Installer Cinématique S1</title>
+<meta name="description" content="Installe gratuitement l'appli de révision du contrôle 1 de physique S1 sur Android, iPhone ou ordinateur.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+@@FONTS@@
+@@BASE_STYLE@@
+<style>
+/* Page d'installation : une colonne, l'étape à suivre pour ton appareil en premier. */
+:root { --qr-bg: #FFFFFF; --qr-ink: #141C33; }
+body { margin: 0; }
+.nav { top: 0; padding-top: env(safe-area-inset-top, 0px); }
+.page { max-width: 44rem; margin: 0 auto; padding-inline: 20px; padding-block: 28px calc(56px + env(safe-area-inset-bottom, 0px)); display: grid; gap: 28px; }
+.page > * { min-width: 0; }
+.ins-hero { display: grid; grid-template-columns: 88px minmax(0, 1fr); gap: 18px; align-items: center; }
+.ins-hero img { width: 88px; height: 88px; border-radius: 22px; box-shadow: 0 6px 20px rgba(20, 28, 51, 0.25); }
+.ins-hero h1 { font-size: clamp(1.7rem, 6vw, 2.4rem); font-weight: 800; }
+.ins-hero p { margin: 6px 0 0; color: var(--ink-2); }
+.badges { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 10px; }
+.done-card { background: var(--good-soft); border: 1.5px solid var(--good); border-radius: var(--radius); padding: 16px; display: grid; gap: 10px; }
+.done-card b { font-family: var(--f-disp); font-size: 1.2rem; }
+.tabs { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 4px; background: var(--grid); padding: 4px; border-radius: 12px; }
+.tab { font: 700 0.95rem var(--f-body); color: var(--ink-2); background: transparent; border: 0; border-radius: 9px; padding: 10px 6px; cursor: pointer; min-height: 44px; }
+.tab[aria-selected="true"] { background: var(--card); color: var(--ink); box-shadow: 0 1px 3px rgba(20, 28, 51, 0.15); }
+.panel-i { background: var(--card); border: 1px solid var(--rule); border-radius: var(--radius); padding: 18px; display: grid; gap: 14px; }
+.panel-i h2 { font-size: 1.35rem; }
+.big { width: 100%; justify-content: center; font-size: 1.05rem; padding: 14px 18px; border-radius: 12px; }
+.how { list-style: none; counter-reset: s; margin: 0; padding: 0; display: grid; gap: 12px; }
+.how li { counter-increment: s; display: grid; grid-template-columns: 2rem minmax(0, 1fr); gap: 12px; align-items: start; }
+.how li::before { content: counter(s); font-family: var(--f-mono); font-weight: 700; background: var(--ink); color: var(--paper); width: 1.8rem; height: 1.8rem; border-radius: 50%; display: grid; place-items: center; font-size: 0.85rem; }
+.how li > span { padding-top: 2px; }
+.ico { display: inline-flex; align-items: center; justify-content: center; vertical-align: -6px; width: 26px; height: 26px; border-radius: 7px; background: var(--grid); color: var(--v); margin: 0 2px; }
+.ico svg { width: 18px; height: 18px; }
+.kbd { font-family: var(--f-mono); font-size: 0.86rem; font-weight: 700; background: var(--grid); border-radius: 6px; padding: 1px 7px; white-space: nowrap; }
+.note { font-size: 0.9rem; color: var(--ink-2); margin: 0; }
+.warn-box { background: var(--note); border: 1.5px solid var(--note-line); border-radius: 12px; padding: 12px 14px; }
+.share { display: grid; grid-template-columns: auto minmax(0, 1fr); gap: 20px; align-items: center; background: var(--card); border: 1px solid var(--rule); border-radius: var(--radius); padding: 18px; }
+.qr-wrap { background: var(--qr-bg); color: var(--qr-ink); border-radius: 14px; padding: 10px; width: 176px; }
+.qr { width: 100%; height: auto; display: block; }
+.share h2 { font-size: 1.25rem; }
+.link-row { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 10px; }
+.url { font-family: var(--f-mono); font-size: 0.82rem; word-break: break-all; background: var(--paper); border-radius: 8px; padding: 8px 10px; margin: 8px 0 0; user-select: all; }
+@media (max-width: 560px) { .share { grid-template-columns: 1fr; justify-items: center; text-align: center; } .link-row { justify-content: center; } }
+.faq { display: grid; gap: 8px; }
+.faq h2 { font-size: 1.25rem; margin-bottom: 4px; }
+.faq details { background: var(--card); border: 1px solid var(--rule); border-radius: 10px; }
+.faq summary { cursor: pointer; padding: 12px 14px; font-weight: 700; }
+.faq details > p { margin: 0; padding: 0 14px 12px; color: var(--ink-2); }
+.foot { font-size: 0.85rem; color: var(--ink-2); }
+</style>
+</head>
+<body>
+<header class="nav">
+  <div class="wrap">
+    <a class="brand" href="./">Cinématique<span>S1</span></a>
+    <span style="flex:1"></span>
+    <a class="btn ghost small" href="./">Ouvrir sans installer</a>
+  </div>
+</header>
+
+<main class="page">
+  <section class="ins-hero">
+    <img src="icons/icon-192.png" alt="" width="88" height="88">
+    <div>
+      <h1>Installe l’appli de révision</h1>
+      <p>Le contrôle 1 de physique S1 dans ta poche : cours illustré, @@NB_QCM@@ QCM et @@NB_EXOS@@ exercices des annales.</p>
+      <div class="badges"><span class="chip">Gratuit</span><span class="chip">Sans compte</span><span class="chip">Marche hors ligne</span><span class="chip">Mises à jour automatiques</span></div>
+    </div>
+  </section>
+
+  <section class="done-card" id="installed" hidden>
+    <b>L’appli est déjà installée sur cet appareil.</b>
+    <a class="btn" href="./">Ouvrir l’appli</a>
+  </section>
+
+  <section id="choose" aria-label="Choisis ton appareil">
+    <div class="tabs" role="tablist" aria-label="Appareil">
+      <button class="tab" role="tab" id="t-android" aria-controls="p-android" aria-selected="false" type="button">Android</button>
+      <button class="tab" role="tab" id="t-ios" aria-controls="p-ios" aria-selected="false" type="button">iPhone</button>
+      <button class="tab" role="tab" id="t-pc" aria-controls="p-pc" aria-selected="false" type="button">Ordinateur</button>
+    </div>
+
+    <div class="panel-i" role="tabpanel" id="p-android" aria-labelledby="t-android" hidden style="margin-top:12px">
+      <h2>Sur Android</h2>
+      <button class="btn big" type="button" data-install hidden>Installer l’appli</button>
+      <p class="note" data-install-hint>Si le bouton n’apparaît pas, fais-le à la main :</p>
+      <ol class="how">
+        <li><span>Ouvre cette page dans <b>Chrome</b>.</span></li>
+        <li><span>Touche le menu <span class="kbd">⋮</span> en haut à droite.</span></li>
+        <li><span>Choisis <b>« Installer l’application »</b> ou <b>« Ajouter à l’écran d’accueil »</b>.</span></li>
+        <li><span>Confirme. L’icône apparaît avec tes autres applis.</span></li>
+      </ol>
+      <p class="note">Avec Samsung Internet : menu <span class="kbd">≡</span>, puis « Ajouter la page à », puis « Écran d’accueil ».</p>
+    </div>
+
+    <div class="panel-i" role="tabpanel" id="p-ios" aria-labelledby="t-ios" hidden style="margin-top:12px">
+      <h2>Sur iPhone ou iPad</h2>
+      <div class="warn-box" id="inapp" hidden><b>Tu es dans le navigateur d’une autre appli</b> (Discord, Instagram, Snapchat…). Touche <span class="kbd">•••</span> ou <span class="kbd">⋯</span>, puis <b>« Ouvrir dans Safari »</b>, et reviens sur cette page.</div>
+      <ol class="how">
+        <li><span>Ouvre cette page dans <b>Safari</b>.</span></li>
+        <li><span>Touche le bouton Partager
+          <span class="ico" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12"/><path d="M8 7l4-4 4 4"/><path d="M6 11H5a1 1 0 0 0-1 1v8a1 1 0 0 0 1 1h14a1 1 0 0 0 1-1v-8a1 1 0 0 0-1-1h-1"/></svg></span>
+          en bas de l’écran (en haut sur iPad).</span></li>
+        <li><span>Fais défiler et touche <b>« Sur l’écran d’accueil »</b>
+          <span class="ico" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="4" width="16" height="16" rx="3"/><path d="M12 8v8"/><path d="M8 12h8"/></svg></span>.</span></li>
+        <li><span>Touche <b>« Ajouter »</b> en haut à droite. L’icône apparaît sur ton écran d’accueil.</span></li>
+      </ol>
+      <p class="note">Depuis iOS 16.4, ça marche aussi depuis Chrome : bouton Partager à droite de la barre d’adresse, puis « Sur l’écran d’accueil ».</p>
+    </div>
+
+    <div class="panel-i" role="tabpanel" id="p-pc" aria-labelledby="t-pc" hidden style="margin-top:12px">
+      <h2>Sur ordinateur</h2>
+      <p style="margin:0">Le plus simple : <b>scanne le QR code ci-dessous avec ton téléphone</b>, puis suis les étapes Android ou iPhone.</p>
+      <button class="btn big" type="button" data-install hidden>Installer aussi sur cet ordinateur</button>
+      <p class="note">Avec Chrome ou Edge, tu peux aussi l’installer sur l’ordinateur : icône d’installation à droite de la barre d’adresse.</p>
+    </div>
+  </section>
+
+  <section class="share" aria-label="Partager avec tes camarades">
+    <div class="qr-wrap">@@QR@@</div>
+    <div>
+      <h2>Partage-la avec ta promo</h2>
+      <p class="note" style="margin-top:6px">Fais scanner ce QR code, ou envoie le lien sur le groupe.</p>
+      <p class="url" id="url">@@INSTALL_URL@@</p>
+      <div class="link-row">
+        <button class="btn small" type="button" id="copy">Copier le lien</button>
+        <button class="btn ghost small" type="button" id="shareBtn" hidden>Partager…</button>
+      </div>
+      <p class="note" id="copyMsg" aria-live="polite" style="margin-top:6px"></p>
+    </div>
+  </section>
+
+  <section class="faq">
+    <h2>Questions fréquentes</h2>
+    <details><summary>C’est vraiment gratuit ?</summary><p>Oui. Pas de pub, pas de compte, rien à payer.</p></details>
+    <details><summary>Pourquoi elle n’est pas sur l’App Store ou le Play Store ?</summary><p>Publier y coûte 99 $ par an chez Apple et 25 $ chez Google. Une appli web installable fait la même chose gratuitement : icône sur l’écran d’accueil, plein écran, hors ligne.</p></details>
+    <details><summary>Ça marche sans internet ?</summary><p>Oui. Après la première ouverture, tout le cours est enregistré sur ton appareil.</p></details>
+    <details><summary>Comment je reçois les nouveaux cours et QCM ?</summary><p>Tout seul. Quand une nouvelle version sort, un bandeau « Nouvelle version disponible » apparaît dans l’appli : touche « Mettre à jour ».</p></details>
+    <details><summary>Les autres voient mes réponses ?</summary><p>Non. Tes réponses et ta progression restent sur ton appareil.</p></details>
+    <details><summary>Comment la supprimer ?</summary><p>Comme une appli normale : appui long sur l’icône, puis « Supprimer » ou « Désinstaller ».</p></details>
+  </section>
+
+  <p class="foot">Version du @@VERSION@@. Contenu tiré des annales publiques Epidocs (non affilié à EPITA). <a href="@@APP_URL@@">Ouvrir l’appli</a></p>
+</main>
+
+<script>
+(function () {
+  var ua = navigator.userAgent || '';
+  var isIOS = /iPad|iPhone|iPod/.test(ua) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
+  var isAndroid = /Android/i.test(ua);
+  var inApp = /FBAN|FBAV|Instagram|Snapchat|Discord|Line\/|MicroMessenger|TikTok|musical_ly|BytedanceWebview|LinkedInApp|Twitter/i.test(ua);
+  var standalone = window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone === true;
+  var $ = function (s) { return document.querySelector(s); };
+  var $$ = function (s) { return Array.prototype.slice.call(document.querySelectorAll(s)); };
+
+  if (standalone) { $('#installed').hidden = false; }
+  if (isIOS && inApp) { $('#inapp').hidden = false; }
+
+  function select(id) {
+    $$('.tab').forEach(function (t) {
+      var on = t.id === 't-' + id;
+      t.setAttribute('aria-selected', on ? 'true' : 'false');
+      t.tabIndex = on ? 0 : -1;
+      document.getElementById(t.getAttribute('aria-controls')).hidden = !on;
+    });
+  }
+  $$('.tab').forEach(function (t) {
+    t.addEventListener('click', function () { select(t.id.slice(2)); });
+    t.addEventListener('keydown', function (e) {
+      var tabs = $$('.tab'), i = tabs.indexOf(t);
+      if (e.key === 'ArrowRight' || e.key === 'ArrowLeft') {
+        e.preventDefault();
+        var n = tabs[(i + (e.key === 'ArrowRight' ? 1 : tabs.length - 1)) % tabs.length];
+        select(n.id.slice(2)); n.focus();
+      }
+    });
+  });
+  select(isIOS ? 'ios' : isAndroid ? 'android' : 'pc');
+
+  var deferred = null;
+  window.addEventListener('beforeinstallprompt', function (e) {
+    e.preventDefault(); deferred = e;
+    $$('[data-install]').forEach(function (b) { b.hidden = false; });
+    $$('[data-install-hint]').forEach(function (p) { p.textContent = 'Sinon, tu peux aussi le faire à la main :'; });
+  });
+  $$('[data-install]').forEach(function (b) {
+    b.addEventListener('click', function () {
+      if (!deferred) return;
+      deferred.prompt();
+      deferred.userChoice.then(function (r) {
+        if (r && r.outcome === 'accepted') { b.textContent = 'Installée ! Cherche l’icône Cinématique.'; b.disabled = true; }
+        deferred = null;
+      });
+    });
+  });
+  window.addEventListener('appinstalled', function () { $('#installed').hidden = false; });
+
+  var url = $('#url').textContent.trim();
+  $('#copy').addEventListener('click', function () {
+    var msg = $('#copyMsg');
+    function fallback() {
+      var r = document.createRange(); r.selectNodeContents($('#url'));
+      var s = window.getSelection(); s.removeAllRanges(); s.addRange(r);
+      msg.textContent = 'Lien sélectionné : copie-le avec Ctrl+C ou un appui long.';
+    }
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(url).then(function () { msg.textContent = 'Lien copié.'; }, fallback);
+    } else { fallback(); }
+  });
+  if (navigator.share) {
+    var sb = $('#shareBtn'); sb.hidden = false;
+    sb.addEventListener('click', function () {
+      navigator.share({ title: 'Cinématique S1', text: 'L’appli de révision du contrôle 1 de physique S1', url: url }).catch(function () {});
+    });
+  }
+
+  if ('serviceWorker' in navigator) {
+    window.addEventListener('load', function () { navigator.serviceWorker.register('sw.js', { updateViaCache: 'none' }).catch(function () {}); });
+  }
+})();
+</script>
+</body>
+</html>
