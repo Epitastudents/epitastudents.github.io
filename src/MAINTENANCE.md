@@ -1,16 +1,16 @@
-# Maintenance de l'appli « Cinématique S1 »
+# Maintenance de l'appli « Mécanique S1 »
 
-Ce fichier explique comment mettre l'appli à jour. Il sert aussi de consignes à la tâche programmée qui vérifie chaque semaine s'il y a du nouveau.
+Ce fichier explique comment mettre l'appli à jour. Il sert aussi de consignes à la tâche programmée hebdomadaire.
 
 ## Ce qui est publié
 
-Le dépôt est un site GitHub Pages d'organisation (`epitastudents.github.io` (organisation Epitastudents)). Tout ce qui est poussé sur la branche par défaut est en ligne environ une minute après.
+Le dépôt est le site GitHub Pages de l'organisation : `epitastudents.github.io`. Tout ce qui est poussé sur `main` est en ligne environ une minute après.
 
 | Chemin | Rôle |
 | --- | --- |
-| `index.html` | Accueil du site, liste des applis (généré) |
-| `cinematique-s1/` | L'appli installable : `index.html`, `installer.html`, `manifest.webmanifest`, `sw.js`, `icons/`, `vendor/mathjax/` (tout est généré) |
-| `src/` | Les sources : on ne modifie que ces fichiers, puis on reconstruit |
+| `index.html` | Accueil du site (généré) |
+| `cinematique-s1/` | L'appli installable (générée). Le nom du dossier est historique : on le garde pour ne pas casser les applis déjà installées. |
+| `src/` | Les sources : on ne modifie que ces fichiers, puis on reconstruit. |
 
 ## Reconstruire
 
@@ -19,44 +19,42 @@ pip install --break-system-packages qrcode pillow   # une fois par session
 python3 src/build.py https://epitastudents.github.io/
 ```
 
-Le script réécrit `index.html` et tout le dossier `cinematique-s1/`. Le service worker reçoit une nouvelle version (empreinte du contenu). Les téléphones qui ont installé l'appli voient alors le bandeau « Nouvelle version disponible ». Il ne faut jamais modifier à la main les fichiers générés.
-
-Les icônes se refont avec `python3 src/make_icons.py src/icons`. On ne le fait que si le dessin change.
+Le script réécrit `index.html` et le dossier `cinematique-s1/`. Le service worker change de version (empreinte du contenu) : les téléphones voient le bandeau « Nouvelle version disponible ». Ne jamais modifier à la main les fichiers générés.
 
 ## Où est le contenu
 
-- `src/content.py` contient les données :
-  - `BARS` : les barres « Ce qui tombe » (thème, nombre de sujets, années, lien).
-  - `QCM` : les questions, sous la forme `(source, énoncé, [(lettre, réponse)…], "bonne(s) lettre(s)", explication[, True si plusieurs réponses])`.
-  - `EXOS` : les exercices, regroupés par thème. Chaque exercice a un `id` unique, des `chips`, des liens `src`, un `enonce` et des `qs` sous la forme (question, correction).
-  - `ANNALES` : une carte par sujet, du plus récent au plus ancien.
-  - `FICHE` : les formules de la fiche.
-- `src/template.html` contient le cours (chapitres 1 à 5), les styles et le script de la page.
-- `src/figs.py` contient les schémas SVG, dont la géométrie est calculée.
+Le contenu suit le cours de mécanique S1 de Moodle (poly « Cours cinématique V4 », fiche coordonnées, TD1 à TD8 2026). On garde les notations du poly : coordonnées polaires (r, θ), base (u_r, u_θ).
 
-Les formules s'écrivent en LaTeX entre `\( … \)` (en ligne) ou `\[ … \]` (bloc). Les macros `\OM`, `\V`, `\A`, `\ur`, `\ut`, `\uT`, `\uN` colorent les vecteurs.
+- `src/cours.py` contient tout :
+  - `CHAPITRES` : 9 chapitres (0 = rappels de maths, puis un par TD).
+  - `LECONS` : pour chaque chapitre, une liste de cartes courtes. Une carte = une idée. Champs : `t` (titre), `h` (texte, 80 mots au plus), `k` (formule à retenir), `fig` (schéma), `piege` (erreur fréquente).
+  - `QCM` : `(chapitre, question, [(lettre, réponse)…], "bonne(s) lettre(s)", explication[, True si plusieurs réponses])`.
+  - `EXOS` : exercices de TD, en étapes `(question, indice, correction)`. `officiel=True` seulement si la correction vient d'un corrigé publié sur Moodle.
+  - `FICHES` : cartes mémoire `(chapitre, question, réponse)`.
+  - `ANNALES` : anciens contrôles Epidocs (ancien format).
+- `src/app.html` : l'interface (écrans, QCM, exercices, révision espacée).
+- `src/figs.py`, `src/figs2.py` : les schémas SVG (géométrie calculée).
 
-Les nombres de QCM, d'exercices et de sujets, ainsi que la plage d'années, sont calculés automatiquement à partir de `content.py`. Les textes qui disent « 7 sujets » dans la section « Ce qui tombe » et les valeurs de `BARS` (sur 7) sont à mettre à jour à la main quand un sujet s'ajoute.
+Formules : LaTeX entre `\( … \)` ou `\[ … \]`. Macros : `\OM`, `\V`, `\A`, `\ur`, `\ut`. Plusieurs formules dans un même `\[ … \]`, séparées par `\qquad`, sont automatiquement mises sur des lignes séparées.
 
-## Vérifier s'il y a de nouveaux sujets
+## Principes de design (à respecter)
 
-La source est le dépôt public `Epidocs/past-exams`, dans les dossiers `S1/Midterms/Phys` et `S1/Finals/Phys`. Les noms de dossiers sont des années de promo, pas des années d'examen. La liste des fichiers déjà traités est dans `src/annales_connues.txt`.
+- Une idée par écran, aucune page interminable.
+- Rien de décoratif : pas de fond à motif, pas d'illustration sans rapport. La couleur sert seulement aux vecteurs (v bleu, a rouge, u_r violet, u_θ vert) et à la correction.
+- On privilégie l'entraînement actif : QCM, exercices guidés, cartes mémoire espacées.
 
-```sh
-GIT_LFS_SKIP_SMUDGE=1 git clone --depth 1 --filter=blob:none --no-checkout https://github.com/Epidocs/past-exams /tmp/pe
-git -C /tmp/pe ls-tree -r --name-only HEAD | grep -E '^S1/(Midterms|Finals)/Phys/' | sort > /tmp/actuel.txt
-comm -13 src/annales_connues.txt /tmp/actuel.txt   # fichiers nouveaux
-```
+## Mettre à jour le contenu
 
-Pour chaque nouveau sujet de contrôle (`Midterms`) :
+Sources possibles :
+1. Le dépôt public `Epidocs/past-exams`, dossiers `S1/Midterms/Phys` et `S1/Finals/Phys`. La liste des fichiers déjà vus est dans `src/annales_connues.txt`.
+   ```sh
+   GIT_LFS_SKIP_SMUDGE=1 git clone --depth 1 --filter=blob:none --no-checkout https://github.com/Epidocs/past-exams /tmp/pe
+   git -C /tmp/pe ls-tree -r --name-only HEAD | grep -E '^S1/(Midterms|Finals)/Phys/' | sort > /tmp/actuel.txt
+   comm -13 src/annales_connues.txt /tmp/actuel.txt   # fichiers nouveaux
+   ```
+2. De nouveaux fichiers de cours, de TD ou de corrigés envoyés par le propriétaire.
 
-1. Lire le sujet et, s'il existe, le corrigé. Beaucoup sont scannés : on les rend en images (`pdftoppm -r 90 -gray -png`) et on les regarde.
-2. Ajouter une carte dans `ANNALES`, puis les nouvelles questions de QCM (sans doublon) et les exercices qui ont un nouveau modèle.
-3. Refaire chaque calcul soi-même. Les corrigés scannés contiennent parfois des erreurs : on les signale dans la correction.
-4. Mettre à jour `BARS` et le texte « Ce qui tombe » si la répartition des thèmes change.
-5. Ajouter les nouveaux chemins à `src/annales_connues.txt`, reconstruire et pousser.
-
-Les nouveaux sujets de partiel (`Finals`) relèvent d'un module « Partiel » à part (statique, lois de Newton, travail et énergie). Ils n'entrent pas dans ce contrôle.
+Pour un nouveau sujet : le lire (les scans se rendent en images avec `pdftoppm -r 90 -gray -png`), ajouter les questions de QCM nouvelles au bon chapitre, et les exercices dont le modèle est nouveau. Refaire chaque calcul. Pour un nouveau corrigé de TD : remplacer la correction proposée et passer `officiel=True`.
 
 ## Publier
 
@@ -66,4 +64,4 @@ git -c user.name="Révisions S1" -c user.email="bot@revisions-s1.invalid" commit
 git push origin HEAD
 ```
 
-Les commits sont toujours signés « Révisions S1 » : on ne met jamais le nom ni l'adresse du propriétaire du compte. Après le push, on vérifie que `https://epitastudents.github.io/cinematique-s1/sw.js` affiche bien la nouvelle `VERSION` (une à deux minutes de délai).
+Les commits sont toujours signés « Révisions S1 ». On n'y met jamais le nom, le pseudo ni l'adresse du propriétaire du compte. Après le push, vérifier que `https://epitastudents.github.io/cinematique-s1/` est à jour (une à deux minutes de délai).

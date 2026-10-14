@@ -1,16 +1,16 @@
 {
   "id": "./",
-  "name": "Cinématique S1",
-  "short_name": "Cinématique",
-  "description": "Révisions du contrôle 1 de physique S1 : cours illustré, QCM et exercices des annales, hors ligne.",
+  "name": "Mécanique S1",
+  "short_name": "Méca S1",
+  "description": "Révisions de mécanique S1 : le cours en fiches courtes, QCM corrigés, exercices de TD guidés et cartes mémoire, hors ligne.",
   "lang": "fr",
   "dir": "ltr",
   "start_url": "./?source=appli",
   "scope": "./",
   "display": "standalone",
   "orientation": "any",
-  "background_color": "#F4F6FA",
-  "theme_color": "#141C33",
+  "background_color": "#FFFFFF",
+  "theme_color": "#FFFFFF",
   "categories": [
     "education"
   ],
@@ -42,8 +42,8 @@
   ],
   "shortcuts": [
     {
-      "name": "QCM",
-      "url": "./#qcm",
+      "name": "QCM rapide",
+      "url": "./#/qcm/go/tout",
       "icons": [
         {
           "src": "icons/icon-192.png",
@@ -52,8 +52,8 @@
       ]
     },
     {
-      "name": "Exercices",
-      "url": "./#exos",
+      "name": "Fiches du jour",
+      "url": "./#/fiches",
       "icons": [
         {
           "src": "icons/icon-192.png",
@@ -62,8 +62,8 @@
       ]
     },
     {
-      "name": "Fiche",
-      "url": "./#fiche",
+      "name": "Exercices de TD",
+      "url": "./#/exos",
       "icons": [
         {
           "src": "icons/icon-192.png",

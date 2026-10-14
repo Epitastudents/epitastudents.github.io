@@ -1,9 +1,10 @@
 # Construit le site publié : l'application installable (PWA) et la page d'accueil.
 #
-#   python3 src/build.py https://revisions-s1.github.io/
+#   python3 src/build.py https://epitastudents.github.io/
 #
-# Entrées : src/template.html, src/content.py, src/figs.py, src/icons (générées par make_icons.py)
-# Sorties : index.html (accueil), cinematique-s1/ (application, page d'installation, service worker, manifeste)
+# Entrées : src/app.html, src/cours.py (contenu), src/figs.py + src/figs2.py (schémas), src/installer.html,
+#           src/installer_base.css, src/accueil.html, src/icons/, src/vendor/mathjax/
+# Sorties : index.html (accueil), cinematique-s1/ (appli, page d'installation, service worker, manifeste)
 import datetime
 import hashlib
 import io
@@ -16,28 +17,24 @@ import sys
 SRC = os.path.dirname(os.path.abspath(__file__))
 ROOT = os.path.dirname(SRC)
 sys.path.insert(0, SRC)
-import content  # noqa: E402
+import cours  # noqa: E402
 import figs  # noqa: E402
+import figs2  # noqa: E402
 
-APP_DIR = "cinematique-s1"
-APP_NAME = "Cinématique S1"
-SHORT_NAME = "Cinématique"
-DESC = "Révisions du contrôle 1 de physique S1 : cours illustré, QCM et exercices des annales, hors ligne."
+APP_DIR = "cinematique-s1"   # dossier historique : on le garde pour ne pas casser les applis déjà installées
+APP_NAME = "Mécanique S1"
+SHORT_NAME = "Méca S1"
+DESC = "Révisions de mécanique S1 : le cours en fiches courtes, QCM corrigés, exercices de TD guidés et cartes mémoire, hors ligne."
 MATHJAX_SRC = os.environ.get("MATHJAX_DIR", os.path.join(SRC, "vendor", "mathjax"))
 MONTHS = ["janvier", "février", "mars", "avril", "mai", "juin", "juillet", "août", "septembre", "octobre", "novembre", "décembre"]
 
 
 def counts():
-    """Chiffres affichés dans les pages, calculés depuis content.py."""
-    years = [int(y) for a in content.ANNALES for y in re.findall(r"(20\d\d)", a["date"])]
-    nb_q = len(content.QCM)
-    nb_e = sum(len(items) for _, items in content.EXOS)
     return {
-        "NB_QCM": str(nb_q),
-        "NB_EXOS": str(nb_e),
-        "NB_TOTAL": str(nb_q + nb_e),
-        "NB_SUJETS": str(len(content.ANNALES)),
-        "ANNEES": f"{min(years)} à {max(years)}",
+        "NB_QCM": str(len(cours.QCM)),
+        "NB_EXOS": str(len(cours.EXOS)),
+        "NB_FICHES": str(len(cours.FICHES)),
+        "NB_CARTES": str(sum(len(v) for v in cours.LECONS.values())),
     }
 
 
@@ -47,32 +44,85 @@ def fill_counts(s):
     return s
 
 
-def page_body():
-    """Assemble le contenu du cours (même résultat que le site Claude)."""
-    figs_svg = {k: fn() for k, fn in figs.FIGS.items()}
-    tpl = open(os.path.join(SRC, "template.html"), encoding="utf-8").read()
-    exos = content.EXOS
-    order = {"Cartésiennes et trajectoire": 0, "Polaires et cylindriques": 1, "Base de Frenet": 2}
-    content.EXOS = sorted(exos, key=lambda g: order.get(g[0], 9))
-    parts = {
-        "BARS": content.bars_html(),
-        "QCM": content.qcm_html(),
-        "EXOS": content.exos_html(figs_svg),
-        "ANNALES": content.annales_html(),
-        "FICHE": content.fiche_html(),
-    }
-    content.EXOS = exos
-    for k, v in parts.items():
-        tpl = tpl.replace(f"@@{k}@@", v)
-    for k, v in figs_svg.items():
-        tpl = tpl.replace(f"@@{k}@@", v)
-    tpl = fill_counts(tpl)
-    left = re.findall(r"@@[A-Z_]+@@", tpl)
-    assert not left, left
-    return tpl.replace("class='eq'", 'class="eq"')
+def figures():
+    out = {k: fn() for k, fn in figs.FIGS.items()}
+    out.update({k: fn() for k, fn in figs2.FIGS2.items()})
+    trio = lambda keys, caps: ('<div class="fig-row">' + "".join(
+        f'<div>{out[k]}<div>{c}</div></div>' for k, c in zip(keys, caps)) + "</div>")
+    out["SC3"] = trio(["SC_AIGU", "SC_DROIT", "SC_OPP"], ["angle aigu : &gt; 0", "angle droit : = 0", "sens opposés : &lt; 0"])
+    out["SP3"] = trio(["SP_ACC", "SP_DEC", "SP_UNI"], ["v·a &gt; 0 : accéléré", "v·a &lt; 0 : décéléré", "v·a = 0 : virage"])
+    return out
 
 
-def head_common(theme_light="#F4F6FA", theme_dark="#0D1220"):
+SEPS = (r"\quad\Longrightarrow\quad", r"\quad\Rightarrow\quad", r"\qquad")
+
+
+def split_display(tex):
+    """Coupe les blocs \\[ … \\] qui alignent plusieurs formules : une formule par ligne, lisible sur téléphone."""
+    def one(block):
+        body, parts, depth, i, cur = block, [], 0, 0, ""
+        while i < len(body):
+            if body.startswith(r"\begin", i):
+                depth += 1
+            elif body.startswith(r"\end", i):
+                depth -= 1
+            hit = next((sep for sep in SEPS if depth == 0 and body.startswith(sep, i)), None)
+            if hit:
+                parts.append(cur)
+                cur = r"\Rightarrow " if "Rightarrow" in hit else ""
+                i += len(hit)
+                continue
+            cur += body[i]
+            i += 1
+        parts.append(cur)
+        return "".join(r"\[" + p.strip() + r"\]" for p in parts if p.strip())
+    return re.sub(r"\\\[(.*?)\\\]", lambda m: one(m.group(1)), tex, flags=re.S)
+
+
+def deep_split(obj):
+    if isinstance(obj, str):
+        return split_display(obj)
+    if isinstance(obj, list):
+        return [deep_split(x) for x in obj]
+    if isinstance(obj, tuple):
+        return tuple(deep_split(x) for x in obj)
+    if isinstance(obj, dict):
+        return {k: deep_split(v) for k, v in obj.items()}
+    return obj
+
+
+def app_data():
+    """Toutes les données de l'appli, en JSON."""
+    figs_all = figures()
+    used = set()
+    lecons = {}
+    for ch, cards in cours.LECONS.items():
+        lecons[ch] = cards
+        used.update(c["fig"] for c in cards if c.get("fig"))
+    exos = []
+    for e in cours.EXOS:
+        exos.append(dict(e))
+        if e.get("fig"):
+            used.add(e["fig"])
+    qcm = []
+    for i, item in enumerate(cours.QCM):
+        ch, q, opts, ans, expl = item[:5]
+        qcm.append(dict(id=f"q{i}-{ch}", ch=ch, q=q, opts=opts, ans=ans, expl=expl, multi=bool(len(item) > 5 and item[5])))
+    fiches = [dict(id=f"f{i}-{ch}", ch=ch, q=q, r=r) for i, (ch, q, r) in enumerate(cours.FICHES)]
+    missing = [k for k in used if k != "POLAR" and k not in figs_all]
+    assert not missing, missing
+    lecons, exos, fiches = deep_split(lecons), deep_split(exos), deep_split(fiches)
+    data = dict(
+        chapitres=cours.CHAPITRES, lecons=lecons, qcm=qcm, exos=exos, fiches=fiches,
+        figs={k: v for k, v in figs_all.items() if k in used},
+        annales=cours.ANNALES, partiels=cours.PARTIELS_GH,
+    )
+    for ch in lecons:
+        assert ch in {c["id"] for c in cours.CHAPITRES}, ch
+    return json.dumps(data, ensure_ascii=False).replace("</", "<\\/")
+
+
+def head_common(theme_light="#FFFFFF", theme_dark="#111318"):
     return f"""<meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="theme-color" content="{theme_light}" media="(prefers-color-scheme: light)">
@@ -83,76 +133,8 @@ def head_common(theme_light="#F4F6FA", theme_dark="#0D1220"):
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-title" content="{SHORT_NAME}">
-<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">"""
+<meta name="apple-mobile-web-app-status-bar-style" content="default">"""
 
-
-APP_CSS = """<style>
-/* Ajouts propres à l'application installée */
-body { margin: 0; -webkit-text-size-adjust: 100%; }
-img { max-width: 100%; }
-html { scroll-padding-top: calc(72px + env(safe-area-inset-top, 0px)); }
-.nav { top: 0; padding-top: env(safe-area-inset-top, 0px); }
-.nav .wrap { padding-inline: max(20px, env(safe-area-inset-left, 0px)); }
-footer { padding-bottom: calc(48px + env(safe-area-inset-bottom, 0px)); }
-.inst { flex: 0 0 auto; font: 700 0.82rem var(--f-body); background: var(--ink); color: var(--paper); border-radius: 8px; padding: 6px 10px; text-decoration: none; white-space: nowrap; }
-.inst:hover { filter: brightness(1.15); }
-.toast { position: fixed; left: 50%; bottom: calc(16px + env(safe-area-inset-bottom, 0px)); transform: translateX(-50%); z-index: 60; display: flex; flex-wrap: wrap; align-items: center; gap: 10px 14px; width: max-content; max-width: calc(100% - 32px); background: var(--ink); color: var(--paper); border-radius: 14px; padding: 12px 14px 12px 18px; box-shadow: 0 8px 28px rgba(0, 0, 0, 0.28); font-size: 0.95rem; }
-.toast b { font-weight: 700; }
-.toast button { font: 700 0.9rem var(--f-body); border-radius: 9px; padding: 7px 12px; cursor: pointer; border: 1.5px solid var(--paper); }
-.toast .go { background: var(--paper); color: var(--ink); }
-.toast .later { background: transparent; color: var(--paper); }
-.ver { font-family: var(--f-mono); font-size: 0.8rem; }
-</style>"""
-
-APP_JS = """<script>
-(function () {
-  var standalone = window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone === true;
-  var inst = document.getElementById('instBtn');
-  var deferred = null;
-  if (inst && !standalone) inst.hidden = false;
-  window.addEventListener('beforeinstallprompt', function (e) { e.preventDefault(); deferred = e; });
-  window.addEventListener('appinstalled', function () { if (inst) inst.hidden = true; });
-  if (inst) inst.addEventListener('click', function (e) {
-    if (!deferred) return;
-    e.preventDefault();
-    deferred.prompt();
-    deferred.userChoice.then(function () { deferred = null; });
-  });
-
-  var toast = document.getElementById('updToast');
-  var waitingWorker = null, updating = false;
-  function offer(w) { waitingWorker = w; toast.hidden = false; }
-  document.getElementById('updGo').addEventListener('click', function () {
-    if (!waitingWorker) return;
-    updating = true;
-    this.textContent = 'Mise à jour…';
-    waitingWorker.postMessage('skipWaiting');
-  });
-  document.getElementById('updLater').addEventListener('click', function () { toast.hidden = true; });
-
-  if ('serviceWorker' in navigator) {
-    window.addEventListener('load', function () {
-      navigator.serviceWorker.register('sw.js', { updateViaCache: 'none' }).then(function (reg) {
-        if (reg.waiting && navigator.serviceWorker.controller) offer(reg.waiting);
-        reg.addEventListener('updatefound', function () {
-          var w = reg.installing;
-          if (!w) return;
-          w.addEventListener('statechange', function () {
-            if (w.state === 'installed' && navigator.serviceWorker.controller) offer(w);
-          });
-        });
-        document.addEventListener('visibilitychange', function () {
-          if (document.visibilityState === 'visible') reg.update().catch(function () {});
-        });
-        setInterval(function () { reg.update().catch(function () {}); }, 3600000);
-      }).catch(function () {});
-      navigator.serviceWorker.addEventListener('controllerchange', function () {
-        if (updating) { updating = false; window.location.reload(); }
-      });
-    });
-  }
-})();
-</script>"""
 
 SW_TEMPLATE = """// Service worker : fonctionnement hors ligne et mises à jour de l'application.
 const VERSION = '@@VERSION@@';
@@ -239,30 +221,19 @@ def build(base_url):
     now = datetime.datetime.now()
 
     # ---------- Application ----------
-    body = page_body()
-    cut = body.index('<svg width="0"')
-    tpl_head, tpl_body = body[:cut], body[cut:]
-    tpl_body = tpl_body.replace(
-        '<script src="https://cdn.jsdelivr.net/npm/mathjax@3.2.2/es5/tex-svg.js" async></script>',
-        '<script src="vendor/mathjax/tex-svg.js" async></script>')
-    assert "vendor/mathjax/tex-svg.js" in tpl_body
-    tpl_body = tpl_body.replace(
-        '<div class="prog"',
-        '<a class="inst" id="instBtn" href="installer.html" hidden>Installer</a>\n    <div class="prog"', 1)
-    footer_extra = (f'<p class="ver">Version du {version_label(now)} · <a href="installer.html">Installer ou partager l’appli</a></p>\n'
-                    '    <div class="reset">')
-    tpl_body = tpl_body.replace('<div class="reset">', footer_extra, 1)
-    toast = ('<div class="toast" id="updToast" role="status" hidden><span><b>Nouvelle version disponible.</b> '
-             'Nouveaux contenus ou corrections.</span><span style="display:flex;gap:8px">'
-             '<button class="go" id="updGo" type="button">Mettre à jour</button>'
-             '<button class="later" id="updLater" type="button">Plus tard</button></span></div>')
-    app_html = ('<!doctype html>\n<html lang="fr">\n<head>\n' + head_common() + "\n" + tpl_head + APP_CSS +
-                "\n</head>\n<body>\n" + tpl_body + "\n" + toast + "\n" + APP_JS + "\n</body>\n</html>\n")
+    tpl = open(os.path.join(SRC, "app.html"), encoding="utf-8").read()
+    tpl = tpl.replace("@@DATA@@", app_data()).replace("@@MATHJAX@@", "vendor/mathjax/tex-svg.js")
+    left = re.findall(r"@@[A-Z_]+@@", tpl)
+    assert not left, left
+    cut = tpl.index('<svg width="0"')
+    head_part, body_part = tpl[:cut], tpl[cut:]
+    app_html = ('<!doctype html>\n<html lang="fr">\n<head>\n' + head_common() + "\n" + head_part +
+                "</head>\n<body>\n" + body_part + "\n</body>\n</html>\n")
     open(os.path.join(out, "index.html"), "w", encoding="utf-8").write(app_html)
 
     # ---------- Page d'installation ----------
-    style = re.search(r"<style>.*?</style>", tpl_head, re.S).group(0)
-    fonts = re.search(r'<link rel="stylesheet"[^>]*>', tpl_head).group(0)
+    fonts = '<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400&display=swap">'
+    style = "<style>\n" + open(os.path.join(SRC, "installer_base.css"), encoding="utf-8").read() + "</style>"
     inst = open(os.path.join(SRC, "installer.html"), encoding="utf-8").read()
     inst = (inst.replace("@@HEAD@@", head_common())
                 .replace("@@FONTS@@", fonts)
@@ -276,8 +247,7 @@ def build(base_url):
     open(os.path.join(out, "installer.html"), "w", encoding="utf-8").write(inst)
 
     # ---------- Icônes et MathJax ----------
-    if os.path.isdir(os.path.join(SRC, "icons")):
-        shutil.copytree(os.path.join(SRC, "icons"), os.path.join(out, "icons"), dirs_exist_ok=True)
+    shutil.copytree(os.path.join(SRC, "icons"), os.path.join(out, "icons"), dirs_exist_ok=True)
     mj_out = os.path.join(out, "vendor", "mathjax")
     os.makedirs(os.path.join(mj_out, "input", "tex", "extensions"), exist_ok=True)
     shutil.copy(os.path.join(MATHJAX_SRC, "tex-svg.js"), os.path.join(mj_out, "tex-svg.js"))
@@ -286,19 +256,10 @@ def build(base_url):
 
     # ---------- Manifeste ----------
     manifest = {
-        "id": "./",
-        "name": APP_NAME,
-        "short_name": SHORT_NAME,
-        "description": DESC,
-        "lang": "fr",
-        "dir": "ltr",
-        "start_url": "./?source=appli",
-        "scope": "./",
-        "display": "standalone",
-        "orientation": "any",
-        "background_color": "#F4F6FA",
-        "theme_color": "#141C33",
-        "categories": ["education"],
+        "id": "./", "name": APP_NAME, "short_name": SHORT_NAME, "description": DESC,
+        "lang": "fr", "dir": "ltr", "start_url": "./?source=appli", "scope": "./",
+        "display": "standalone", "orientation": "any",
+        "background_color": "#FFFFFF", "theme_color": "#FFFFFF", "categories": ["education"],
         "icons": [
             {"src": "icons/icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any"},
             {"src": "icons/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any"},
@@ -306,9 +267,9 @@ def build(base_url):
             {"src": "icons/maskable-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable"},
         ],
         "shortcuts": [
-            {"name": "QCM", "url": "./#qcm", "icons": [{"src": "icons/icon-192.png", "sizes": "192x192"}]},
-            {"name": "Exercices", "url": "./#exos", "icons": [{"src": "icons/icon-192.png", "sizes": "192x192"}]},
-            {"name": "Fiche", "url": "./#fiche", "icons": [{"src": "icons/icon-192.png", "sizes": "192x192"}]},
+            {"name": "QCM rapide", "url": "./#/qcm/go/tout", "icons": [{"src": "icons/icon-192.png", "sizes": "192x192"}]},
+            {"name": "Fiches du jour", "url": "./#/fiches", "icons": [{"src": "icons/icon-192.png", "sizes": "192x192"}]},
+            {"name": "Exercices de TD", "url": "./#/exos", "icons": [{"src": "icons/icon-192.png", "sizes": "192x192"}]},
         ],
     }
     open(os.path.join(out, "manifest.webmanifest"), "w", encoding="utf-8").write(json.dumps(manifest, ensure_ascii=False, indent=2) + "\n")
@@ -326,10 +287,10 @@ def build(base_url):
     # ---------- Accueil du site ----------
     hub = open(os.path.join(SRC, "accueil.html"), encoding="utf-8").read()
     hub = fill_counts(hub.replace("@@FONTS@@", fonts).replace("@@APP_DIR@@", APP_DIR))
-    assert "@@" not in hub
+    assert "@@" not in hub, re.findall(r"@@\w+@@", hub)
     open(os.path.join(ROOT, "index.html"), "w", encoding="utf-8").write(hub)
     open(os.path.join(ROOT, ".nojekyll"), "w").write("")
-    print("ok · version", version, "·", app_url)
+    print("ok · version", version, "·", app_url, "·", counts())
 
 
 if __name__ == "__main__":

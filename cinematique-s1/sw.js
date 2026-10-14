@@ -1,5 +1,5 @@
 // Service worker : fonctionnement hors ligne et mises à jour de l'application.
-const VERSION = 'abb0fffd5981';
+const VERSION = '9951ddcc3c6c';
 const PREFIX = 'cinematique-s1-';
 const CACHE = PREFIX + VERSION;
 const FONTS = PREFIX + 'polices';

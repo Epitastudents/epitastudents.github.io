@@ -2,8 +2,8 @@
 <html lang="fr">
 <head>
 @@HEAD@@
-<title>Installer Cinématique S1</title>
-<meta name="description" content="Installe gratuitement l'appli de révision du contrôle 1 de physique S1 sur Android, iPhone ou ordinateur.">
+<title>Installer Mécanique S1</title>
+<meta name="description" content="Installe gratuitement l'appli de révision de mécanique S1 sur Android, iPhone ou ordinateur.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 @@FONTS@@
@@ -55,7 +55,7 @@ body { margin: 0; }
 <body>
 <header class="nav">
   <div class="wrap">
-    <a class="brand" href="./">Cinématique<span>S1</span></a>
+    <a class="brand" href="./">Mécanique<span>S1</span></a>
     <span style="flex:1"></span>
     <a class="btn ghost small" href="./">Ouvrir sans installer</a>
   </div>
@@ -66,7 +66,7 @@ body { margin: 0; }
     <img src="icons/icon-192.png" alt="" width="88" height="88">
     <div>
       <h1>Installe l’appli de révision</h1>
-      <p>Le contrôle 1 de physique S1 dans ta poche : cours illustré, @@NB_QCM@@ QCM et @@NB_EXOS@@ exercices des annales.</p>
+      <p>Toute la mécanique du S1 dans ta poche : le cours en fiches courtes, @@NB_QCM@@ questions de QCM, @@NB_EXOS@@ exercices de TD guidés et des cartes mémoire.</p>
       <div class="badges"><span class="chip">Gratuit</span><span class="chip">Sans compte</span><span class="chip">Marche hors ligne</span><span class="chip">Mises à jour automatiques</span></div>
     </div>
   </section>
@@ -143,7 +143,7 @@ body { margin: 0; }
     <details><summary>Comment la supprimer ?</summary><p>Comme une appli normale : appui long sur l’icône, puis « Supprimer » ou « Désinstaller ».</p></details>
   </section>
 
-  <p class="foot">Version du @@VERSION@@. Contenu tiré des annales publiques Epidocs (non affilié à EPITA). <a href="@@APP_URL@@">Ouvrir l’appli</a></p>
+  <p class="foot">Version du @@VERSION@@. Contenu tiré du cours et des TD de mécanique S1, et des annales publiques Epidocs. Appli d’étudiants, non officielle. <a href="@@APP_URL@@">Ouvrir l’appli</a></p>
 </main>
 
 <script>
@@ -191,7 +191,7 @@ body { margin: 0; }
       if (!deferred) return;
       deferred.prompt();
       deferred.userChoice.then(function (r) {
-        if (r && r.outcome === 'accepted') { b.textContent = 'Installée ! Cherche l’icône Cinématique.'; b.disabled = true; }
+        if (r && r.outcome === 'accepted') { b.textContent = 'Installée ! Cherche l’icône Méca S1.'; b.disabled = true; }
         deferred = null;
       });
     });
@@ -213,7 +213,7 @@ body { margin: 0; }
   if (navigator.share) {
     var sb = $('#shareBtn'); sb.hidden = false;
     sb.addEventListener('click', function () {
-      navigator.share({ title: 'Cinématique S1', text: 'L’appli de révision du contrôle 1 de physique S1', url: url }).catch(function () {});
+      navigator.share({ title: 'Mécanique S1', text: 'L’appli de révision de mécanique S1 (cours, QCM, TD)', url: url }).catch(function () {});
     });
   }
 

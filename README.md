@@ -2,7 +2,7 @@
 
 Applis de révision gratuites, installables sur Android, iPhone et ordinateur. Elles marchent hors ligne.
 
-- **Cinématique S1** : le contrôle 1 de physique, avec le cours illustré, des QCM et des exercices corrigés tirés des annales.
+- **Mécanique S1** : le cours de mécanique en fiches courtes, des QCM, les exercices de TD guidés et des cartes mémoire.
   - Installer : `/cinematique-s1/installer.html`
   - Ouvrir : `/cinematique-s1/`
 

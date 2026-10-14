@@ -3,20 +3,20 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<meta name="theme-color" content="#F4F6FA" media="(prefers-color-scheme: light)">
-<meta name="theme-color" content="#0D1220" media="(prefers-color-scheme: dark)">
+<meta name="theme-color" content="#FFFFFF" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#111318" media="(prefers-color-scheme: dark)">
 <link rel="manifest" href="manifest.webmanifest">
 <link rel="icon" href="icons/favicon-64.png" type="image/png">
 <link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-title" content="Cinématique">
-<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-<title>Installer Cinématique S1</title>
-<meta name="description" content="Installe gratuitement l'appli de révision du contrôle 1 de physique S1 sur Android, iPhone ou ordinateur.">
+<meta name="apple-mobile-web-app-title" content="Méca S1">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<title>Installer Mécanique S1</title>
+<meta name="description" content="Installe gratuitement l'appli de révision de mécanique S1 sur Android, iPhone ou ordinateur.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400&family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,800&family=JetBrains+Mono:wght@500;700&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400&display=swap">
 <style>
 /* Layout : un cahier à petits carreaux. Colonne de lecture de 46rem, schémas jusqu'à 60rem, barre de navigation collante avec la progression. */
 :root {
@@ -41,7 +41,7 @@
   --btn: #141C33;
   --btn-ink: #FFFFFF;
   --area: rgba(18, 98, 210, 0.10);
-  --f-disp: "Bricolage Grotesque", "Avenir Next", "Segoe UI", system-ui, sans-serif;
+  --f-disp: "Atkinson Hyperlegible", "Segoe UI", system-ui, sans-serif;
   --f-body: "Atkinson Hyperlegible", "Segoe UI", system-ui, -apple-system, sans-serif;
   --f-mono: "JetBrains Mono", ui-monospace, "SFMono-Regular", Menlo, Consolas, monospace;
   --radius: 12px;
@@ -382,7 +382,7 @@ body { margin: 0; }
 <body>
 <header class="nav">
   <div class="wrap">
-    <a class="brand" href="./">Cinématique<span>S1</span></a>
+    <a class="brand" href="./">Mécanique<span>S1</span></a>
     <span style="flex:1"></span>
     <a class="btn ghost small" href="./">Ouvrir sans installer</a>
   </div>
@@ -393,7 +393,7 @@ body { margin: 0; }
     <img src="icons/icon-192.png" alt="" width="88" height="88">
     <div>
       <h1>Installe l’appli de révision</h1>
-      <p>Le contrôle 1 de physique S1 dans ta poche : cours illustré, 27 QCM et 12 exercices des annales.</p>
+      <p>Toute la mécanique du S1 dans ta poche : le cours en fiches courtes, 63 questions de QCM, 21 exercices de TD guidés et des cartes mémoire.</p>
       <div class="badges"><span class="chip">Gratuit</span><span class="chip">Sans compte</span><span class="chip">Marche hors ligne</span><span class="chip">Mises à jour automatiques</span></div>
     </div>
   </section>
@@ -470,7 +470,7 @@ body { margin: 0; }
     <details><summary>Comment la supprimer ?</summary><p>Comme une appli normale : appui long sur l’icône, puis « Supprimer » ou « Désinstaller ».</p></details>
   </section>
 
-  <p class="foot">Version du 13 octobre 2026. Contenu tiré des annales publiques Epidocs (non affilié à EPITA). <a href="https://epitastudents.github.io/cinematique-s1/">Ouvrir l’appli</a></p>
+  <p class="foot">Version du 15 octobre 2026. Contenu tiré du cours et des TD de mécanique S1, et des annales publiques Epidocs. Appli d’étudiants, non officielle. <a href="https://epitastudents.github.io/cinematique-s1/">Ouvrir l’appli</a></p>
 </main>
 
 <script>
@@ -518,7 +518,7 @@ body { margin: 0; }
       if (!deferred) return;
       deferred.prompt();
       deferred.userChoice.then(function (r) {
-        if (r && r.outcome === 'accepted') { b.textContent = 'Installée ! Cherche l’icône Cinématique.'; b.disabled = true; }
+        if (r && r.outcome === 'accepted') { b.textContent = 'Installée ! Cherche l’icône Méca S1.'; b.disabled = true; }
         deferred = null;
       });
     });
@@ -540,7 +540,7 @@ body { margin: 0; }
   if (navigator.share) {
     var sb = $('#shareBtn'); sb.hidden = false;
     sb.addEventListener('click', function () {
-      navigator.share({ title: 'Cinématique S1', text: 'L’appli de révision du contrôle 1 de physique S1', url: url }).catch(function () {});
+      navigator.share({ title: 'Mécanique S1', text: 'L’appli de révision de mécanique S1 (cours, QCM, TD)', url: url }).catch(function () {});
     });
   }
 
