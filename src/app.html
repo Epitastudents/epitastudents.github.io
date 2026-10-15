@@ -2,164 +2,203 @@
 <meta name="description" content="Révisions de mécanique S1 : le cours en fiches courtes, QCM corrigés, exercices de TD guidés et cartes mémoire.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400&family=Lexend:wght@500;600;700&display=swap">
 <style>
-/* Une seule colonne de lecture (36rem), un écran = une idée, navigation en bas. Fond uni, couleur réservée au sens. */
+/* Mise en page : téléphone = onglets en bas ; PC = menu à gauche. Une colonne de lecture de 44rem.
+   Les boutons d'action restent collés en bas de l'écran. Couleur réservée au sens (vecteurs, juste/faux, action). */
 :root {
-  --bg: #FFFFFF;
-  --surface: #F3F4F7;
-  --line: #E1E4EA;
-  --ink: #15181E;
-  --ink-2: #4D5361;
-  --ink-3: #8A90A0;
-  --accent: #1F5FD1;
+  --bg: #F5F6F8;
+  --card: #FFFFFF;
+  --line: #E4E7EC;
+  --soft: #EEF1F5;
+  --ink: #14171C;
+  --ink-2: #4A5160;
+  --ink-3: #8A91A1;
+  --accent: #2F5BEA;
+  --accent-soft: #E8EEFD;
   --accent-ink: #FFFFFF;
-  --good: #1D7A45;
-  --good-soft: #E6F4EC;
-  --bad: #B93226;
-  --bad-soft: #FBEAE8;
-  --v: #1262D2;
-  --a: #C8371D;
-  --u1: #7A3BD0;
-  --u2: #0B8574;
+  --good: #187A43;
+  --good-soft: #E3F4EA;
+  --bad: #B8332A;
+  --bad-soft: #FCEBEA;
+  --v: #1262D2; --a: #C8371D; --u1: #7A3BD0; --u2: #0B8574;
   --area: rgba(18, 98, 210, 0.08);
-  --grid: #E1E4EA;
+  --shadow: 0 1px 2px rgba(20, 23, 28, 0.06), 0 2px 8px rgba(20, 23, 28, 0.04);
   --f: "Atkinson Hyperlegible", "Segoe UI", system-ui, -apple-system, sans-serif;
-  --r: 12px;
-  --nav-h: 64px;
+  --fh: "Lexend", "Atkinson Hyperlegible", "Segoe UI", system-ui, sans-serif;
+  --r: 14px;
+  --nav-h: 62px;
+  --side: 232px;
 }
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme="light"]) {
-    --bg: #111318; --surface: #1B1E25; --line: #2B2F39; --ink: #ECEEF2; --ink-2: #AEB4C1; --ink-3: #7C8291;
-    --accent: #8AB0FF; --accent-ink: #0E1220; --good: #5BC98A; --good-soft: #15291D; --bad: #FF8C80; --bad-soft: #2E1816;
-    --v: #6AAEFF; --a: #FF7F64; --u1: #BC95FF; --u2: #3FD0B6; --area: rgba(106, 174, 255, 0.12); --grid: #2B2F39;
+    --bg: #0F1115; --card: #181B21; --line: #2A2E37; --soft: #22262E; --ink: #ECEEF2; --ink-2: #AEB4C1; --ink-3: #7A8090;
+    --accent: #86A6FF; --accent-soft: #1E2740; --accent-ink: #0D1120; --good: #5BC98A; --good-soft: #142A1D; --bad: #FF8C80; --bad-soft: #301917;
+    --v: #6AAEFF; --a: #FF7F64; --u1: #BC95FF; --u2: #3FD0B6; --area: rgba(106, 174, 255, 0.12); --shadow: none;
     color-scheme: dark;
   }
 }
 :root[data-theme="dark"] {
-  --bg: #111318; --surface: #1B1E25; --line: #2B2F39; --ink: #ECEEF2; --ink-2: #AEB4C1; --ink-3: #7C8291;
-  --accent: #8AB0FF; --accent-ink: #0E1220; --good: #5BC98A; --good-soft: #15291D; --bad: #FF8C80; --bad-soft: #2E1816;
-  --v: #6AAEFF; --a: #FF7F64; --u1: #BC95FF; --u2: #3FD0B6; --area: rgba(106, 174, 255, 0.12); --grid: #2B2F39;
+  --bg: #0F1115; --card: #181B21; --line: #2A2E37; --soft: #22262E; --ink: #ECEEF2; --ink-2: #AEB4C1; --ink-3: #7A8090;
+  --accent: #86A6FF; --accent-soft: #1E2740; --accent-ink: #0D1120; --good: #5BC98A; --good-soft: #142A1D; --bad: #FF8C80; --bad-soft: #301917;
+  --v: #6AAEFF; --a: #FF7F64; --u1: #BC95FF; --u2: #3FD0B6; --area: rgba(106, 174, 255, 0.12); --shadow: none;
   color-scheme: dark;
 }
 * { box-sizing: border-box; }
 [hidden] { display: none !important; }
-html { -webkit-text-size-adjust: 100%; }
+html { -webkit-text-size-adjust: 100%; -webkit-tap-highlight-color: transparent; }
 body { margin: 0; background: var(--bg); color: var(--ink); font: 18px/1.6 var(--f); }
 button { font: inherit; color: inherit; }
 a { color: var(--accent); text-underline-offset: 3px; }
-:focus-visible { outline: 3px solid var(--accent); outline-offset: 2px; border-radius: 6px; }
-h1, h2, h3 { line-height: 1.2; margin: 0; text-wrap: balance; }
-h1 { font-size: 1.55rem; }
-h2 { font-size: 1.25rem; }
-h3 { font-size: 1.05rem; }
+:focus-visible { outline: 3px solid var(--accent); outline-offset: 2px; border-radius: 8px; }
+h1, h2, h3 { font-family: var(--fh); font-weight: 600; line-height: 1.2; margin: 0; text-wrap: balance; letter-spacing: -0.01em; }
+h1 { font-size: 1.5rem; }
+h2 { font-size: 1.15rem; }
 p { margin: 0.5rem 0; }
-ul, ol { margin: 0.4rem 0; padding-left: 1.3rem; }
-li + li { margin-top: 0.3rem; }
+ul, ol { margin: 0.5rem 0; padding-left: 1.3rem; }
+li + li { margin-top: 0.35rem; }
 
-/* ---------- Barre du haut ---------- */
-.top { position: sticky; top: 0; z-index: 20; background: var(--bg); border-bottom: 1px solid var(--line); padding-top: env(safe-area-inset-top, 0px); }
-.top-in { max-width: 40rem; margin: 0 auto; padding-inline: 16px; height: 52px; display: flex; align-items: center; gap: 10px; }
-.back { border: 0; background: transparent; padding: 6px 8px 6px 0; cursor: pointer; display: inline-flex; align-items: center; color: var(--ink-2); font-size: 0.95rem; }
-.back svg { width: 20px; height: 20px; }
-.top-title { flex: 1; min-width: 0; font-weight: 700; font-size: 1rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-.top-count { font-size: 0.85rem; color: var(--ink-2); font-variant-numeric: tabular-nums; }
-.bar { height: 3px; background: var(--line); }
-.bar i { display: block; height: 100%; background: var(--accent); width: 0; transition: width .25s; }
-
-/* ---------- Contenu ---------- */
-main { max-width: 40rem; margin: 0 auto; padding: 20px 16px calc(var(--nav-h) + 28px + env(safe-area-inset-bottom, 0px)); }
+/* ---------- Structure ---------- */
+.top { position: sticky; top: 0; z-index: 20; background: var(--bg); padding-top: env(safe-area-inset-top, 0px); }
+.top-in { max-width: 46rem; margin: 0 auto; padding-inline: 16px; height: 56px; display: flex; align-items: center; gap: 8px; }
+.back { flex: 0 0 auto; width: 40px; height: 40px; margin-left: -8px; border: 0; border-radius: 10px; background: transparent; cursor: pointer; display: grid; place-items: center; color: var(--ink); }
+.back:hover { background: var(--soft); }
+.back svg { width: 22px; height: 22px; }
+.top-title { flex: 1; min-width: 0; font-family: var(--fh); font-weight: 600; font-size: 1.02rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.top-count { font-size: 0.86rem; color: var(--ink-2); font-variant-numeric: tabular-nums; }
+.bar { height: 4px; background: var(--line); }
+.bar i { display: block; height: 100%; background: var(--accent); width: 0; transition: width .25s; border-radius: 0 2px 2px 0; }
+main { max-width: 46rem; margin: 0 auto; padding: 12px 16px calc(var(--nav-h) + 24px + env(safe-area-inset-bottom, 0px)); outline: none; }
 .stack { display: grid; gap: 14px; }
-.stack > *, .duo > *, .pager > * { min-width: 0; }
+.stack > *, .duo > *, .actions > * { min-width: 0; }
 .muted { color: var(--ink-2); }
 .small { font-size: 0.88rem; }
-.panel { background: var(--surface); border-radius: var(--r); padding: 16px; }
-.row { display: flex; align-items: center; gap: 12px; }
-.row > .grow { flex: 1; min-width: 0; }
-.btn { display: inline-flex; align-items: center; justify-content: center; gap: 8px; min-height: 46px; padding: 10px 18px; border-radius: 10px; border: 0; background: var(--accent); color: var(--accent-ink); font-weight: 700; text-decoration: none; cursor: pointer; }
-.btn.sec { background: var(--surface); color: var(--ink); }
-.btn.line { background: transparent; color: var(--ink); box-shadow: inset 0 0 0 1.5px var(--line); }
+.label { font-family: var(--fh); font-size: 0.76rem; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; color: var(--ink-2); }
+.card { background: var(--card); border: 1px solid var(--line); border-radius: var(--r); box-shadow: var(--shadow); padding: 18px; }
+
+/* ---------- Boutons ---------- */
+.btn { display: inline-flex; align-items: center; justify-content: center; gap: 8px; min-height: 50px; padding: 10px 18px; border-radius: 12px; border: 0; background: var(--accent); color: var(--accent-ink); font-weight: 700; text-decoration: none; cursor: pointer; user-select: none; }
+.btn:hover { filter: brightness(1.06); }
+.btn:active { transform: translateY(1px); }
+.btn.sec { background: var(--card); color: var(--ink); box-shadow: inset 0 0 0 1.5px var(--line); }
 .btn.full { width: 100%; }
 .btn:disabled { opacity: 0.45; cursor: default; }
 .duo { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
-.label { font-size: 0.78rem; font-weight: 700; letter-spacing: 0.04em; text-transform: uppercase; color: var(--ink-2); }
+.actions { position: sticky; bottom: calc(var(--nav-h) + 10px + env(safe-area-inset-bottom, 0px)); z-index: 10; display: grid; grid-template-columns: 1fr 1.7fr; gap: 10px; margin-top: 18px; padding: 10px; background: var(--card); border: 1px solid var(--line); border-radius: 18px; box-shadow: 0 6px 24px rgba(20, 23, 28, 0.10); }
+.actions.one { grid-template-columns: 1fr; }
+.kbd-hint { text-align: center; font-size: 0.8rem; color: var(--ink-3); margin-top: 8px; }
 
-/* Listes cliquables */
+/* ---------- Listes ---------- */
 .list { display: grid; gap: 8px; }
-.item { display: flex; align-items: center; gap: 12px; width: 100%; text-align: left; background: var(--surface); border: 0; border-radius: var(--r); padding: 12px 14px; cursor: pointer; text-decoration: none; color: var(--ink); min-height: 56px; }
-.item:hover { filter: brightness(0.98); }
-.num { flex: 0 0 auto; width: 30px; height: 30px; border-radius: 8px; display: grid; place-items: center; font-weight: 700; font-size: 0.9rem; background: var(--bg); color: var(--ink-2); }
-.num.done { background: var(--good); color: var(--bg); }
-.item .t { font-weight: 700; display: block; }
-.item .s { display: block; font-size: 0.86rem; color: var(--ink-2); }
-.meter { height: 5px; border-radius: 3px; background: var(--line); overflow: hidden; margin-top: 6px; }
-.meter i { display: block; height: 100%; background: var(--good); }
-.chev { color: var(--ink-3); flex: 0 0 auto; }
+.item { display: flex; align-items: center; gap: 14px; width: 100%; text-align: left; background: var(--card); border: 1px solid var(--line); box-shadow: var(--shadow); border-radius: var(--r); padding: 12px 14px; cursor: pointer; text-decoration: none; color: var(--ink); min-height: 64px; }
+.item:hover { border-color: var(--ink-3); }
+.item .grow { flex: 1; min-width: 0; }
+.num { flex: 0 0 auto; width: 36px; height: 36px; border-radius: 10px; display: grid; place-items: center; font-family: var(--fh); font-weight: 600; font-size: 0.95rem; background: var(--accent-soft); color: var(--accent); }
+.num.done { background: var(--good); color: var(--card); }
+.item .t { font-weight: 700; display: block; line-height: 1.3; }
+.item .s { display: block; font-size: 0.86rem; color: var(--ink-2); margin-top: 2px; }
+.meter { height: 5px; border-radius: 3px; background: var(--soft); overflow: hidden; margin-top: 8px; }
+.meter i { display: block; height: 100%; background: var(--good); border-radius: 3px; }
+.chev { color: var(--ink-3); flex: 0 0 auto; font-size: 1.4rem; line-height: 1; }
 
-/* ---------- Carte de cours ---------- */
-.card h1 { margin-bottom: 6px; }
-.key { background: var(--surface); border-radius: var(--r); padding: 12px 14px; margin: 14px 0; overflow-x: auto; }
-.key .label { display: block; margin-bottom: 2px; }
-.trap { margin: 14px 0; padding: 10px 14px; border-radius: var(--r); background: var(--bad-soft); color: var(--ink); font-size: 0.95rem; }
+/* ---------- Accueil ---------- */
+.hello { font-family: var(--fh); font-size: 1.6rem; font-weight: 700; margin: 8px 0 2px; }
+.resume { display: block; text-decoration: none; color: var(--ink); background: var(--accent); color: var(--accent-ink); border-radius: 18px; padding: 18px 18px 16px; box-shadow: var(--shadow); }
+.resume .label { color: inherit; opacity: 0.85; }
+.resume .t { display: block; font-family: var(--fh); font-size: 1.25rem; font-weight: 600; margin: 4px 0 10px; }
+.resume .meter { background: rgba(255,255,255,0.3); }
+.resume .meter i { background: var(--accent-ink); }
+.tiles { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.tile { display: grid; gap: 2px; text-decoration: none; color: var(--ink); background: var(--card); border: 1px solid var(--line); box-shadow: var(--shadow); border-radius: var(--r); padding: 14px; }
+.tile b { font-family: var(--fh); font-size: 1.6rem; font-weight: 700; line-height: 1.1; }
+.tile span { font-size: 0.9rem; color: var(--ink-2); }
+.sec-title { display: flex; align-items: baseline; justify-content: space-between; margin-top: 10px; }
+
+/* ---------- Fiche de cours ---------- */
+.lesson h1 { font-size: 1.45rem; margin-bottom: 8px; }
+.meta { font-size: 0.85rem; color: var(--ink-2); margin: 0 0 6px; }
+.key { background: var(--accent-soft); border-radius: 12px; padding: 12px 14px; margin: 16px 0; overflow-x: auto; }
+.key .label { display: block; color: var(--accent); margin-bottom: 2px; }
+.trap { margin: 16px 0 0; padding: 12px 14px; border-radius: 12px; background: var(--bad-soft); font-size: 0.95rem; }
 .trap b { color: var(--bad); }
-.fig { margin: 14px 0; }
-.fig-row { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; text-align: center; font-size: 0.82rem; color: var(--ink-2); }
-.pager { display: grid; grid-template-columns: 1fr 1.6fr; gap: 10px; margin-top: 22px; }
-.dots { display: flex; gap: 6px; justify-content: center; margin-top: 14px; flex-wrap: wrap; }
-.dots i { width: 8px; height: 8px; border-radius: 50%; background: var(--line); }
-.dots i.on { background: var(--accent); }
+.fig { margin: 16px 0 0; }
+.fig svg { max-height: min(38vh, 320px); max-width: 100%; display: block; margin: 0 auto; }
+.fig-row { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; text-align: center; font-size: 0.8rem; color: var(--ink-2); }
+.dots { display: flex; gap: 6px; justify-content: center; flex-wrap: wrap; margin-top: 14px; }
+.dots i { width: 7px; height: 7px; border-radius: 50%; background: var(--line); }
+.dots i.on { background: var(--accent); width: 18px; border-radius: 4px; }
 mjx-container { max-width: 100%; }
-mjx-container[display="true"] { margin: 0.4em 0 !important; overflow-x: auto; overflow-y: hidden; }
+mjx-container[display="true"] { margin: 0.35em 0 !important; overflow-x: auto; overflow-y: hidden; padding: 2px 0; }
 
 /* ---------- QCM ---------- */
 .chips { display: flex; flex-wrap: wrap; gap: 8px; }
-.chip { border: 0; border-radius: 999px; padding: 8px 14px; background: var(--surface); color: var(--ink); cursor: pointer; font-size: 0.92rem; min-height: 40px; }
-.chip[aria-pressed="true"] { background: var(--accent); color: var(--accent-ink); font-weight: 700; }
-.q-text { font-size: 1.12rem; font-weight: 700; margin: 6px 0 14px; }
+.chip { border: 1px solid var(--line); border-radius: 999px; padding: 8px 14px; background: var(--card); color: var(--ink); cursor: pointer; font-size: 0.92rem; min-height: 42px; }
+.chip[aria-pressed="true"] { background: var(--accent); border-color: var(--accent); color: var(--accent-ink); font-weight: 700; }
+.q-text { font-size: 1.15rem; font-weight: 700; line-height: 1.45; margin: 4px 0 16px; }
 .opts { display: grid; gap: 10px; }
-.opt { display: flex; gap: 12px; align-items: center; text-align: left; width: 100%; min-height: 54px; background: var(--surface); border: 2px solid transparent; border-radius: var(--r); padding: 10px 14px; cursor: pointer; overflow-x: auto; }
-.opt .k { flex: 0 0 auto; width: 28px; height: 28px; border-radius: 7px; display: grid; place-items: center; font-weight: 700; font-size: 0.85rem; background: var(--bg); color: var(--ink-2); }
-.opt.sel { border-color: var(--accent); }
+.opt { display: flex; gap: 12px; align-items: center; text-align: left; width: 100%; min-height: 58px; background: var(--card); border: 2px solid var(--line); border-radius: var(--r); padding: 10px 14px; cursor: pointer; overflow-x: auto; }
+.opt:hover:not(:disabled) { border-color: var(--ink-3); }
+.opt .k { flex: 0 0 auto; width: 30px; height: 30px; border-radius: 8px; display: grid; place-items: center; font-family: var(--fh); font-weight: 600; font-size: 0.85rem; background: var(--soft); color: var(--ink-2); }
+.opt.sel { border-color: var(--accent); background: var(--accent-soft); }
 .opt.ok { border-color: var(--good); background: var(--good-soft); }
-.opt.ok .k { background: var(--good); color: var(--bg); }
+.opt.ok .k { background: var(--good); color: var(--card); }
 .opt.ko { border-color: var(--bad); background: var(--bad-soft); }
-.opt.ko .k { background: var(--bad); color: var(--bg); }
+.opt.ko .k { background: var(--bad); color: var(--card); }
 .opt:disabled { cursor: default; }
-.fb { margin-top: 14px; padding: 12px 14px; border-radius: var(--r); background: var(--surface); }
+.fb { margin-top: 14px; padding: 14px; border-radius: var(--r); background: var(--card); border: 1px solid var(--line); }
 .fb b.ok { color: var(--good); }
 .fb b.ko { color: var(--bad); }
-.score { font-size: 2.6rem; font-weight: 700; line-height: 1; }
+.score { font-family: var(--fh); font-size: 3rem; font-weight: 700; line-height: 1; margin: 8px 0; }
 
 /* ---------- Exercices ---------- */
-.enonce { background: var(--surface); border-radius: var(--r); padding: 12px 14px; }
-.step-q { font-weight: 700; margin: 4px 0 10px; }
-textarea { width: 100%; min-height: 110px; resize: vertical; font: 1rem/1.5 var(--f); color: var(--ink); background: var(--bg); border: 1.5px solid var(--line); border-radius: var(--r); padding: 10px 12px; }
-textarea:focus { border-color: var(--accent); outline: none; }
-.hint { margin-top: 10px; padding: 10px 14px; border-radius: var(--r); background: var(--surface); font-size: 0.95rem; }
-.corr { margin-top: 10px; padding: 12px 14px; border-radius: var(--r); background: var(--good-soft); overflow-x: auto; }
-.tag { display: inline-block; font-size: 0.8rem; font-weight: 700; padding: 2px 8px; border-radius: 6px; background: var(--surface); color: var(--ink-2); }
+.enonce { font-size: 0.95rem; }
+.step-q { font-weight: 700; font-size: 1.05rem; margin: 0 0 10px; }
+textarea { display: block; width: 100%; min-height: 96px; resize: vertical; font: 1rem/1.5 var(--f); color: var(--ink); background: var(--bg); border: 1.5px solid var(--line); border-radius: 12px; padding: 10px 12px; }
+textarea:focus { border-color: var(--accent); outline: none; background: var(--card); }
+.reveal { margin-top: 10px; padding: 12px 14px; border-radius: 12px; overflow-x: auto; }
+.reveal.hint { background: var(--soft); }
+.reveal.corr { background: var(--good-soft); }
+.tag { display: inline-block; font-size: 0.78rem; font-weight: 700; padding: 3px 9px; border-radius: 999px; background: var(--soft); color: var(--ink-2); margin-right: 4px; }
+.steps-dots { display: flex; gap: 5px; margin: 2px 0 10px; }
+.steps-dots i { flex: 1; height: 4px; border-radius: 2px; background: var(--line); }
+.steps-dots i.on { background: var(--accent); }
 
 /* ---------- Fiches mémoire ---------- */
-.flash { min-height: 260px; display: grid; align-content: center; gap: 12px; text-align: center; background: var(--surface); border-radius: 16px; padding: 24px 18px; }
-.flash .front { font-size: 1.15rem; font-weight: 700; }
-.flash .backside { font-size: 1.1rem; border-top: 1px solid var(--line); padding-top: 14px; overflow-x: auto; }
+.flash { min-height: 300px; display: grid; align-content: center; gap: 14px; text-align: center; cursor: pointer; }
+.flash .front { font-family: var(--fh); font-size: 1.2rem; font-weight: 600; }
+.flash .answer { font-size: 1.1rem; border-top: 1px dashed var(--line); padding-top: 14px; overflow-x: auto; }
+.flash .tap { font-size: 0.85rem; color: var(--ink-3); }
 
-/* ---------- Navigation du bas ---------- */
-.nav { position: fixed; left: 0; right: 0; bottom: 0; z-index: 30; background: var(--bg); border-top: 1px solid var(--line); padding-bottom: env(safe-area-inset-bottom, 0px); }
-.nav-in { max-width: 40rem; margin: 0 auto; display: grid; grid-template-columns: repeat(5, 1fr); height: var(--nav-h); }
-.nav a { display: grid; justify-items: center; align-content: center; gap: 2px; text-decoration: none; color: var(--ink-3); font-size: 0.72rem; font-weight: 700; }
+/* ---------- Navigation ---------- */
+.nav { position: fixed; left: 0; right: 0; bottom: 0; z-index: 30; background: var(--card); border-top: 1px solid var(--line); padding-bottom: env(safe-area-inset-bottom, 0px); }
+.nav-in { max-width: 46rem; margin: 0 auto; display: grid; grid-template-columns: repeat(5, 1fr); height: var(--nav-h); }
+.nav a { display: grid; justify-items: center; align-content: center; gap: 3px; text-decoration: none; color: var(--ink-3); font-size: 0.72rem; font-weight: 700; position: relative; }
 .nav a svg { width: 24px; height: 24px; }
 .nav a[aria-current="page"] { color: var(--accent); }
-.badge { display: inline-block; min-width: 18px; padding: 0 5px; border-radius: 9px; background: var(--accent); color: var(--accent-ink); font-size: 0.7rem; line-height: 18px; text-align: center; }
+.nav .brand-side { display: none; }
+.badge { position: absolute; top: 6px; left: calc(50% + 6px); min-width: 18px; padding: 0 5px; border-radius: 9px; background: var(--accent); color: var(--accent-ink); font-size: 0.68rem; line-height: 18px; text-align: center; }
 
-/* ---------- Toast de mise à jour ---------- */
-.toast { position: fixed; left: 50%; bottom: calc(var(--nav-h) + 12px + env(safe-area-inset-bottom, 0px)); transform: translateX(-50%); z-index: 60; display: flex; flex-wrap: wrap; align-items: center; gap: 10px 14px; width: max-content; max-width: calc(100% - 32px); background: var(--ink); color: var(--bg); border-radius: 14px; padding: 12px 14px 12px 18px; box-shadow: 0 8px 28px rgba(0,0,0,.25); font-size: 0.95rem; }
-.toast button { border-radius: 9px; padding: 7px 12px; cursor: pointer; font-weight: 700; border: 1.5px solid var(--bg); }
-.toast .go { background: var(--bg); color: var(--ink); }
-.toast .later { background: transparent; color: var(--bg); }
+@media (min-width: 960px) {
+  body { padding-left: var(--side); }
+  .nav { top: 0; right: auto; width: var(--side); border-top: 0; border-right: 1px solid var(--line); padding: 20px 12px; }
+  .nav-in { display: grid; grid-template-columns: 1fr; grid-auto-rows: min-content; gap: 4px; height: auto; max-width: none; }
+  .nav .brand-side { display: block; font-family: var(--fh); font-weight: 700; font-size: 1.15rem; color: var(--ink); padding: 4px 12px 18px; }
+  .nav a { display: flex; align-items: center; gap: 12px; justify-items: start; padding: 10px 12px; border-radius: 10px; font-size: 0.98rem; color: var(--ink-2); }
+  .nav a:hover { background: var(--soft); }
+  .nav a[aria-current="page"] { background: var(--accent-soft); color: var(--accent); }
+  .nav a svg { width: 22px; height: 22px; }
+  .badge { position: static; margin-left: auto; }
+  main { padding-bottom: 40px; padding-top: 18px; }
+  .actions { bottom: 16px; }
+  .top-in, main { max-width: 48rem; }
+}
 
-/* ---------- Schémas (SVG) ---------- */
-.fig-svg { width: 100%; height: auto; display: block; }
+/* ---------- Toast ---------- */
+.toast { position: fixed; left: 50%; bottom: calc(var(--nav-h) + 14px + env(safe-area-inset-bottom, 0px)); transform: translateX(-50%); z-index: 60; display: flex; flex-wrap: wrap; align-items: center; gap: 10px 14px; width: max-content; max-width: calc(100% - 32px); background: var(--ink); color: var(--bg); border-radius: 14px; padding: 12px 14px 12px 18px; box-shadow: 0 8px 28px rgba(0,0,0,.25); font-size: 0.95rem; }
+.toast button { border-radius: 9px; padding: 7px 12px; cursor: pointer; font-weight: 700; border: 0; background: var(--bg); color: var(--ink); }
+
+/* ---------- Schémas ---------- */
+.fig-svg { width: 100%; height: auto; display: block; max-height: min(42vh, 360px); }
 .fig-svg.mini, .fig-svg.half { max-width: 460px; margin: 0 auto; }
 .fig-svg.icon { max-width: 160px; margin: 0 auto; }
 .ln { fill: none; stroke-linecap: round; }
@@ -173,7 +212,7 @@ textarea:focus { border-color: var(--accent); outline: none; }
 .dot-ink { fill: var(--ink); } .dot-ink2 { fill: var(--ink-2); } .dot-ink3 { fill: var(--ink-3); }
 .area { fill: var(--area); stroke: none; }
 .cv { color: var(--v); } .ca { color: var(--a); } .c1 { color: var(--u1); } .c2 { color: var(--u2); }
-.polar-ctl { display: grid; gap: 8px; margin-top: 8px; }
+.polar-ctl { display: grid; gap: 6px; margin-top: 8px; }
 .polar-ctl input { width: 100%; accent-color: var(--accent); }
 @media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
 </style>
@@ -192,7 +231,7 @@ textarea:focus { border-color: var(--accent); outline: none; }
 
 <header class="top">
   <div class="top-in">
-    <button class="back" id="back" type="button" hidden aria-label="Retour"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 5l-7 7 7 7"/></svg></button>
+    <button class="back" id="topBack" type="button" hidden aria-label="Retour"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 5l-7 7 7 7"/></svg></button>
     <span class="top-title" id="topTitle">Mécanique S1</span>
     <span class="top-count" id="topCount"></span>
   </div>
@@ -203,15 +242,16 @@ textarea:focus { border-color: var(--accent); outline: none; }
 
 <nav class="nav" aria-label="Navigation principale">
   <div class="nav-in">
+    <span class="brand-side">Mécanique S1</span>
     <a href="#/" data-tab="home"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11l9-7 9 7"/><path d="M5 10v10h14V10"/></svg>Accueil</a>
     <a href="#/cours" data-tab="cours"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 5a2 2 0 0 1 2-2h13v16H6a2 2 0 0 0-2 2z"/><path d="M4 21V5"/></svg>Cours</a>
     <a href="#/qcm" data-tab="qcm"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M8 12.5l2.6 2.5L16 9.5"/></svg>QCM</a>
     <a href="#/exos" data-tab="exos"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20h4L19 9l-4-4L4 16z"/><path d="M13.5 6.5l4 4"/></svg>TD</a>
-    <a href="#/fiches" data-tab="fiches"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="6" width="14" height="14" rx="2"/><path d="M7 3h12a2 2 0 0 1 2 2v12"/></svg>Fiches</a>
+    <a href="#/fiches" data-tab="fiches"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="6" width="14" height="14" rx="2"/><path d="M7 3h12a2 2 0 0 1 2 2v12"/></svg>Fiches<span class="badge" id="navBadge" hidden></span></a>
   </div>
 </nav>
 
-<div class="toast" id="updToast" role="status" hidden><span><b>Nouvelle version disponible.</b> Nouveaux contenus ou corrections.</span><span style="display:flex;gap:8px"><button class="go" id="updGo" type="button">Mettre à jour</button><button class="later" id="updLater" type="button">Plus tard</button></span></div>
+<div class="toast" id="updToast" role="status" hidden><span>Nouvelle version prête.</span><button id="updGo" type="button">Recharger</button></div>
 
 <script id="data" type="application/json">@@DATA@@</script>
 <script>
@@ -248,102 +288,123 @@ window.MathJax = {
   var CH = D.chapitres, LE = D.lecons, Q = D.qcm, EX = D.exos, FI = D.fiches;
   var chById = {}; CH.forEach(function (c) { chById[c.id] = c; });
   var KEY = 'meca-s1-v2';
-  var S = { lu: {}, qcm: {}, exo: {}, rep: {}, srs: {}, last: null };
-  try { var raw = localStorage.getItem(KEY); if (raw) { var o = JSON.parse(raw); if (o && typeof o === 'object') Object.keys(S).forEach(function (k) { if (o[k] !== undefined) S[k] = o[k]; }); } } catch (e) {}
+  function fresh() { return { lu: {}, qcm: {}, exo: {}, rep: {}, srs: {}, last: null }; }
+  var S = fresh();
+  try { var raw = localStorage.getItem(KEY); if (raw) { var o = JSON.parse(raw); if (o && typeof o === 'object') Object.keys(S).forEach(function (k) { if (o[k] !== undefined && o[k] !== null) S[k] = o[k]; }); } } catch (e) {}
   function save() { try { localStorage.setItem(KEY, JSON.stringify(S)); } catch (e) {} }
   var $ = function (s, r) { return (r || document).querySelector(s); };
   var $$ = function (s, r) { return Array.prototype.slice.call((r || document).querySelectorAll(s)); };
   var view = $('#view');
   function esc(s) { return String(s).replace(/[&<>"]/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]; }); }
   function today() { var d = new Date(); return Math.floor((d.getTime() - d.getTimezoneOffset() * 60000) / 864e5); }
+  function go(h) { if (location.hash === h) route(); else location.hash = h; }
 
   /* ---------- Formules ---------- */
   var pending = [];
   window.__mjPending = function () { var p = pending; pending = []; p.forEach(typeset); };
   function typeset(el) {
-    if (window.__mjReady && window.MathJax && MathJax.typesetPromise) { MathJax.typesetClear && MathJax.typesetClear([el]); MathJax.typesetPromise([el]).catch(function () {}); }
+    if (!el) return;
+    if (window.__mjReady && window.MathJax && MathJax.typesetPromise) { MathJax.typesetPromise([el]).catch(function () {}); }
     else pending.push(el);
   }
 
-  /* ---------- En-tête ---------- */
+  /* ---------- En-tête, onglets, raccourcis ---------- */
+  var keys = null, swipe = null;
   function header(title, count, progress, back) {
     $('#topTitle').textContent = title;
     $('#topCount').textContent = count || '';
     var bar = $('#topBar');
     if (progress == null) bar.hidden = true; else { bar.hidden = false; $('i', bar).style.width = Math.round(progress * 100) + '%'; }
-    var b = $('#back'); b.hidden = !back; b.onclick = back ? function () { location.hash = back; } : null;
+    var b = $('#topBack'); b.hidden = !back; b.onclick = back ? function () { go(back); } : null;
   }
-  function tab(name) { $$('.nav a').forEach(function (a) { if (a.dataset.tab === name) a.setAttribute('aria-current', 'page'); else a.removeAttribute('aria-current'); }); }
-  function render(html) { view.innerHTML = html; window.scrollTo(0, 0); typeset(view); }
+  function tab(name) {
+    $$('.nav a').forEach(function (a) { if (a.dataset.tab === name) a.setAttribute('aria-current', 'page'); else a.removeAttribute('aria-current'); });
+    var n = dueCards().length, bd = $('#navBadge'); bd.hidden = !n; bd.textContent = n;
+  }
+  function render(html) { keys = null; swipe = null; view.innerHTML = html; window.scrollTo(0, 0); typeset(view); }
+  document.addEventListener('keydown', function (e) {
+    if (!keys || e.target.tagName === 'TEXTAREA' || e.target.tagName === 'INPUT' || e.metaKey || e.ctrlKey || e.altKey) return;
+    var f = keys[e.key]; if (f) { e.preventDefault(); f(); }
+  });
+  var tx = null, ty = null;
+  view.addEventListener('touchstart', function (e) { if (e.touches.length === 1) { tx = e.touches[0].clientX; ty = e.touches[0].clientY; } }, { passive: true });
+  view.addEventListener('touchend', function (e) {
+    if (tx == null || !swipe) return;
+    var dx = e.changedTouches[0].clientX - tx, dy = e.changedTouches[0].clientY - ty; tx = null;
+    if (Math.abs(dx) > 70 && Math.abs(dx) > 2 * Math.abs(dy) && !(e.target.closest && e.target.closest('input, textarea, .fig, mjx-container'))) { if (dx < 0 && swipe.next) swipe.next(); if (dx > 0 && swipe.prev) swipe.prev(); }
+  }, { passive: true });
 
-  /* ---------- Fiches mémoire : calcul des cartes dues ---------- */
+  /* ---------- Révision espacée ---------- */
   var BOX = [0, 1, 3, 7, 14, 30];
   function dueCards() { var t = today(); return FI.filter(function (f) { var s = S.srs[f.id]; return !s || s.d <= t; }); }
 
   /* ---------- Accueil ---------- */
   function chapterProgress(c) {
-    var n = (LE[c.id] || []).length, seen = S.lu[c.id] || 0;
+    var n = (LE[c.id] || []).length, seen = Math.min(S.lu[c.id] || 0, n);
     var qs = Q.filter(function (q) { return q.ch === c.id; }), ok = qs.filter(function (q) { return S.qcm[q.id] && S.qcm[q.id].ok; }).length;
-    return { lu: Math.min(seen, n), n: n, ok: ok, nq: qs.length };
+    return { lu: seen, n: n, ok: ok, nq: qs.length };
+  }
+  function chapterRow(c, withResume) {
+    var p = chapterProgress(c), done = p.n > 0 && p.lu >= p.n;
+    return '<a class="item" href="#/cours/' + c.id + '"><span class="num' + (done ? ' done' : '') + '">' + c.n + '</span><span class="grow"><span class="t">' + esc(c.titre) + '</span>' +
+      '<span class="s">' + (withResume ? esc(c.resume) : (c.td ? c.td + ' · ' : '') + p.lu + '/' + p.n + ' fiches · QCM ' + p.ok + '/' + p.nq) + '</span>' +
+      (withResume ? '' : '<span class="meter"><i style="width:' + Math.round(100 * p.lu / Math.max(p.n, 1)) + '%"></i></span>') + '</span><span class="chev">›</span></a>';
   }
   function home() {
     tab('home'); header('Mécanique S1');
     var due = dueCards().length;
-    var cont = S.last && S.last !== '#/' ? S.last : '#/cours/cine/0';
-    var contLabel = S.last ? 'Reprendre où tu t’es arrêté' : 'Commencer : cinématique';
-    var rows = CH.map(function (c) {
-      var p = chapterProgress(c), pct = p.n ? (p.lu / p.n) : 0, done = p.lu >= p.n && p.n > 0;
-      return '<a class="item" href="#/cours/' + c.id + '"><span class="num' + (done ? ' done' : '') + '">' + c.n + '</span><span class="grow"><span class="t">' + esc(c.titre) + '</span>' +
-        '<span class="s">' + (c.td ? c.td + ' · ' : '') + 'QCM ' + p.ok + '/' + p.nq + '</span><span class="meter"><i style="width:' + Math.round(pct * 100) + '%"></i></span></span></a>';
-    }).join('');
+    var lastCh = null;
+    if (S.last) { var m = S.last.match(/^#\/cours\/(\w+)/); if (m && chById[m[1]]) lastCh = chById[m[1]]; }
+    var target = lastCh || CH.filter(function (c) { var p = chapterProgress(c); return p.lu < p.n; })[0] || CH[1];
+    var tp = chapterProgress(target);
+    var okQ = Q.filter(function (q) { return S.qcm[q.id] && S.qcm[q.id].ok; }).length;
     render('<div class="stack">' +
-      '<a class="btn full" href="' + cont + '">' + contLabel + '</a>' +
-      '<div class="duo"><a class="btn sec" href="#/fiches">Fiches du jour ' + (due ? '<span class="badge">' + due + '</span>' : '') + '</a><a class="btn sec" href="#/qcm/go/tout">QCM rapide</a></div>' +
-      '<p class="small muted" style="margin:6px 0 0">Évaluation : 4 QCM (10 %) et 2 partiels (90 %). Le plus efficace : quelques QCM et fiches chaque jour, plutôt que tout relire la veille.</p>' +
-      '<h2 style="margin-top:10px">Chapitres</h2><div class="list">' + rows + '</div>' +
-      '<div class="list" style="margin-top:6px"><a class="item" href="#/annales"><span class="grow"><span class="t">Anciens sujets</span><span class="s">Contrôles 2017 à 2022 et partiels (Epidocs)</span></span><span class="chev">›</span></a>' +
+      '<a class="resume" href="' + (lastCh ? S.last : '#/cours/' + target.id) + '"><span class="label">' + (S.last ? 'Continuer' : 'Commencer') + '</span>' +
+      '<span class="t">' + target.n + '. ' + esc(target.titre) + '</span><span class="meter"><i style="width:' + Math.round(100 * tp.lu / Math.max(tp.n, 1)) + '%"></i></span></a>' +
+      '<div class="tiles"><a class="tile" href="#/fiches"><b>' + due + '</b><span>fiche' + (due > 1 ? 's' : '') + ' à revoir</span></a>' +
+      '<a class="tile" href="#/qcm/go/tout"><b>' + okQ + '<small style="font-size:1rem;color:var(--ink-3)">/' + Q.length + '</small></b><span>QCM réussis · lancer</span></a></div>' +
+      '<p class="small muted" style="margin:2px 2px 0">Évaluation : 4 QCM Moodle (10 %) et 2 partiels (90 %). Le plus efficace : un peu de QCM et de fiches chaque jour.</p>' +
+      '<div class="sec-title"><h2>Chapitres</h2></div><div class="list">' + CH.map(function (c) { return chapterRow(c, false); }).join('') + '</div>' +
+      '<div class="sec-title"><h2>Plus</h2></div><div class="list">' +
+      '<a class="item" href="#/annales"><span class="grow"><span class="t">Anciens sujets</span><span class="s">Contrôles 2017–2022 et partiels (Epidocs)</span></span><span class="chev">›</span></a>' +
       '<a class="item" href="installer.html"><span class="grow"><span class="t">Installer ou partager l’appli</span><span class="s">QR code et lien pour ta promo</span></span><span class="chev">›</span></a>' +
-      '<a class="item" href="#/apropos"><span class="grow"><span class="t">Sources et méthode</span><span class="s">D’où vient le contenu, comment réviser</span></span><span class="chev">›</span></a></div>' +
-      '</div>');
+      '<a class="item" href="#/apropos"><span class="grow"><span class="t">Sources et méthode</span><span class="s">D’où vient le contenu, tes données</span></span><span class="chev">›</span></a></div></div>');
   }
 
   /* ---------- Cours ---------- */
   function coursList() {
     tab('cours'); header('Cours');
-    render('<div class="stack"><p class="muted" style="margin:0">Un chapitre = une suite de fiches courtes, une idée par écran. L’ordre suit le poly et les TD.</p><div class="list">' +
-      CH.map(function (c) { var p = chapterProgress(c); return '<a class="item" href="#/cours/' + c.id + '"><span class="num' + (p.lu >= p.n ? ' done' : '') + '">' + c.n + '</span><span class="grow"><span class="t">' + esc(c.titre) + '</span><span class="s">' + esc(c.resume) + '</span></span><span class="chev">›</span></a>'; }).join('') +
-      '</div></div>');
+    render('<div class="stack"><p class="muted" style="margin:0">Une idée par écran. Glisse ou utilise les flèches du clavier pour avancer.</p><div class="list">' +
+      CH.map(function (c) { return chapterRow(c, true); }).join('') + '</div></div>');
   }
   function figHtml(key) {
     if (!key) return '';
-    if (key === 'POLAR') return '<div class="fig"><svg id="polarSvg" viewBox="0 0 520 400" class="fig-svg" role="img" aria-label="Base polaire au point M"></svg><div class="polar-ctl"><label for="theta" class="small muted">Angle θ : <b id="thetaVal">35°</b></label><input type="range" id="theta" min="0" max="359" value="35"></div></div>';
+    if (key === 'POLAR') return '<div class="fig"><svg id="polarSvg" viewBox="0 0 520 400" class="fig-svg" role="img" aria-label="Base polaire au point M"></svg><div class="polar-ctl"><label for="theta" class="small muted">Fais varier θ : <b id="thetaVal">35°</b></label><input type="range" id="theta" min="0" max="359" value="35"></div></div>';
     return D.figs[key] ? '<div class="fig">' + D.figs[key] + '</div>' : '';
   }
   function lesson(id, i) {
     var c = chById[id], cards = LE[id];
     if (!c || !cards) return notFound();
-    if (isNaN(i)) { i = Math.min(S.lu[id] || 0, cards.length - 1); }
+    if (isNaN(i)) i = Math.min(S.lu[id] || 0, cards.length - 1);
     i = Math.max(0, Math.min(i, cards.length - 1));
-    var k = cards[i];
+    var k = cards[i], last = i === cards.length - 1;
     S.lu[id] = Math.max(S.lu[id] || 0, i + 1); save();
     tab('cours'); header(c.n + '. ' + c.titre, (i + 1) + ' / ' + cards.length, (i + 1) / cards.length, '#/cours');
-    var last = i === cards.length - 1;
-    var nextBtn = last
-      ? '<a class="btn" href="#/qcm/go/' + id + '">Teste-toi sur ce chapitre</a>'
-      : '<a class="btn" href="#/cours/' + id + '/' + (i + 1) + '">Suivant</a>';
-    var prevBtn = i > 0 ? '<a class="btn sec" href="#/cours/' + id + '/' + (i - 1) + '">Précédent</a>' : '<a class="btn sec" href="#/cours">Chapitres</a>';
-    var after = last ? '<div class="list" style="margin-top:14px">' +
-        (c.td ? '<a class="item" href="#/exos/' + id + '"><span class="grow"><span class="t">Exercices du ' + c.td + '</span><span class="s">Corrections pas à pas</span></span><span class="chev">›</span></a>' : '') + '</div>' : '';
-    render('<article class="card">' +
-      (i === 0 ? '<p class="small muted" style="margin:0 0 6px">' + esc(c.pages) + (c.td ? ' · ' + c.td : '') + '</p>' : '') +
+    var prevH = i > 0 ? '#/cours/' + id + '/' + (i - 1) : null, nextH = last ? null : '#/cours/' + id + '/' + (i + 1);
+    render('<article class="card lesson">' +
+      (i === 0 ? '<p class="meta">' + esc(c.pages) + (c.td ? ' · ' + c.td : '') + '</p>' : '') +
       '<h1>' + k.t + '</h1>' + (k.h || '') +
       (k.k ? '<div class="key"><span class="label">À retenir</span>' + k.k + '</div>' : '') +
       figHtml(k.fig) +
       (k.piege ? '<p class="trap"><b>Attention.</b> ' + k.piege + '</p>' : '') +
-      '<div class="pager">' + prevBtn + nextBtn + '</div>' +
-      '<div class="dots" aria-hidden="true">' + cards.map(function (_, j) { return '<i' + (j === i ? ' class="on"' : '') + '></i>'; }).join('') + '</div>' +
-      after + '</article>');
+      '<div class="dots" aria-hidden="true">' + cards.map(function (_, j) { return '<i' + (j === i ? ' class="on"' : '') + '></i>'; }).join('') + '</div></article>' +
+      (last ? '<div class="list" style="margin-top:14px"><a class="item" href="#/qcm/go/' + id + '"><span class="num">?</span><span class="grow"><span class="t">Teste-toi sur ce chapitre</span><span class="s">QCM, correction immédiate</span></span><span class="chev">›</span></a>' +
+        (c.td ? '<a class="item" href="#/exos/' + id + '"><span class="num">✎</span><span class="grow"><span class="t">Exercices du ' + c.td + '</span><span class="s">Corrigés étape par étape</span></span><span class="chev">›</span></a>' : '') + '</div>' : '') +
+      '<div class="actions">' + (prevH ? '<a class="btn sec" href="' + prevH + '">Précédent</a>' : '<a class="btn sec" href="#/cours">Chapitres</a>') +
+      (nextH ? '<a class="btn" href="' + nextH + '">Suivant</a>' : '<a class="btn" href="#/qcm/go/' + id + '">Faire le QCM</a>') + '</div>');
     if (k.fig === 'POLAR') initPolar();
+    swipe = { next: nextH ? function () { go(nextH); } : null, prev: prevH ? function () { go(prevH); } : null };
+    keys = { ArrowRight: swipe.next || function () {}, ArrowLeft: swipe.prev || function () {} };
   }
 
   /* ---------- QCM ---------- */
@@ -351,31 +412,28 @@ window.MathJax = {
   function shuffle(a) { for (var i = a.length - 1; i > 0; i--) { var j = Math.floor(Math.random() * (i + 1)); var t = a[i]; a[i] = a[j]; a[j] = t; } return a; }
   function qcmSetup() {
     tab('qcm'); header('QCM');
-    var chips = CH.map(function (c) { return '<button class="chip" type="button" data-ch="' + c.id + '" aria-pressed="false">' + c.n + '. ' + esc(c.titre) + '</button>'; }).join('');
     var wrong = Q.filter(function (q) { return S.qcm[q.id] && !S.qcm[q.id].ok; }).length;
-    render('<div class="stack"><p class="muted" style="margin:0">Comme les QCM Moodle : une question à la fois, correction immédiate. Se tester fait mieux retenir que relire.</p>' +
-      '<a class="btn full" href="#/qcm/go/tout">10 questions, tous chapitres mélangés</a>' +
+    render('<div class="stack"><p class="muted" style="margin:0">Une question à la fois, correction immédiate. Se tester fait mieux retenir que relire.</p>' +
+      '<a class="btn full" href="#/qcm/go/tout">10 questions mélangées</a>' +
       (wrong ? '<a class="btn sec full" href="#/qcm/go/erreurs">Refaire mes erreurs (' + wrong + ')</a>' : '') +
-      '<h2 style="margin-top:8px">Ou choisis les chapitres</h2><div class="chips" id="chips">' + chips + '</div>' +
-      '<button class="btn sec full" type="button" id="goSel" disabled>Lancer</button></div>');
-    var sel = [];
+      '<div class="card"><h2>Choisir les chapitres</h2><div class="chips" id="chips" style="margin-top:12px">' +
+      CH.map(function (c) { return '<button class="chip" type="button" data-ch="' + c.id + '" aria-pressed="false">' + c.n + '. ' + esc(c.titre) + '</button>'; }).join('') +
+      '</div><button class="btn full" type="button" id="goSel" disabled style="margin-top:14px">Lancer</button></div></div>');
     $$('#chips .chip').forEach(function (b) { b.addEventListener('click', function () {
-      var on = b.getAttribute('aria-pressed') !== 'true'; b.setAttribute('aria-pressed', on ? 'true' : 'false');
-      sel = $$('#chips .chip[aria-pressed="true"]').map(function (x) { return x.dataset.ch; });
-      $('#goSel').disabled = !sel.length;
+      b.setAttribute('aria-pressed', b.getAttribute('aria-pressed') === 'true' ? 'false' : 'true');
+      $('#goSel').disabled = !$$('#chips .chip[aria-pressed="true"]').length;
     }); });
-    $('#goSel').addEventListener('click', function () { location.hash = '#/qcm/go/' + sel.join(','); });
+    $('#goSel').addEventListener('click', function () { go('#/qcm/go/' + $$('#chips .chip[aria-pressed="true"]').map(function (x) { return x.dataset.ch; }).join(',')); });
   }
   function qcmStart(scope) {
     var pool;
     if (scope === 'tout') pool = Q.slice();
     else if (scope === 'erreurs') pool = Q.filter(function (q) { return S.qcm[q.id] && !S.qcm[q.id].ok; });
     else { var ids = scope.split(','); pool = Q.filter(function (q) { return ids.indexOf(q.ch) >= 0; }); }
-    if (!pool.length) { location.hash = '#/qcm'; return; }
+    if (!pool.length) { location.replace('#/qcm'); return; }
     shuffle(pool);
-    pool.sort(function (a, b) { var wa = S.qcm[a.id] ? (S.qcm[a.id].ok ? 2 : 0) : 1, wb = S.qcm[b.id] ? (S.qcm[b.id].ok ? 2 : 0) : 1; return wa - wb; });
-    var n = scope === 'tout' ? 10 : Math.min(pool.length, 12);
-    run = { scope: scope, qs: shuffle(pool.slice(0, n)), i: 0, ok: 0, miss: [] };
+    pool.sort(function (a, b) { var w = function (q) { return S.qcm[q.id] ? (S.qcm[q.id].ok ? 2 : 0) : 1; }; return w(a) - w(b); });
+    run = { scope: scope, qs: shuffle(pool.slice(0, scope === 'tout' ? 10 : 12)), i: 0, ok: 0, miss: [] };
     location.replace('#/qcm/q');
   }
   function qcmQuestion() {
@@ -383,43 +441,47 @@ window.MathJax = {
     if (run.i >= run.qs.length) return qcmEnd();
     var q = run.qs[run.i], c = chById[q.ch];
     tab('qcm'); header('QCM', (run.i + 1) + ' / ' + run.qs.length, run.i / run.qs.length, '#/qcm');
-    render('<div><p class="small muted" style="margin:0">' + esc(c.titre) + (q.multi ? ' · <b>plusieurs réponses</b>' : '') + '</p>' +
+    render('<div class="card"><p class="meta">' + esc(c.titre) + (q.multi ? ' · <b>plusieurs réponses</b>' : '') + '</p>' +
       '<p class="q-text">' + q.q + '</p><div class="opts">' +
-      q.opts.map(function (o) { return '<button class="opt" type="button" data-k="' + o[0] + '"><span class="k">' + o[0] + '</span><span>' + o[1] + '</span></button>'; }).join('') +
-      '</div>' + (q.multi ? '<button class="btn full" type="button" id="valid" style="margin-top:14px">Valider</button>' : '') +
-      '<div id="fb"></div></div>');
+      q.opts.map(function (o) { return '<button class="opt" type="button" data-k="' + o[0] + '"><span class="k">' + o[0].toUpperCase() + '</span><span>' + o[1] + '</span></button>'; }).join('') +
+      '</div><div id="fb"></div></div>' +
+      '<div class="actions one" id="qAct">' + (q.multi ? '<button class="btn" type="button" id="valid" disabled>Valider</button>' : '<button class="btn sec" type="button" disabled>Choisis une réponse</button>') + '</div>' +
+      '<p class="kbd-hint">Clavier : touches A, B, C, D puis Entrée</p>');
     var answered = false;
+    function next() { run.i++; qcmQuestion(); }
     function finish(chosen) {
       if (answered) return; answered = true;
       var good = q.ans.split(','), ok = chosen.slice().sort().join(',') === good.slice().sort().join(',');
       $$('.opt', view).forEach(function (b) { b.disabled = true; var k = b.dataset.k; if (good.indexOf(k) >= 0) b.classList.add('ok'); else if (chosen.indexOf(k) >= 0) b.classList.add('ko'); });
       if (ok) run.ok++; else run.miss.push(q);
       S.qcm[q.id] = { ok: ok, n: ((S.qcm[q.id] || {}).n || 0) + 1 }; save();
-      var v = $('#valid'); if (v) v.hidden = true;
       var fb = $('#fb');
-      fb.innerHTML = '<div class="fb"><b class="' + (ok ? 'ok' : 'ko') + '">' + (ok ? 'Juste.' : 'Pas tout à fait.') + '</b> ' + q.expl + '</div>' +
-        '<button class="btn full" type="button" id="nextQ" style="margin-top:14px">' + (run.i + 1 < run.qs.length ? 'Question suivante' : 'Voir mon score') + '</button>';
+      fb.innerHTML = '<div class="fb"><b class="' + (ok ? 'ok' : 'ko') + '">' + (ok ? 'Juste.' : 'Pas tout à fait.') + '</b> ' + q.expl + '</div>';
       typeset(fb);
-      $('#nextQ').addEventListener('click', function () { run.i++; qcmQuestion(); });
-      $('#nextQ').focus({ preventScroll: true });
-      fb.scrollIntoView({ block: 'nearest', behavior: 'smooth' });
+      $('#qAct').innerHTML = '<button class="btn" type="button" id="nextQ">' + (run.i + 1 < run.qs.length ? 'Question suivante' : 'Voir mon score') + '</button>';
+      $('#nextQ').addEventListener('click', next);
+      keys = { Enter: next, ArrowRight: next };
     }
-    $$('.opt', view).forEach(function (b) { b.addEventListener('click', function () {
-      if (q.multi) { b.classList.toggle('sel'); b.setAttribute('aria-pressed', b.classList.contains('sel') ? 'true' : 'false'); }
+    function pick(b) {
+      if (answered) return;
+      if (q.multi) { b.classList.toggle('sel'); $('#valid').disabled = !$$('.opt.sel', view).length; }
       else finish([b.dataset.k]);
-    }); });
+    }
+    $$('.opt', view).forEach(function (b) { b.addEventListener('click', function () { pick(b); }); });
     var v = $('#valid'); if (v) v.addEventListener('click', function () { var ch = $$('.opt.sel', view).map(function (b) { return b.dataset.k; }); if (ch.length) finish(ch); });
+    keys = {};
+    q.opts.forEach(function (o) { keys[o[0]] = keys[o[0].toUpperCase()] = function () { var b = $('.opt[data-k="' + o[0] + '"]', view); if (b) pick(b); }; });
+    keys.Enter = function () { var vv = $('#valid'); if (vv && !vv.disabled) vv.click(); };
   }
   function qcmEnd() {
     tab('qcm'); header('QCM', null, 1, '#/qcm');
     var n = run.qs.length, pct = Math.round(100 * run.ok / n);
-    var msg = pct >= 80 ? 'Très bien. Reviens demain pour consolider.' : pct >= 50 ? 'Bien parti. Refais les erreurs, puis relis les fiches des chapitres concernés.' : 'Relis les fiches de cours de ces chapitres, puis réessaie.';
+    var msg = pct >= 80 ? 'Très bien. Reviens demain pour consolider.' : pct >= 50 ? 'Bien parti. Refais tes erreurs, puis relis les fiches concernées.' : 'Relis les fiches de ces chapitres, puis réessaie.';
     var missCh = {}; run.miss.forEach(function (q) { missCh[q.ch] = true; });
-    render('<div class="stack" style="text-align:center"><p class="score">' + run.ok + ' / ' + n + '</p><p class="muted">' + msg + '</p>' +
-      (run.miss.length ? '<a class="btn full" href="#/qcm/go/erreurs">Refaire mes erreurs</a>' : '') +
-      '<a class="btn sec full" href="#/qcm/go/' + run.scope + '">Nouvelle série</a>' +
-      (Object.keys(missCh).length ? '<div class="list" style="text-align:left;margin-top:8px"><p class="label">Revoir le cours</p>' + Object.keys(missCh).map(function (id) { return '<a class="item" href="#/cours/' + id + '/0"><span class="grow"><span class="t">' + esc(chById[id].titre) + '</span></span><span class="chev">›</span></a>'; }).join('') + '</div>' : '') +
-      '</div>');
+    render('<div class="card" style="text-align:center"><p class="label">Score</p><p class="score">' + run.ok + ' / ' + n + '</p><p class="muted">' + msg + '</p></div>' +
+      (Object.keys(missCh).length ? '<div class="sec-title"><h2>À revoir</h2></div><div class="list">' + Object.keys(missCh).map(function (id) { return chapterRow(chById[id], true); }).join('') + '</div>' : '') +
+      '<div class="actions">' + '<a class="btn sec" href="#/qcm/go/' + run.scope + '">Nouvelle série</a>' +
+      (run.miss.length ? '<a class="btn" href="#/qcm/go/erreurs">Refaire mes erreurs</a>' : '<a class="btn" href="#/">Accueil</a>') + '</div>');
   }
 
   /* ---------- Exercices ---------- */
@@ -428,14 +490,14 @@ window.MathJax = {
     var list = chId ? EX.filter(function (e) { return e.ch === chId; }) : EX;
     header(chId ? 'TD · ' + chById[chId].titre : 'Exercices de TD', null, null, chId ? '#/exos' : null);
     var groups = {}; list.forEach(function (e) { (groups[e.td] = groups[e.td] || []).push(e); });
-    var html = '<div class="stack"><p class="muted" style="margin:0">Les exercices de tes TD, étape par étape. Essaie d’abord, écris ta réponse, puis regarde l’indice ou la correction.</p>';
+    var html = '<div class="stack"><p class="muted" style="margin:0">Essaie d’abord, écris ta réponse, puis regarde l’indice ou la correction.</p>';
     Object.keys(groups).sort().forEach(function (td) {
-      html += '<h2 style="margin-top:6px">' + td + '</h2><div class="list">' + groups[td].map(function (e) {
+      html += '<div class="sec-title"><h2>' + td + '</h2><span class="small muted">' + esc(chById[groups[td][0].ch].titre) + '</span></div><div class="list">' + groups[td].map(function (e) {
         var st = S.exo[e.id];
-        return '<a class="item" href="#/exo/' + e.id + '"><span class="num' + (st === 'ok' ? ' done' : '') + '">' + '★'.repeat(e.niv) + '</span><span class="grow"><span class="t">' + esc(e.titre) + '</span><span class="s">' + esc(e.tag) + (st === 'revoir' ? ' · à revoir' : '') + '</span></span><span class="chev">›</span></a>';
+        return '<a class="item" href="#/exo/' + e.id + '"><span class="num' + (st === 'ok' ? ' done' : '') + '">' + (st === 'ok' ? '✓' : e.niv) + '</span><span class="grow"><span class="t">' + esc(e.titre) + '</span><span class="s">' + esc(e.tag) + ' · ' + e.etapes.length + ' étapes' + (st === 'revoir' ? ' · à revoir' : '') + '</span></span><span class="chev">›</span></a>';
       }).join('') + '</div>';
     });
-    render(html + '</div>');
+    render(html + '<p class="small muted">Le chiffre indique la difficulté (1 à 3).</p></div>');
   }
   function exo(id, step) {
     var e = EX.filter(function (x) { return x.id === id; })[0];
@@ -445,27 +507,29 @@ window.MathJax = {
     tab('exos');
     if (step >= n) {
       header(e.titre, null, 1, '#/exos/' + e.ch);
-      render('<div class="stack" style="text-align:center"><h1>Exercice terminé</h1><p class="muted">Sois honnête : saurais-tu le refaire seul, sans regarder ?</p>' +
-        '<div class="duo"><button class="btn" type="button" id="exOk">Oui, réussi</button><button class="btn sec" type="button" id="exKo">À revoir</button></div>' +
-        '<a class="btn line full" href="#/exo/' + id + '/0">Revoir depuis le début</a></div>');
-      $('#exOk').onclick = function () { S.exo[id] = 'ok'; save(); location.hash = '#/exos/' + e.ch; };
-      $('#exKo').onclick = function () { S.exo[id] = 'revoir'; save(); location.hash = '#/exos/' + e.ch; };
+      render('<div class="card" style="text-align:center"><h1>Exercice terminé</h1><p class="muted">Saurais-tu le refaire seul, sans regarder ?</p></div>' +
+        '<div class="actions"><button class="btn sec" type="button" id="exKo">À revoir</button><button class="btn" type="button" id="exOk">Oui, réussi</button></div>');
+      $('#exOk').onclick = function () { S.exo[id] = 'ok'; save(); go('#/exos/' + e.ch); };
+      $('#exKo').onclick = function () { S.exo[id] = 'revoir'; save(); go('#/exos/' + e.ch); };
       return;
     }
     var s = e.etapes[step], key = id + '-' + step;
     header(e.titre, 'Étape ' + (step + 1) + ' / ' + n, (step + 1) / n, '#/exos/' + e.ch);
+    var prevH = step > 0 ? '#/exo/' + id + '/' + (step - 1) : '#/exos/' + e.ch, nextH = '#/exo/' + id + '/' + (step + 1);
     render('<div class="stack">' +
-      (step === 0 ? '<p class="small muted" style="margin:0"><span class="tag">' + esc(e.td) + '</span> <span class="tag">' + esc(e.tag) + '</span> ' + (e.officiel ? 'Correction officielle du TD' : 'Correction proposée (le TD n’a pas encore de corrigé sur Moodle)') + '</p>' : '') +
-      '<div class="enonce small">' + e.enonce + '</div>' + (step === 0 ? figHtml(e.fig) : '') +
-      '<div><p class="step-q">' + s[0] + '</p><textarea id="rep" placeholder="Ta réponse (calculs, idées)…" aria-label="Ta réponse"></textarea>' +
+      '<details class="card enonce"' + (step === 0 ? ' open' : '') + '><summary style="cursor:pointer;font-weight:700">Énoncé</summary><div style="margin-top:8px">' +
+      (step === 0 ? '<p style="margin-top:0"><span class="tag">' + esc(e.td) + '</span><span class="tag">' + esc(e.tag) + '</span></p>' : '') + e.enonce + figHtml(e.fig) +
+      '<p class="small muted" style="margin-bottom:0">' + (e.officiel ? 'Correction tirée du corrigé officiel du TD.' : 'Correction proposée : le TD n’a pas encore de corrigé sur Moodle.') + '</p></div></details>' +
+      '<div class="card"><div class="steps-dots" aria-hidden="true">' + e.etapes.map(function (_, j) { return '<i' + (j <= step ? ' class="on"' : '') + '></i>'; }).join('') + '</div>' +
+      '<p class="step-q">' + s[0] + '</p><textarea id="rep" placeholder="Ta réponse (calculs, idées)…" aria-label="Ta réponse"></textarea>' +
       '<div class="duo" style="margin-top:10px"><button class="btn sec" type="button" id="hintB">Indice</button><button class="btn sec" type="button" id="corrB">Correction</button></div>' +
-      '<div class="hint" id="hint" hidden><b>Indice.</b> ' + s[1] + '</div><div class="corr" id="corr" hidden>' + s[2] + '</div></div>' +
-      '<a class="btn full" href="#/exo/' + id + '/' + (step + 1) + '" id="nextS">' + (step + 1 < n ? 'Étape suivante' : 'Terminer') + '</a></div>');
-    if (e.fig === 'POLAR' && step === 0) initPolar();
+      '<div class="reveal hint" id="hint" hidden><b>Indice.</b> ' + s[1] + '</div><div class="reveal corr" id="corr" hidden><b>Correction.</b> ' + s[2] + '</div></div>' +
+      '<div class="actions"><a class="btn sec" href="' + prevH + '">' + (step > 0 ? 'Précédent' : 'Liste') + '</a><a class="btn" href="' + nextH + '">' + (step + 1 < n ? 'Étape suivante' : 'Terminer') + '</a></div></div>');
+    if (e.fig === 'POLAR') initPolar();
     var ta = $('#rep'); ta.value = S.rep[key] || '';
     ta.addEventListener('input', function () { S.rep[key] = ta.value; save(); });
     $('#hintB').onclick = function () { $('#hint').hidden = false; };
-    $('#corrB').onclick = function () { $('#corr').hidden = false; $('#corr').scrollIntoView({ block: 'nearest', behavior: 'smooth' }); };
+    $('#corrB').onclick = function () { var c = $('#corr'); c.hidden = false; c.scrollIntoView({ block: 'nearest', behavior: 'smooth' }); };
   }
 
   /* ---------- Fiches mémoire ---------- */
@@ -476,55 +540,64 @@ window.MathJax = {
     if (!deck.length) {
       header('Fiches');
       var next = FI.map(function (f) { return S.srs[f.id] ? S.srs[f.id].d : today(); }).filter(function (d) { return d > today(); }).sort(function (a, b) { return a - b; })[0];
-      render('<div class="stack" style="text-align:center"><h1>Rien à revoir aujourd’hui</h1><p class="muted">Les fiches reviennent à intervalles de plus en plus longs (1, 3, 7, 14 puis 30 jours) : c’est la révision espacée.' + (next ? ' Prochaines fiches dans ' + (next - today()) + ' jour(s).' : '') + '</p>' +
-        '<button class="btn sec full" type="button" id="all">Revoir toutes les fiches quand même</button></div>');
+      render('<div class="card" style="text-align:center"><h1>Rien à revoir aujourd’hui</h1><p class="muted">Chaque fiche revient après 1, 3, 7, 14 puis 30 jours : c’est la révision espacée.' + (next ? ' Prochaines fiches dans ' + (next - today()) + ' jour' + (next - today() > 1 ? 's' : '') + '.' : '') + '</p></div>' +
+        '<div class="actions one"><button class="btn sec" type="button" id="all">Revoir toutes les fiches quand même</button></div>');
       $('#all').onclick = function () { deck = shuffle(FI.slice()); fiches(); };
       return;
     }
-    var f = deck[0];
-    header('Fiches', deck.length + ' restante' + (deck.length > 1 ? 's' : ''));
-    render('<div class="stack"><p class="small muted" style="margin:0;text-align:center">' + esc(chById[f.ch].titre) + '</p>' +
-      '<div class="flash"><div class="front">' + f.q + '</div><div class="backside" id="back" hidden>' + f.r + '</div></div>' +
-      '<button class="btn full" type="button" id="show">Voir la réponse</button>' +
-      '<div class="duo" id="rate" hidden><button class="btn sec" type="button" id="no">À revoir</button><button class="btn" type="button" id="yes">Je savais</button></div>' +
-      '<p class="small muted" style="text-align:center;margin:0">Essaie de répondre de tête avant de retourner la fiche.</p></div>');
-    $('#show').onclick = function () { $('#back').hidden = false; $('#show').hidden = true; $('#rate').hidden = false; };
-    $('#yes').onclick = function () { var s = S.srs[f.id] || { b: 0 }; var b = Math.min((s.b || 0) + 1, 5); S.srs[f.id] = { b: b, d: today() + BOX[b] }; save(); deck.shift(); fiches(); };
-    $('#no').onclick = function () { S.srs[f.id] = { b: 1, d: today() }; save(); deck.push(deck.shift()); if (deck.length === 1) { /* une seule fiche : on la garde */ } fiches(); };
+    var f = deck[0], shown = false;
+    header('Fiches', deck.length + ' à revoir', null);
+    render('<div class="card flash" id="flash" role="button" tabindex="0" aria-label="Retourner la fiche"><p class="meta" style="margin:0">' + esc(chById[f.ch].titre) + '</p><div class="front">' + f.q + '</div>' +
+      '<div class="answer" id="answer" hidden>' + f.r + '</div><div class="tap" id="tapHint">Réponds de tête, puis touche la fiche</div></div>' +
+      '<div class="actions one" id="fAct"><button class="btn" type="button" id="show">Voir la réponse</button></div>');
+    function reveal() {
+      if (shown) return; shown = true;
+      $('#answer').hidden = false; $('#tapHint').hidden = true;
+      $('#fAct').className = 'actions';
+      $('#fAct').innerHTML = '<button class="btn sec" type="button" id="no">À revoir</button><button class="btn" type="button" id="yes">Je savais</button>';
+      $('#yes').onclick = yes; $('#no').onclick = no;
+      keys = { '1': no, '2': yes, ArrowLeft: no, ArrowRight: yes };
+    }
+    function yes() { var s = S.srs[f.id] || { b: 0 }; var b = Math.min((s.b || 0) + 1, 5); S.srs[f.id] = { b: b, d: today() + BOX[b] }; save(); deck.shift(); fiches(); }
+    function no() { S.srs[f.id] = { b: 1, d: today() }; save(); deck.push(deck.shift()); fiches(); }
+    $('#show').onclick = reveal;
+    $('#flash').onclick = reveal;
+    $('#flash').onkeydown = function (e) { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); reveal(); } };
+    keys = { ' ': reveal, Enter: reveal };
   }
 
   /* ---------- Annales et à propos ---------- */
   function annales() {
     tab('home'); header('Anciens sujets', null, null, '#/');
-    render('<div class="stack"><p class="muted" style="margin:0">Ces sujets viennent du dépôt public Epidocs. Ce sont d’anciens <b>contrôles</b> (2017 à 2022), avant le format actuel en QCM et partiels. Ils restent utiles pour s’entraîner sur la cinématique.</p><div class="list">' +
+    render('<div class="stack"><p class="muted" style="margin:0">D’anciens <b>contrôles</b> (2017 à 2022), avant le format actuel en QCM et partiels. Toujours utiles pour la cinématique. Source : dépôt public Epidocs.</p><div class="list">' +
       D.annales.map(function (a) { return '<div class="item" style="cursor:default"><span class="grow"><span class="t">' + esc(a[0]) + '</span><span class="s">' + esc(a[1]) + '</span></span>' +
-        (a[2] ? '<a class="btn sec" href="' + a[2] + '" target="_blank" rel="noopener" style="min-height:38px;padding:6px 12px">Sujet</a>' : '') +
-        (a[3] ? '<a class="btn sec" href="' + a[3] + '" target="_blank" rel="noopener" style="min-height:38px;padding:6px 12px">Corrigé</a>' : '') + '</div>'; }).join('') +
+        (a[2] ? '<a class="btn sec" href="' + a[2] + '" target="_blank" rel="noopener" style="min-height:40px;padding:6px 12px">Sujet</a>' : '') +
+        (a[3] ? '<a class="btn sec" href="' + a[3] + '" target="_blank" rel="noopener" style="min-height:40px;padding:6px 12px">Corrigé</a>' : '') + '</div>'; }).join('') +
       '</div><a class="btn sec full" href="' + D.partiels + '" target="_blank" rel="noopener">Anciens partiels (dynamique, énergie)</a></div>');
   }
   function apropos() {
     tab('home'); header('Sources et méthode', null, null, '#/');
-    render('<div class="card"><h2>D’où vient le contenu</h2><p>Du poly « Cours cinématique V4 », de la fiche coordonnées et des TD1 à TD8 de 2026 (Moodle). Les notations sont celles du poly : r, θ, \\(\\ur\\), \\(\\ut\\). Les corrections des TD1 à TD3 suivent les corrigés officiels. Celles des TD4 à TD8 sont proposées et signalées comme telles.</p>' +
-      '<h2 style="margin-top:18px">Pourquoi l’appli est faite comme ça</h2><ul><li><b>Une idée par écran</b> : découper une leçon en étapes courtes, au rythme de l’élève, améliore la compréhension (méta-analyse de Rey et al., 2019).</li><li><b>Rien de décoratif</b> : les éléments sans rapport avec la leçon font moins bien retenir (effet « détails séduisants »). La couleur sert seulement à repérer les vecteurs et à corriger.</li><li><b>Se tester plutôt que relire</b> : les tests et la révision espacée sont les deux techniques les mieux notées (Dunlosky et al., 2013). D’où les QCM et les fiches qui reviennent à 1, 3, 7, 14 puis 30 jours.</li><li><b>Exemples guidés</b> : pour un débutant, étudier un exercice résolu étape par étape est plus efficace que chercher seul tout de suite.</li></ul>' +
-      '<h2 style="margin-top:18px">Tes données</h2><p>Tes réponses et ta progression restent sur ton appareil. Rien n’est envoyé.</p><button class="btn sec" type="button" id="wipe">Effacer ma progression</button><p class="small muted" id="wipeMsg"></p></div>');
+    render('<div class="card"><h2>D’où vient le contenu</h2><p>Du poly « Cours cinématique V4 », de la fiche coordonnées et des TD1 à TD8 de 2026 (Moodle), avec les notations du poly. Les corrections des TD1 à TD3 suivent les corrigés officiels ; celles des TD4 à TD8 sont proposées et signalées comme telles.</p>' +
+      '<h2 style="margin-top:18px">Pourquoi l’appli est faite comme ça</h2><ul><li><b>Une idée par écran</b> : un cours découpé en étapes courtes, au rythme de l’élève, se comprend mieux (Rey et al., 2019).</li><li><b>Rien de décoratif</b> : ce qui n’a pas de rapport avec la leçon fait moins bien retenir. La couleur sert aux vecteurs et à la correction.</li><li><b>Se tester plutôt que relire</b> : tests et révision espacée sont les techniques les plus efficaces (Dunlosky et al., 2013).</li><li><b>Exemples guidés</b> : pour débuter, un exercice résolu étape par étape aide plus que chercher seul.</li></ul>' +
+      '<h2 style="margin-top:18px">Tes données</h2><p>Tes réponses et ta progression restent sur cet appareil. Rien n’est envoyé.</p><button class="btn sec" type="button" id="wipe">Effacer ma progression</button><p class="small muted" id="wipeMsg"></p></div>');
     var armed = false;
     $('#wipe').onclick = function () {
       if (!armed) { armed = true; this.textContent = 'Confirmer : tout effacer'; return; }
-      S = { lu: {}, qcm: {}, exo: {}, rep: {}, srs: {}, last: null }; save(); deck = null; this.textContent = 'Effacé'; $('#wipeMsg').textContent = 'Ta progression a été remise à zéro.';
+      S = fresh(); save(); deck = null; this.textContent = 'Effacé'; $('#wipeMsg').textContent = 'Ta progression a été remise à zéro.';
     };
   }
-  function notFound() { header('Mécanique S1'); render('<p>Page introuvable.</p><a class="btn" href="#/">Accueil</a>'); }
+  function notFound() { header('Mécanique S1'); render('<div class="card"><p>Page introuvable.</p><a class="btn" href="#/">Accueil</a></div>'); }
 
   /* ---------- Schéma polaire interactif ---------- */
   function initPolar() {
     var svg = $('#polarSvg'), range = $('#theta'); if (!svg || !range) return;
-    var O = { x: 250, y: 205 }, RHO = 140, U = 72;
+    var O = { x: 250, y: 205 }, R = 140, U = 72;
     function L(x1, y1, x2, y2, c, w, dash, arrow) { return '<line x1="' + x1.toFixed(1) + '" y1="' + y1.toFixed(1) + '" x2="' + x2.toFixed(1) + '" y2="' + y2.toFixed(1) + '" class="ln ln-' + c + '" stroke-width="' + w + '"' + (dash ? ' stroke-dasharray="' + dash + '"' : '') + (arrow ? ' marker-end="url(#ar-' + c + ')"' : '') + '/>'; }
     function T(x, y, s, c, anchor, size, weight) { return '<text x="' + x.toFixed(1) + '" y="' + y.toFixed(1) + '" class="tx tx-' + c + '" text-anchor="' + (anchor || 'start') + '" font-size="' + (size || 15) + '"' + (weight ? ' font-weight="' + weight + '"' : '') + '>' + s + '</text>'; }
     function draw(deg) {
       var t = deg * Math.PI / 180, c = Math.cos(t), s = Math.sin(t);
-      var M = { x: O.x + RHO * c, y: O.y - RHO * s }, ur = { x: c, y: -s }, ut = { x: -s, y: -c }, h = '';
-      h += '<circle cx="' + O.x + '" cy="' + O.y + '" r="' + RHO + '" class="ln ln-ink3" stroke-width="1" stroke-dasharray="3 5" fill="none"/>';
+      var M = { x: O.x + R * c, y: O.y - R * s }, ur = { x: c, y: -s }, ut = { x: -s, y: -c }, h = '';
+      h += '<circle cx="' + O.x + '" cy="' + O.y + '" r="' + R + '" class="ln ln-ink3" stroke-width="1" stroke-dasharray="3 5" fill="none"/>';
       h += L(30, O.y, 490, O.y, 'ink3', 1.4, null, true) + L(O.x, 385, O.x, 22, 'ink3', 1.4, null, true);
       h += T(496, O.y + 5, 'x', 'ink2', 'start', 14) + T(O.x + 10, 26, 'y', 'ink2', 'start', 14) + T(O.x - 8, O.y + 20, 'O', 'ink2', 'end', 14);
       h += L(M.x, M.y, M.x, O.y, 'ink3', 1.2, '5 5') + L(M.x, M.y, O.x, M.y, 'ink3', 1.2, '5 5');
@@ -548,7 +621,7 @@ window.MathJax = {
   function route() {
     var h = location.hash || '#/', p = h.slice(2).split('/');
     if (h.indexOf('#/cours/') === 0 || h.indexOf('#/exo/') === 0) { S.last = h; save(); }
-    if (p[0] === '' ) return home();
+    if (p[0] === '') return home();
     if (p[0] === 'cours') return p[1] ? lesson(p[1], parseInt(p[2], 10)) : coursList();
     if (p[0] === 'qcm') { if (p[1] === 'go') return qcmStart(p[2] || 'tout'); if (p[1] === 'q') return qcmQuestion(); return qcmSetup(); }
     if (p[0] === 'exos') return exosList(p[1]);
@@ -559,21 +632,22 @@ window.MathJax = {
     notFound();
   }
   window.addEventListener('hashchange', route);
+  $$('.nav a').forEach(function (a) { a.addEventListener('click', function (e) { if (location.hash === a.getAttribute('href') || (a.getAttribute('href') === '#/' && !location.hash)) { e.preventDefault(); route(); } }); });
   route();
 
-  /* ---------- Mise à jour de l'appli ---------- */
-  var toast = $('#updToast'), waiting = null, updating = false;
-  $('#updGo').addEventListener('click', function () { if (!waiting) return; updating = true; this.textContent = 'Mise à jour…'; waiting.postMessage('skipWaiting'); });
-  $('#updLater').addEventListener('click', function () { toast.hidden = true; });
+  /* ---------- Mises à jour : la nouvelle version s'installe toute seule ---------- */
   if ('serviceWorker' in navigator && location.protocol !== 'file:') {
+    var hadController = !!navigator.serviceWorker.controller, reloaded = false;
+    navigator.serviceWorker.addEventListener('controllerchange', function () {
+      if (!hadController || reloaded) return;
+      var onHome = !location.hash || location.hash === '#/';
+      if (onHome || document.visibilityState === 'hidden') { reloaded = true; location.reload(); }
+      else { $('#updToast').hidden = false; $('#updGo').onclick = function () { reloaded = true; location.reload(); }; }
+    });
     window.addEventListener('load', function () {
       navigator.serviceWorker.register('sw.js', { updateViaCache: 'none' }).then(function (reg) {
-        function offer(w) { waiting = w; toast.hidden = false; }
-        if (reg.waiting && navigator.serviceWorker.controller) offer(reg.waiting);
-        reg.addEventListener('updatefound', function () { var w = reg.installing; if (!w) return; w.addEventListener('statechange', function () { if (w.state === 'installed' && navigator.serviceWorker.controller) offer(w); }); });
         document.addEventListener('visibilitychange', function () { if (document.visibilityState === 'visible') reg.update().catch(function () {}); });
       }).catch(function () {});
-      navigator.serviceWorker.addEventListener('controllerchange', function () { if (updating) { updating = false; location.reload(); } });
     });
   }
 })();

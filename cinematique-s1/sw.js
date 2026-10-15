@@ -1,5 +1,5 @@
 // Service worker : fonctionnement hors ligne et mises à jour de l'application.
-const VERSION = '9951ddcc3c6c';
+const VERSION = '244bec681cb7';
 const PREFIX = 'cinematique-s1-';
 const CACHE = PREFIX + VERSION;
 const FONTS = PREFIX + 'polices';
@@ -8,6 +8,7 @@ const PRECACHE = ["./", "index.html", "installer.html", "manifest.webmanifest", 
 self.addEventListener('install', (event) => {
   event.waitUntil(
     caches.open(CACHE).then((cache) => cache.addAll(PRECACHE.map((u) => new Request(u, { cache: 'reload' }))))
+      .then(() => self.skipWaiting())
   );
 });
 
